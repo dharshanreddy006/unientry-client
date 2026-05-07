@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { useSettings } from '@/components/providers/SettingsProvider';
 
 const quickLinks = [
   { name: 'Home', href: '/' },
@@ -17,6 +20,8 @@ const studyAbroad = [
 ];
 
 export default function Footer() {
+  const settings = useSettings();
+
   return (
     <footer className="bg-primary-900 text-white">
       {/* Main footer */}
@@ -109,7 +114,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <p className="text-white/40 text-xs uppercase tracking-wider mb-0.5">Email</p>
-                  <a href="mailto:info@unientry.com" className="text-white/80 text-sm hover:text-accent-400 transition-colors">info@unientry.com</a>
+                  <a href={`mailto:${settings?.email}`} className="text-white/80 text-sm hover:text-accent-400 transition-colors">{settings?.email}</a>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -120,11 +125,11 @@ export default function Footer() {
                 </div>
                 <div>
                   <p className="text-white/40 text-xs uppercase tracking-wider mb-0.5">Phone</p>
-                  <a href="tel:+919876543210" className="text-white/80 text-sm hover:text-accent-400 transition-colors">+91 98765 43210</a>
+                  <a href={`tel:${settings?.phone}`} className="text-white/80 text-sm hover:text-accent-400 transition-colors">{settings?.phone}</a>
                 </div>
               </div>
               <a
-                href="https://wa.me/919876543210?text=Hi%20UniEntry!%20I%20need%20admission%20guidance."
+                href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I%20need%20admission%20guidance.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="whatsapp-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold mt-2"

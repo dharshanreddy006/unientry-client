@@ -6,6 +6,7 @@ import FeaturedUniversities from '@/components/home/FeaturedUniversities';
 import StudyAbroad from '@/components/home/StudyAbroad';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import Testimonials from '@/components/home/Testimonials';
+import FounderSection from '@/components/home/FounderSection';
 import ContactSection from '@/components/home/ContactSection';
 
 export default function HomePage() {
@@ -17,6 +18,7 @@ export default function HomePage() {
       <StudyAbroad />
       <WhyChooseUs />
       <Testimonials />
+      <FounderSection />
       <ContactSection />
       <Footer />
       <FloatingWhatsApp />

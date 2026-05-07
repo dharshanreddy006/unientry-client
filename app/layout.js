@@ -1,3 +1,4 @@
+import { SettingsProvider } from '@/components/providers/SettingsProvider';
 import "./globals.css";
 
 export const metadata = {
@@ -11,11 +12,26 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+async function getSettings() {
+  try {
+    const res = await fetch('https://unientry-server-production.up.railway.app/api/settings', { next: { revalidate: 60 } });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.data;
+  } catch (e) {
+    return null;
+  }
+}
+
+export default async function RootLayout({ children }) {
+  const settings = await getSettings();
+
   return (
     <html lang="en">
       <body className="antialiased">
-        {children}
+        <SettingsProvider initialSettings={settings}>
+          {children}
+        </SettingsProvider>
       </body>
     </html>
   );

@@ -1,8 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import { useSettings } from '@/components/providers/SettingsProvider';
 
 export default function Hero() {
+  const settings = useSettings();
   return (
     <section className="relative min-h-screen flex items-center justify-center hero-gradient overflow-hidden">
       {/* Animated background shapes */}
@@ -65,7 +67,7 @@ export default function Hero() {
             </span>
           </Link>
           <a
-            href="https://wa.me/919876543210?text=Hi%20UniEntry!%20I%20need%20admission%20guidance."
+            href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I%20need%20admission%20guidance.`}
             target="_blank"
             rel="noopener noreferrer"
             className="whatsapp-btn flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-base animate-pulse-glow"

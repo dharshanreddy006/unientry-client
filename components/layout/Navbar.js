@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSettings } from '@/components/providers/SettingsProvider';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -16,6 +17,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const settings = useSettings();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -65,7 +67,7 @@ export default function Navbar() {
           {/* WhatsApp CTA */}
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="https://wa.me/919876543210?text=Hi%20UniEntry!%20I%20need%20admission%20guidance."
+              href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I%20need%20admission%20guidance.`}
               target="_blank"
               rel="noopener noreferrer"
               className="whatsapp-btn flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg"
@@ -111,7 +113,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <a
-                href="https://wa.me/919876543210?text=Hi%20UniEntry!%20I%20need%20admission%20guidance."
+                href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I%20need%20admission%20guidance.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="whatsapp-btn flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold mt-2"

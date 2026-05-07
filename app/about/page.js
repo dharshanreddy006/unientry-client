@@ -1,6 +1,7 @@
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
+import WhatsAppButton from '@/components/common/WhatsAppButton';
 
 export const metadata = {
   title: 'About UniEntry — Your Trusted Education Consultancy',
@@ -115,14 +116,11 @@ export default function AboutPage() {
             >
               Contact Us
             </Link>
-            <a
-              href="https://wa.me/919876543210"
-              target="_blank"
-              rel="noopener noreferrer"
+            <WhatsAppButton
               className="px-8 py-4 bg-white/20 text-white border border-white/30 rounded-2xl font-semibold hover:bg-white/30 transition-all"
             >
               Chat on WhatsApp
-            </a>
+            </WhatsAppButton>
           </div>
         </div>
       </section>

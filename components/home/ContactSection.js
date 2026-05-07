@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useSettings } from '@/components/providers/SettingsProvider';
 
 export default function ContactSection() {
+  const settings = useSettings();
   const [form, setForm] = useState({
     studentName: '',
     email: '',
@@ -61,7 +63,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Email</p>
-                  <a href="mailto:info@unientry.com" className="text-primary-900 font-medium hover:text-accent-600 transition-colors">info@unientry.com</a>
+                  <a href={`mailto:${settings?.email}`} className="text-primary-900 font-medium hover:text-accent-600 transition-colors">{settings?.email}</a>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -72,14 +74,14 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Phone</p>
-                  <a href="tel:+919876543210" className="text-primary-900 font-medium hover:text-accent-600 transition-colors">+91 98765 43210</a>
+                  <a href={`tel:${settings?.phone}`} className="text-primary-900 font-medium hover:text-accent-600 transition-colors">{settings?.phone}</a>
                 </div>
               </div>
             </div>
 
             {/* WhatsApp CTA */}
             <a
-              href="https://wa.me/919876543210?text=Hi%20UniEntry!%20I%20need%20admission%20guidance."
+              href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I%20need%20admission%20guidance.`}
               target="_blank"
               rel="noopener noreferrer"
               className="whatsapp-btn inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-base shadow-lg"

@@ -1,13 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { useSettings } from '@/components/providers/SettingsProvider';
 
 export default function FloatingWhatsApp() {
+  const settings = useSettings();
   const [hovered, setHovered] = useState(false);
 
   return (
     <a
-      href="https://wa.me/919876543210?text=Hi%20UniEntry!%20I%20need%20admission%20guidance."
+      href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I%20need%20admission%20guidance.`}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-40 group"
