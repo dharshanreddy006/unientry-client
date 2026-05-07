@@ -64,7 +64,7 @@ Calling setState synchronously within an effect body causes cascading renders th
   179:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
 
 /Users/darshanreddy/.gemini/antigravity/scratch/unientry/client/app/admin/universities/page.js
-   37:21  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+   38:21  error    Error: Calling setState synchronously within an effect can trigger cascading renders
 
 Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
 * Update external systems with the latest state from React.
@@ -72,15 +72,15 @@ Effects are intended to synchronize state between React and external systems suc
 
 Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
 
-  35 |   };
-  36 |
-> 37 |   useEffect(() => { fetchUniversities(); }, []);
+  36 |   };
+  37 |
+> 38 |   useEffect(() => { fetchUniversities(); }, []);
      |                     ^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
-  38 |
-  39 |   const handleEdit = (uni) => {
-  40 |     setEditId(uni._id);  react-hooks/set-state-in-effect
-  192:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @next/next/no-img-element
-  318:27  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @next/next/no-img-element
+  39 |
+  40 |   const handleEdit = (uni) => {
+  41 |     setEditId(uni._id);  react-hooks/set-state-in-effect
+  219:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @next/next/no-img-element
+  378:27  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @next/next/no-img-element
 
 /Users/darshanreddy/.gemini/antigravity/scratch/unientry/client/app/internships/page.js
   33:21  error    Error: Calling setState synchronously within an effect can trigger cascading renders
