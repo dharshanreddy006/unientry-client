@@ -9,7 +9,7 @@ const emptyForm = {
   fees: { tuition: '', hostel: '', livingCost: '' },
   eligibility: { marks: '', ielts: '', toefl: '', documents: '' },
   coverImage: { url: '', publicId: '' },
-  uniCheatsUrl: '',
+  uniCheats: [],
   referAndEarn: '',
 };
 
@@ -99,7 +99,10 @@ export default function AdminUniversities() {
       });
       const data = await res.json();
       if (data.success) {
-        setForm({ ...form, uniCheatsUrl: data.data.url });
+        setForm({ 
+          ...form, 
+          uniCheats: [...(form.uniCheats || []), { url: data.data.url, note: 'New Document' }] 
+        });
       } else {
         alert('Upload failed: ' + data.message);
       }
@@ -245,36 +248,52 @@ export default function AdminUniversities() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Uni Cheats (PDF)</label>
-                  {form.uniCheatsUrl ? (
-                    <div className="flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-xl mb-2">
-                      <div className="flex items-center gap-3">
-                        <svg className="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2.03 16.924c-1.396 0-2.342-.907-2.342-2.32 0-1.455.986-2.378 2.372-2.378 1.405 0 2.316.907 2.316 2.335 0 1.464-.954 2.363-2.346 2.363zm2.505-8.226h-4.996v-5h4.996v5z"/></svg>
-                        <a href={form.uniCheatsUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-accent-600 hover:underline">View Uploaded PDF</a>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Uni Cheats (PDFs)</label>
+                  <div className="space-y-3 mb-3">
+                    {(form.uniCheats || []).map((cheat, index) => (
+                      <div key={index} className="p-4 bg-gray-50 border border-gray-200 rounded-xl space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M11.363 2.028a3.446 3.446 0 00-4.726 0l-4.727 4.727a3.446 3.446 0 000 4.873l9.454 9.454a3.446 3.446 0 004.873 0l4.727-4.727a3.446 3.446 0 000-4.873l-9.454-9.454zM8.33 16.417a.643.643 0 11-.91 0 .643.643 0 01.91 0zM15 13.5l-3 3-3-3m3-3V15" /></svg>
+                            <a href={cheat.url} target="_blank" rel="noopener noreferrer" className="text-xs text-accent-600 hover:underline truncate max-w-[200px]">View Document</a>
+                          </div>
+                          <button type="button" onClick={() => {
+                            const newCheats = [...form.uniCheats];
+                            newCheats.splice(index, 1);
+                            setForm({ ...form, uniCheats: newCheats });
+                          }} className="text-red-500 hover:text-red-600 text-xs font-semibold">Remove</button>
+                        </div>
+                        <input 
+                          type="text" 
+                          placeholder="Document Note (e.g., Fee Structure 2024)" 
+                          value={cheat.note} 
+                          onChange={(e) => {
+                            const newCheats = [...form.uniCheats];
+                            newCheats[index].note = e.target.value;
+                            setForm({ ...form, uniCheats: newCheats });
+                          }}
+                          className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-accent-400 outline-none text-xs"
+                        />
                       </div>
-                      <button type="button" onClick={() => setForm({ ...form, uniCheatsUrl: '' })}
-                        className="text-red-500 hover:text-red-600 font-semibold text-sm transition-colors">
-                        Remove
-                      </button>
-                    </div>
-                  ) : (
-                    <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-accent-50/30 transition-all">
-                      {uploading ? (
-                        <div className="flex flex-col items-center gap-2">
-                          <div className="w-6 h-6 border-3 border-accent-200 border-t-accent-500 rounded-full animate-spin" />
-                          <span className="text-sm text-gray-500">Uploading...</span>
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-2">
-                          <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                          </svg>
-                          <span className="text-sm text-gray-500">Click to upload PDF</span>
-                        </div>
-                      )}
-                      <input type="file" accept="application/pdf" onChange={handlePdfUpload} className="hidden" disabled={uploading} />
-                    </label>
-                  )}
+                    ))}
+                  </div>
+
+                  <label className="flex flex-col items-center justify-center w-full h-20 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-accent-50/30 transition-all">
+                    {uploading ? (
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="w-5 h-5 border-2 border-accent-200 border-t-accent-500 rounded-full animate-spin" />
+                        <span className="text-xs text-gray-500">Uploading...</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span className="text-sm text-gray-500">Upload New PDF</span>
+                      </div>
+                    )}
+                    <input type="file" accept="application/pdf" onChange={handlePdfUpload} className="hidden" disabled={uploading} />
+                  </label>
                 </div>
 
                 <div>
