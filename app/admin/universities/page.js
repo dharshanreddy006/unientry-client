@@ -10,6 +10,7 @@ const emptyForm = {
   eligibility: { marks: '', ielts: '', toefl: '', documents: '' },
   coverImage: { url: '', publicId: '' },
   uniCheatsUrl: '',
+  referAndEarn: '',
 };
 
 export default function AdminUniversities() {
@@ -274,6 +275,13 @@ export default function AdminUniversities() {
                       <input type="file" accept="application/pdf" onChange={handlePdfUpload} className="hidden" disabled={uploading} />
                     </label>
                   )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Refer and Earn Offer</label>
+                  <textarea rows={2} value={form.referAndEarn || ''} onChange={(e) => setForm({ ...form, referAndEarn: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm resize-none"
+                    placeholder="e.g., Refer a student and earn ₹10,000 upon successful admission!" />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

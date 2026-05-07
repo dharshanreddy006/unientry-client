@@ -249,6 +249,16 @@ export default function UniversityDetailsPage() {
                   </Link>
                 </div>
 
+                {university.referAndEarn && (
+                  <div className="mt-5 p-4 bg-gradient-to-br from-yellow-50 to-orange-50 border border-yellow-200 rounded-xl shadow-inner">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xl">🎁</span>
+                      <h4 className="font-heading font-semibold text-yellow-800 text-sm">Refer & Earn</h4>
+                    </div>
+                    <p className="text-yellow-700 text-sm font-medium leading-snug">{university.referAndEarn}</p>
+                  </div>
+                )}
+
                 {university.website && (
                   <a
                     href={university.website}
