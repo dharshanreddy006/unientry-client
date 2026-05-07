@@ -5,6 +5,14 @@ import { useSettings } from '@/components/providers/SettingsProvider';
 
 export default function Hero() {
   const settings = useSettings();
+
+  const stats = settings?.stats || [
+    { number: '200+', label: 'Universities' },
+    { number: '15+', label: 'Countries' },
+    { number: '5000+', label: 'Students Placed' },
+    { number: '95%', label: 'Success Rate' },
+  ];
+
   return (
     <section className="relative min-h-screen flex items-center justify-center hero-gradient overflow-hidden">
       {/* Animated background shapes */}
@@ -26,31 +34,17 @@ export default function Hero() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-white/80 text-sm mb-8 animate-fade-in">
           <span className="w-2 h-2 rounded-full bg-accent-400 animate-pulse" />
-          Trusted by 5000+ Students Worldwide
+          Trusted by {stats[2]?.number || '5000+'} Students Worldwide
         </div>
 
         {/* Main heading */}
         <h1 className="font-heading font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-tight mb-6 animate-fade-in-up">
-          Your Gateway to{' '}
-          <span className="relative">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-300 to-accent-500">
-              Global Education
-            </span>
-            <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none">
-              <path d="M2 10C50 2 100 2 150 6C200 10 250 4 298 8" stroke="url(#grad)" strokeWidth="3" strokeLinecap="round"/>
-              <defs>
-                <linearGradient id="grad" x1="0" y1="0" x2="300" y2="0">
-                  <stop offset="0%" stopColor="#38BDF8" />
-                  <stop offset="100%" stopColor="#0EA5E9" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </span>
+          {settings?.heroTitle || 'Your Gateway to Global Education'}
         </h1>
 
         {/* Subtitle */}
-        <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-200">
-          Discover top universities worldwide. Get expert guidance for admissions, visas, and scholarships — all in one place.
+        <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-200 whitespace-pre-wrap">
+          {settings?.heroSubtitle || 'Discover top universities worldwide. Get expert guidance for admissions, visas, and scholarships — all in one place.'}
         </p>
 
         {/* CTA Buttons */}
@@ -81,12 +75,7 @@ export default function Hero() {
 
         {/* Stats */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 animate-fade-in-up delay-500">
-          {[
-            { number: '200+', label: 'Universities' },
-            { number: '15+', label: 'Countries' },
-            { number: '5000+', label: 'Students Placed' },
-            { number: '95%', label: 'Success Rate' },
-          ].map((stat) => (
+          {stats.map((stat) => (
             <div key={stat.label} className="glass rounded-2xl p-4">
               <p className="font-heading font-bold text-2xl md:text-3xl text-white">{stat.number}</p>
               <p className="text-white/50 text-sm mt-1">{stat.label}</p>
@@ -104,3 +93,4 @@ export default function Hero() {
     </section>
   );
 }
+

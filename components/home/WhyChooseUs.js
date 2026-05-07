@@ -1,5 +1,7 @@
 'use client';
 
+import { useSettings } from '@/components/providers/SettingsProvider';
+
 const features = [
   {
     icon: (
@@ -51,6 +53,8 @@ const features = [
 ];
 
 export default function WhyChooseUs() {
+  const settings = useSettings();
+  
   return (
     <section className="section-padding bg-primary-900 relative overflow-hidden">
       {/* Background decoration */}
@@ -68,8 +72,8 @@ export default function WhyChooseUs() {
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-white mb-4">
             Why Choose UniEntry?
           </h2>
-          <p className="text-white/60 max-w-2xl mx-auto">
-            We provide comprehensive support to make your dream of studying abroad a reality
+          <p className="text-white/60 max-w-2xl mx-auto whitespace-pre-wrap">
+            {settings?.aboutText || 'We provide comprehensive support to make your dream of studying abroad a reality'}
           </p>
         </div>
 
@@ -98,3 +102,4 @@ export default function WhyChooseUs() {
     </section>
   );
 }
+
