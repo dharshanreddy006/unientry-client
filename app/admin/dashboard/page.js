@@ -66,7 +66,7 @@ export default function AdminDashboard() {
                   <thead>
                     <tr className="border-b border-gray-100">
                       <th className="text-left py-3 px-4 text-gray-400 font-medium">Student</th>
-                      <th className="text-left py-3 px-4 text-gray-400 font-medium">Email</th>
+                      <th className="text-left py-3 px-4 text-gray-400 font-medium">Contact</th>
                       <th className="text-left py-3 px-4 text-gray-400 font-medium">University</th>
                       <th className="text-left py-3 px-4 text-gray-400 font-medium">Status</th>
                       <th className="text-left py-3 px-4 text-gray-400 font-medium">Date</th>
@@ -76,7 +76,10 @@ export default function AdminDashboard() {
                     {stats.recentInquiries.map((inquiry) => (
                       <tr key={inquiry._id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                         <td className="py-3 px-4 font-medium text-primary-900">{inquiry.studentName}</td>
-                        <td className="py-3 px-4 text-gray-500">{inquiry.email}</td>
+                        <td className="py-3 px-4">
+                          <p className="text-gray-500 text-sm">{inquiry.email}</p>
+                          <p className="text-gray-400 text-xs mt-0.5">{inquiry.phone}</p>
+                        </td>
                         <td className="py-3 px-4 text-gray-500">{inquiry.interestedUniversity || 'General'}</td>
                         <td className="py-3 px-4">
                           <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${
