@@ -4,31 +4,31 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const SettingsContext = createContext(null);
 
-export function SettingsProvider({ children }) {
-  const [settings, setSettings] = useState(null);
+const defaultSettings = {
+  whatsappNumber: '919876543210',
+  phone: '+91 98765 43210',
+  email: 'info@unientry.com',
+  address: 'UniEntry Education Consultancy',
+  socialLinks: { facebook: '', instagram: '', twitter: '', linkedin: '', youtube: '' },
+  heroTitle: 'Your Gateway to Global Education',
+  heroSubtitle: 'Discover top universities worldwide. Get expert guidance for admissions, visas, and scholarships.',
+  aboutText: 'UniEntry is a trusted educational consultancy helping students achieve their dream of studying at top universities worldwide.',
+  founderName: 'Darshan',
+  founderRole: 'Founder & CEO',
+  founderMessage: 'Education is the passport to the future, for tomorrow belongs to those who prepare for it today.',
+  founderImageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800'
+};
 
-  const defaultSettings = {
-    whatsappNumber: '919876543210',
-    phone: '+91 98765 43210',
-    email: 'info@unientry.com',
-    address: 'UniEntry Education Consultancy',
-    socialLinks: { facebook: '', instagram: '', twitter: '', linkedin: '', youtube: '' },
-    heroTitle: 'Your Gateway to Global Education',
-    heroSubtitle: 'Discover top universities worldwide. Get expert guidance for admissions, visas, and scholarships.',
-    aboutText: 'UniEntry is a trusted educational consultancy helping students achieve their dream of studying at top universities worldwide.',
-    founderName: 'Darshan',
-    founderRole: 'Founder & CEO',
-    founderMessage: 'Education is the passport to the future, for tomorrow belongs to those who prepare for it today.',
-    founderImageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800'
-  };
+export function SettingsProvider({ children }) {
+  const [settings, setSettings] = useState(defaultSettings);
 
   useEffect(() => {
     const fetchSettings = async () => {
       try {
         const res = await fetch('https://unientry-server-production.up.railway.app/api/settings');
         const data = await res.json();
-        if (data.success) {
-          setSettings(data.data);
+        if (data.success && data.data) {
+          setSettings({ ...defaultSettings, ...data.data });
         }
       } catch (err) {
         console.error('Settings fetch error:', err);
@@ -37,10 +37,8 @@ export function SettingsProvider({ children }) {
     fetchSettings();
   }, []);
 
-  const currentSettings = settings ? { ...defaultSettings, ...settings } : defaultSettings;
-
   return (
-    <SettingsContext.Provider value={currentSettings}>
+    <SettingsContext.Provider value={settings}>
       {children}
     </SettingsContext.Provider>
   );
