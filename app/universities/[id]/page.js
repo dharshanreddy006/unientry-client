@@ -16,7 +16,7 @@ export default function UniversityDetailsPage() {
     const fetchUniversity = async () => {
       try {
         const res = await fetch(
-          `${'https://unientry-server-production.up.railway.app/api' || 'http://localhost:5000/api'}/universities/${id}`
+          `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/universities/${id}`
         );
         const data = await res.json();
         if (data.success) {

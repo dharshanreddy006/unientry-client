@@ -28,7 +28,7 @@ function UniversitiesContent() {
       params.append('limit', 12);
 
       const res = await fetch(
-        `${'https://unientry-server-production.up.railway.app/api' || 'http://localhost:5000/api'}/universities?${params}`
+        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/universities?${params}`
       );
       const data = await res.json();
       if (data.success) {

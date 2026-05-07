@@ -12,7 +12,7 @@ export default function AdminDashboard() {
       try {
         const token = localStorage.getItem('unientry_token');
         const res = await fetch(
-          `${'https://unientry-server-production.up.railway.app/api' || 'http://localhost:5000/api'}/settings/stats`,
+          `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/settings/stats`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         const data = await res.json();

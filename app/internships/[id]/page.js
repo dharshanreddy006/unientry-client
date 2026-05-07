@@ -16,7 +16,7 @@ export default function InternshipDetailsPage() {
     const fetchInternship = async () => {
       try {
         const res = await fetch(
-          `${'https://unientry-server-production.up.railway.app/api' || 'http://localhost:5000/api'}/internships/${id}`
+          `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/internships/${id}`
         );
         const data = await res.json();
         if (data.success) setInternship(data.data);

@@ -17,7 +17,7 @@ export default function AdminLoginPage() {
 
     try {
       const res = await fetch(
-        `${'https://unientry-server-production.up.railway.app/api' || 'http://localhost:5000/api'}/admin/login`,
+        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/admin/login`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
