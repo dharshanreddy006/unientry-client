@@ -9,6 +9,7 @@ const emptyForm = {
   fees: { tuition: '', hostel: '', livingCost: '' },
   eligibility: { marks: '', ielts: '', toefl: '', documents: '' },
   coverImage: { url: '', publicId: '' },
+  uniCheatsUrl: '',
 };
 
 export default function AdminUniversities() {
@@ -72,6 +73,32 @@ export default function AdminUniversities() {
       const data = await res.json();
       if (data.success) {
         setForm({ ...form, coverImage: { url: data.data.url, publicId: data.data.filename } });
+      } else {
+        alert('Upload failed: ' + data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Upload failed');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handlePdfUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('image', file); // using the same endpoint
+      const res = await fetch(`${API}/upload`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        setForm({ ...form, uniCheatsUrl: data.data.url });
       } else {
         alert('Upload failed: ' + data.message);
       }
@@ -212,6 +239,39 @@ export default function AdminUniversities() {
                         </div>
                       )}
                       <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" disabled={uploading} />
+                    </label>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Uni Cheats (PDF)</label>
+                  {form.uniCheatsUrl ? (
+                    <div className="flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-xl mb-2">
+                      <div className="flex items-center gap-3">
+                        <svg className="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2.03 16.924c-1.396 0-2.342-.907-2.342-2.32 0-1.455.986-2.378 2.372-2.378 1.405 0 2.316.907 2.316 2.335 0 1.464-.954 2.363-2.346 2.363zm2.505-8.226h-4.996v-5h4.996v5z"/></svg>
+                        <a href={form.uniCheatsUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-accent-600 hover:underline">View Uploaded PDF</a>
+                      </div>
+                      <button type="button" onClick={() => setForm({ ...form, uniCheatsUrl: '' })}
+                        className="text-red-500 hover:text-red-600 font-semibold text-sm transition-colors">
+                        Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-accent-50/30 transition-all">
+                      {uploading ? (
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-6 h-6 border-3 border-accent-200 border-t-accent-500 rounded-full animate-spin" />
+                          <span className="text-sm text-gray-500">Uploading...</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                          </svg>
+                          <span className="text-sm text-gray-500">Click to upload PDF</span>
+                        </div>
+                      )}
+                      <input type="file" accept="application/pdf" onChange={handlePdfUpload} className="hidden" disabled={uploading} />
                     </label>
                   )}
                 </div>
