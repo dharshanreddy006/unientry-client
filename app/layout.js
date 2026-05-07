@@ -1,6 +1,8 @@
 import { SettingsProvider } from '@/components/providers/SettingsProvider';
 import "./globals.css";
 
+// Build timestamp: 2026-05-07T11:41:00Z
+
 export const metadata = {
   title: "UniEntry — Your Gateway to Global Education",
   description: "UniEntry helps students explore top universities worldwide, get expert guidance for admissions, visas, and scholarships. Start your study abroad journey today!",
