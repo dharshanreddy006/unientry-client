@@ -153,6 +153,97 @@ export default function AdminSettings() {
           </div>
         </div>
 
+        {/* About Page Content */}
+        <div className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
+          <h2 className="font-heading font-semibold text-lg text-primary-900 mb-5">About Page Content</h2>
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Mission</label>
+              <textarea rows={3} value={settings.aboutMission || ''} onChange={(e) => setSettings({ ...settings, aboutMission: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm resize-none" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Vision</label>
+              <textarea rows={3} value={settings.aboutVision || ''} onChange={(e) => setSettings({ ...settings, aboutVision: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm resize-none" />
+            </div>
+
+            {/* Stats Management */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <label className="block text-sm font-medium text-gray-700">Statistics</label>
+                <button type="button" onClick={() => setSettings({ ...settings, stats: [...(settings.stats || []), { number: '0', label: 'New Stat' }] })}
+                  className="text-accent-600 text-xs font-semibold hover:underline">+ Add Stat</button>
+              </div>
+              <div className="space-y-3">
+                {(settings.stats || []).map((stat, idx) => (
+                  <div key={idx} className="flex gap-3 items-start">
+                    <input type="text" value={stat.number} onChange={(e) => {
+                      const newStats = [...settings.stats];
+                      newStats[idx].number = e.target.value;
+                      setSettings({ ...settings, stats: newStats });
+                    }} className="w-1/3 px-3 py-2 rounded-lg border border-gray-200 text-sm" placeholder="Number (e.g. 5000+)" />
+                    <input type="text" value={stat.label} onChange={(e) => {
+                      const newStats = [...settings.stats];
+                      newStats[idx].label = e.target.value;
+                      setSettings({ ...settings, stats: newStats });
+                    }} className="flex-1 px-3 py-2 rounded-lg border border-gray-200 text-sm" placeholder="Label (e.g. Students)" />
+                    <button type="button" onClick={() => {
+                      const newStats = settings.stats.filter((_, i) => i !== idx);
+                      setSettings({ ...settings, stats: newStats });
+                    }} className="p-2 text-red-500">✕</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Team Management */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <label className="block text-sm font-medium text-gray-700">Team Members</label>
+                <button type="button" onClick={() => setSettings({ ...settings, team: [...(settings.team || []), { name: '', role: '', initials: '' }] })}
+                  className="text-accent-600 text-xs font-semibold hover:underline">+ Add Member</button>
+              </div>
+              <div className="space-y-4">
+                {(settings.team || []).map((member, idx) => (
+                  <div key={idx} className="p-4 bg-gray-50 rounded-xl border border-gray-100 relative group">
+                    <button type="button" onClick={() => {
+                      const newTeam = settings.team.filter((_, i) => i !== idx);
+                      setSettings({ ...settings, team: newTeam });
+                    }} className="absolute top-2 right-2 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">✕</button>
+                    <div className="grid grid-cols-2 gap-3 mb-3">
+                      <div>
+                        <label className="block text-[10px] uppercase font-bold text-gray-400 mb-1">Name</label>
+                        <input type="text" value={member.name} onChange={(e) => {
+                          const newTeam = [...settings.team];
+                          newTeam[idx].name = e.target.value;
+                          setSettings({ ...settings, team: newTeam });
+                        }} className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm" />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] uppercase font-bold text-gray-400 mb-1">Initials</label>
+                        <input type="text" value={member.initials} maxLength={3} onChange={(e) => {
+                          const newTeam = [...settings.team];
+                          newTeam[idx].initials = e.target.value;
+                          setSettings({ ...settings, team: newTeam });
+                        }} className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] uppercase font-bold text-gray-400 mb-1">Role</label>
+                      <input type="text" value={member.role} onChange={(e) => {
+                        const newTeam = [...settings.team];
+                        newTeam[idx].role = e.target.value;
+                        setSettings({ ...settings, team: newTeam });
+                      }} className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Founder Section */}
         <div className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
           <h2 className="font-heading font-semibold text-lg text-primary-900 mb-5">Founder Information</h2>
