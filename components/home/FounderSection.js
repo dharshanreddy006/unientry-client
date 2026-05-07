@@ -22,6 +22,9 @@ export default function FounderSection() {
                 src={settings.founderImageUrl || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800'}
                 alt={settings.founderName}
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800';
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             </div>
