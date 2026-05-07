@@ -12,24 +12,11 @@ export const metadata = {
   },
 };
 
-async function getSettings() {
-  try {
-    const res = await fetch('https://unientry-server-production.up.railway.app/api/settings', { next: { revalidate: 60 } });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.data;
-  } catch (e) {
-    return null;
-  }
-}
-
-export default async function RootLayout({ children }) {
-  const settings = await getSettings();
-
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="antialiased">
-        <SettingsProvider initialSettings={settings}>
+        <SettingsProvider>
           {children}
         </SettingsProvider>
       </body>

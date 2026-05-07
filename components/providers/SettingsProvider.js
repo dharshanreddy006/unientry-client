@@ -4,21 +4,38 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const SettingsContext = createContext(null);
 
-export function SettingsProvider({ children, initialSettings }) {
-  const [settings, setSettings] = useState(initialSettings);
+export function SettingsProvider({ children }) {
+  const [settings, setSettings] = useState(null);
 
-  // Fallback default values in case fetch fails
   const defaultSettings = {
     whatsappNumber: '919876543210',
     phone: '+91 98765 43210',
     email: 'info@unientry.com',
     address: 'UniEntry Education Consultancy',
     socialLinks: { facebook: '', instagram: '', twitter: '', linkedin: '', youtube: '' },
-    founderName: 'Dr. Jane Smith',
+    heroTitle: 'Your Gateway to Global Education',
+    heroSubtitle: 'Discover top universities worldwide. Get expert guidance for admissions, visas, and scholarships.',
+    aboutText: 'UniEntry is a trusted educational consultancy helping students achieve their dream of studying at top universities worldwide.',
+    founderName: 'Darshan',
     founderRole: 'Founder & CEO',
     founderMessage: 'Education is the passport to the future, for tomorrow belongs to those who prepare for it today.',
     founderImageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800'
   };
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('https://unientry-server-production.up.railway.app/api/settings');
+        const data = await res.json();
+        if (data.success) {
+          setSettings(data.data);
+        }
+      } catch (err) {
+        console.error('Settings fetch error:', err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   const currentSettings = settings ? { ...defaultSettings, ...settings } : defaultSettings;
 
