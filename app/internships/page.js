@@ -19,7 +19,7 @@ export default function InternshipsPage() {
       if (typeFilter) params.append('type', typeFilter);
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || 'https://unientry-server-production.up.railway.app/api'}/internships?${params}`
+        `${'https://unientry-server-production.up.railway.app/api'}/internships?${params}`
       );
       const data = await res.json();
       if (data.success) setInternships(data.data);

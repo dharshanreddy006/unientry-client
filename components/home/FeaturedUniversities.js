@@ -18,7 +18,7 @@ export default function FeaturedUniversities() {
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
-        const API = process.env.NEXT_PUBLIC_API_URL || 'https://unientry-server-production.up.railway.app/api';
+        const API = 'https://unientry-server-production.up.railway.app/api';
         const res = await fetch(`${API}/universities/featured`);
         const data = await res.json();
         if (data.success) {

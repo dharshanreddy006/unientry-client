@@ -19,7 +19,7 @@ export default function ContactSection() {
     setStatus({ loading: true, success: false, error: '' });
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://unientry-server-production.up.railway.app/api'}/inquiry/create`, {
+      const res = await fetch(`${'https://unientry-server-production.up.railway.app/api'}/inquiry/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

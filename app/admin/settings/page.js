@@ -10,7 +10,7 @@ export default function AdminSettings() {
   const [saved, setSaved] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  const API = process.env.NEXT_PUBLIC_API_URL || 'https://unientry-server-production.up.railway.app/api';
+  const API = 'https://unientry-server-production.up.railway.app/api';
   const token = typeof window !== 'undefined' ? localStorage.getItem('unientry_token') : '';
   const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` };
 
