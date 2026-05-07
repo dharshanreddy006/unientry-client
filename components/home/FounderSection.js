@@ -58,7 +58,7 @@ export default function FounderSection() {
             </h2>
             
             <div className="text-lg text-gray-600 leading-relaxed mb-8 space-y-6">
-              {settings.founderMessage.split('\n').map((paragraph, index) => (
+              {(settings.founderMessage || '').split('\n').map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
             </div>
