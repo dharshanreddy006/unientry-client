@@ -1,40 +1,53 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import Link from 'next/link';
+
+const countries = [
+  {
+    name: 'Germany',
+    flag: '🇩🇪',
+    image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=600',
+    description: 'Low tuition fees, world-class engineering programs, and post-study work opportunities.',
+    color: 'from-yellow-400/20 to-red-500/20',
+  },
+  {
+    name: 'UK',
+    flag: '🇬🇧',
+    image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600',
+    description: 'Prestigious universities, shorter degree programs, and diverse cultural experience.',
+    color: 'from-blue-400/20 to-red-400/20',
+  },
+  {
+    name: 'USA',
+    flag: '🇺🇸',
+    image: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f04?w=600',
+    description: 'Top-ranked universities, extensive research opportunities, and campus life like no other.',
+    color: 'from-blue-500/20 to-red-500/20',
+  },
+  {
+    name: 'Canada',
+    flag: '🇨🇦',
+    image: 'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=600',
+    description: 'Affordable education, welcoming immigration policies, and excellent quality of life.',
+    color: 'from-red-400/20 to-white/20',
+  },
+  {
+    name: 'Australia',
+    flag: '🇦🇺',
+    image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600',
+    description: 'Innovative universities, vibrant lifestyle, and strong support for international students.',
+    color: 'from-blue-500/20 to-yellow-400/20',
+  },
+  {
+    name: 'India',
+    flag: '🇮🇳',
+    image: 'https://images.unsplash.com/photo-1524492707947-2f85a64b67ad?w=600',
+    description: 'Rapidly growing education sector, diverse culture, and emerging opportunities in tech and research.',
+    color: 'from-orange-400/20 to-green-500/20',
+  },
+];
 
 export default function StudyAbroad() {
-  const [destinations, setDestinations] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchDestinations = async () => {
-      try {
-        const API = process.env.NEXT_PUBLIC_API_URL || 'https://unientry-server-production.up.railway.app/api';
-        const res = await fetch(`${API}/destinations`);
-        const data = await res.json();
-        if (data.success) {
-          setDestinations(data.data);
-        }
-      } catch (err) {
-        console.error('Error fetching destinations:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDestinations();
-  }, []);
-
-  if (loading) {
-    return (
-      <section className="section-padding bg-white">
-        <div className="max-w-7xl mx-auto flex justify-center py-20">
-          <div className="w-12 h-12 border-4 border-accent-200 border-t-accent-500 rounded-full animate-spin" />
-        </div>
-      </section>
-    );
-  }
-
-  if (destinations.length === 0) return null;
   return (
     <section className="section-padding bg-white">
       <div className="max-w-7xl mx-auto">
@@ -53,9 +66,9 @@ export default function StudyAbroad() {
 
         {/* Countries grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {destinations.map((country, index) => (
+          {countries.map((country, index) => (
             <Link
-              key={country.id}
+              key={country.name}
               href={`/universities?country=${country.name}`}
               className={`group relative overflow-hidden rounded-2xl card-hover ${
                 index < 2 ? 'sm:col-span-1 lg:col-span-1' : ''
@@ -63,7 +76,7 @@ export default function StudyAbroad() {
             >
               <div className="relative h-72">
                 <img
-                  src={country.imageUrl}
+                  src={country.image}
                   alt={`Study in ${country.name}`}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
