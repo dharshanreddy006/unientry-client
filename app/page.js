@@ -3,7 +3,7 @@ import Footer from '@/components/layout/Footer';
 import FloatingWhatsApp from '@/components/common/FloatingWhatsApp';
 import Hero from '@/components/home/Hero';
 import FeaturedUniversities from '@/components/home/FeaturedUniversities';
-import StudyAbroad from '@/components/home/StudyAbroad';
+import AttendanceCalculator from '@/components/features/AttendanceCalculator';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import Testimonials from '@/components/home/Testimonials';
 import FounderSection from '@/components/home/FounderSection';
@@ -16,7 +16,7 @@ export default function HomePage() {
       <Navbar />
       <Hero />
       <FeaturedUniversities />
-      <StudyAbroad />
+      <AttendanceCalculator />
       <WhyChooseUs />
       <Testimonials />
       <FounderSection />
