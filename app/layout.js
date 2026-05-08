@@ -1,4 +1,5 @@
 import { SettingsProvider } from '@/components/providers/SettingsProvider';
+import { Analytics } from '@vercel/analytics/next';
 import "./globals.css";
 
 // Build timestamp: 2026-05-07T11:41:00Z
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
         <SettingsProvider>
           {children}
         </SettingsProvider>
+        <Analytics />
       </body>
     </html>
   );
