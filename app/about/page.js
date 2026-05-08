@@ -13,7 +13,9 @@ export default function AboutPage() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await fetch('https://unientry-server-production.up.railway.app/api/settings');
+        const res = await fetch('https://unientry-server-production.up.railway.app/api/settings', {
+          cache: 'no-store'
+        });
         const data = await res.json();
         if (data.success) setSettings(data.data);
       } catch (err) {

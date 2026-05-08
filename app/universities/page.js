@@ -28,7 +28,8 @@ function UniversitiesContent() {
       params.append('limit', 12);
 
       const res = await fetch(
-        `${'https://unientry-server-production.up.railway.app/api'}/universities?${params}`
+        `${'https://unientry-server-production.up.railway.app/api'}/universities?${params}`,
+        { cache: 'no-store' }
       );
       const data = await res.json();
       if (data.success) {

@@ -20,7 +20,9 @@ export default function FeaturedUniversities() {
     const fetchFeatured = async () => {
       try {
         const API = 'https://unientry-server-production.up.railway.app/api';
-        const res = await fetch(`${API}/universities/featured`);
+        const res = await fetch(`${API}/universities/featured`, {
+          cache: 'no-store'
+        });
         const data = await res.json();
         if (data.success) {
           setUniversities(data.data);

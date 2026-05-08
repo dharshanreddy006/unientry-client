@@ -19,7 +19,8 @@ export default function InternshipsPage() {
       if (typeFilter) params.append('type', typeFilter);
 
       const res = await fetch(
-        `${'https://unientry-server-production.up.railway.app/api'}/internships?${params}`
+        `${'https://unientry-server-production.up.railway.app/api'}/internships?${params}`,
+        { cache: 'no-store' }
       );
       const data = await res.json();
       if (data.success) setInternships(data.data);

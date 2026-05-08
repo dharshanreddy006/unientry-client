@@ -25,7 +25,9 @@ export function SettingsProvider({ children }) {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await fetch('https://unientry-server-production.up.railway.app/api/settings');
+        const res = await fetch('https://unientry-server-production.up.railway.app/api/settings', {
+          cache: 'no-store'
+        });
         const data = await res.json();
         if (data.success && data.data) {
           setSettings({ ...defaultSettings, ...data.data });
