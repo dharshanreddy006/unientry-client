@@ -248,44 +248,77 @@ export default function AdminUniversities() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Uni Cheats (PDFs)</label>
-                  <div className="space-y-3 mb-3">
-                    {(form.uniCheats || []).map((cheat, index) => (
-                      <div key={index} className="p-4 bg-gray-50 border border-gray-200 rounded-xl space-y-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M11.363 2.028a3.446 3.446 0 00-4.726 0l-4.727 4.727a3.446 3.446 0 000 4.873l9.454 9.454a3.446 3.446 0 004.873 0l4.727-4.727a3.446 3.446 0 000-4.873l-9.454-9.454zM8.33 16.417a.643.643 0 11-.91 0 .643.643 0 01.91 0zM15 13.5l-3 3-3-3m3-3V15" /></svg>
-                            <a href={cheat.url} target="_blank" rel="noopener noreferrer" className="text-xs text-accent-600 hover:underline truncate max-w-[200px]">View Document</a>
-                          </div>
-                          <button type="button" onClick={() => {
-                            const newCheats = [...form.uniCheats];
-                            newCheats.splice(index, 1);
-                            setForm({ ...form, uniCheats: newCheats });
-                          }} className="text-red-500 hover:text-red-600 text-xs font-semibold">Remove</button>
+                  <label className="block text-sm font-medium text-gray-700 mb-4">University Cheat Sheets (PDFs)</label>
+                  
+                  {/* Grouped Entries */}
+                  <div className="space-y-6 mb-6">
+                    {Object.entries(
+                      (form.uniCheats || []).reduce((acc, cheat, idx) => {
+                        const cat = cheat.category || 'General';
+                        if (!acc[cat]) acc[cat] = [];
+                        acc[cat].push({ ...cheat, originalIndex: idx });
+                        return acc;
+                      }, {})
+                    ).map(([category, items]) => (
+                      <div key={category} className="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+                        <div className="px-4 py-3 bg-gray-50 border-b border-gray-100 flex justify-between items-center">
+                          <h4 className="text-xs font-bold text-primary-900 uppercase tracking-wider">{category}</h4>
+                          <span className="text-[10px] bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full">{items.length} Documents</span>
                         </div>
-                        <div className="grid grid-cols-2 gap-2">
-                          <input 
-                            type="text" 
-                            placeholder="Category (e.g., Sem 1)" 
-                            value={cheat.category || ''} 
-                            onChange={(e) => {
-                              const newCheats = [...form.uniCheats];
-                              newCheats[index].category = e.target.value;
-                              setForm({ ...form, uniCheats: newCheats });
-                            }}
-                            className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-accent-400 outline-none text-xs"
-                          />
-                          <input 
-                            type="text" 
-                            placeholder="Document Note (e.g., Fee Structure)" 
-                            value={cheat.note} 
-                            onChange={(e) => {
-                              const newCheats = [...form.uniCheats];
-                              newCheats[index].note = e.target.value;
-                              setForm({ ...form, uniCheats: newCheats });
-                            }}
-                            className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-accent-400 outline-none text-xs"
-                          />
+                        <div className="p-4 space-y-4">
+                          {items.map((cheat) => (
+                            <div key={cheat.originalIndex} className="flex flex-col gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100 relative group">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M11.363 2.028a3.446 3.446 0 00-4.726 0l-4.727 4.727a3.446 3.446 0 000 4.873l9.454 9.454a3.446 3.446 0 004.873 0l4.727-4.727a3.446 3.446 0 000-4.873l-9.454-9.454z" />
+                                  </svg>
+                                  <a href={cheat.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-accent-600 hover:underline">View Document</a>
+                                </div>
+                                <button 
+                                  type="button" 
+                                  onClick={() => {
+                                    const newCheats = [...form.uniCheats];
+                                    newCheats.splice(cheat.originalIndex, 1);
+                                    setForm({ ...form, uniCheats: newCheats });
+                                  }} 
+                                  className="text-red-500 hover:text-red-600 text-[10px] font-bold"
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                              <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                  <label className="text-[9px] text-gray-400 uppercase font-bold ml-1">Category</label>
+                                  <input 
+                                    type="text" 
+                                    placeholder="e.g., Sem 1" 
+                                    value={cheat.category || ''} 
+                                    onChange={(e) => {
+                                      const newCheats = [...form.uniCheats];
+                                      newCheats[cheat.originalIndex].category = e.target.value;
+                                      setForm({ ...form, uniCheats: newCheats });
+                                    }}
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-accent-400 outline-none text-xs"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="text-[9px] text-gray-400 uppercase font-bold ml-1">Document Name</label>
+                                  <input 
+                                    type="text" 
+                                    placeholder="e.g., Physics Notes" 
+                                    value={cheat.note} 
+                                    onChange={(e) => {
+                                      const newCheats = [...form.uniCheats];
+                                      newCheats[cheat.originalIndex].note = e.target.value;
+                                      setForm({ ...form, uniCheats: newCheats });
+                                    }}
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-accent-400 outline-none text-xs"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     ))}
