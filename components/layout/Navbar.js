@@ -11,6 +11,7 @@ const navLinks = [
   { name: 'Internships', href: '/internships' },
   { name: 'CGPA Calculator', href: '/#cgpa-calculator' },
   { name: 'Attendance Calculator', href: '/#attendance-calculator' },
+  { name: 'Resources', href: '/#university-resources' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];

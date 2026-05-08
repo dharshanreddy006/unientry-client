@@ -4,7 +4,7 @@ import FloatingWhatsApp from '@/components/common/FloatingWhatsApp';
 import Hero from '@/components/home/Hero';
 import FeaturedUniversities from '@/components/home/FeaturedUniversities';
 import AttendanceCalculator from '@/components/features/AttendanceCalculator';
-import WhyChooseUs from '@/components/home/WhyChooseUs';
+import UniversityResources from '@/components/features/UniversityResources';
 import Testimonials from '@/components/home/Testimonials';
 import FounderSection from '@/components/home/FounderSection';
 import CGPACalculator from '@/components/features/CGPACalculator';
@@ -17,7 +17,7 @@ export default function HomePage() {
       <Hero />
       <FeaturedUniversities />
       <AttendanceCalculator />
-      <WhyChooseUs />
+      <UniversityResources />
       <Testimonials />
       <FounderSection />
       <CGPACalculator />
