@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { API_URL } from '@/lib/apiConfig';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
@@ -13,7 +14,7 @@ export default function AboutPage() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await fetch('https://unientry-server-production.up.railway.app/api/settings', {
+        const res = await fetch(`${API_URL}/settings`, {
           cache: 'no-store'
         });
         const data = await res.json();

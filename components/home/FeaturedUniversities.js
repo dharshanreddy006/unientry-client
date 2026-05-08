@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { API_URL, getImageUrl } from '@/lib/apiConfig';
 import Link from 'next/link';
 
 const flagMap = {
@@ -19,8 +20,7 @@ export default function FeaturedUniversities() {
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
-        const API = 'https://unientry-server-production.up.railway.app/api';
-        const res = await fetch(`${API}/universities/featured`, {
+        const res = await fetch(`${API_URL}/universities/featured`, {
           cache: 'no-store'
         });
         const data = await res.json();
@@ -74,7 +74,7 @@ export default function FeaturedUniversities() {
               {/* Image */}
               <div className="relative h-48 overflow-hidden">
                 <img
-                  src={uni.coverImage?.url || 'https://images.unsplash.com/photo-1562774053-701939374585?w=600'}
+                  src={getImageUrl(uni.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=600'}
                   alt={uni.universityName}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />

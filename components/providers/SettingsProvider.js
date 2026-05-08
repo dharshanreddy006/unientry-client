@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
+import { API_URL } from '@/lib/apiConfig';
 
 const SettingsContext = createContext(null);
 
@@ -25,8 +26,12 @@ export function SettingsProvider({ children }) {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await fetch('https://unientry-server-production.up.railway.app/api/settings', {
-          cache: 'no-store'
+        const res = await fetch(`${API_URL}/settings`, {
+          cache: 'no-store',
+          headers: {
+            'Accept': 'application/json',
+          },
+          mode: 'cors'
         });
         const data = await res.json();
         if (data.success && data.data) {
@@ -47,3 +52,4 @@ export function SettingsProvider({ children }) {
 }
 
 export const useSettings = () => useContext(SettingsContext);
+

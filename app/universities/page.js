@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
+import { API_URL, getImageUrl } from '@/lib/apiConfig';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
@@ -28,7 +29,7 @@ function UniversitiesContent() {
       params.append('limit', 12);
 
       const res = await fetch(
-        `${'https://unientry-server-production.up.railway.app/api'}/universities?${params}`,
+        `${API_URL}/universities?${params}`,
         { cache: 'no-store' }
       );
       const data = await res.json();
@@ -166,7 +167,7 @@ function UniversitiesContent() {
                   >
                     <div className="relative h-48 overflow-hidden">
                       <img
-                        src={uni.coverImage?.url || 'https://images.unsplash.com/photo-1562774053-701939374585?w=600'}
+                        src={getImageUrl(uni.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=600'}
                         alt={uni.universityName}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />

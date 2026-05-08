@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { API_URL, getImageUrl } from '@/lib/apiConfig';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
@@ -16,7 +17,7 @@ export default function UniversityDetailsPage() {
     const fetchUniversity = async () => {
       try {
         const res = await fetch(
-          `${'https://unientry-server-production.up.railway.app/api'}/universities/${id}`,
+          `${API_URL}/universities/${id}`,
           { cache: 'no-store' }
         );
         const data = await res.json();
@@ -65,7 +66,7 @@ export default function UniversityDetailsPage() {
       {/* Banner */}
       <section className="relative h-[400px] md:h-[500px]">
         <img
-          src={university.coverImage?.url || 'https://images.unsplash.com/photo-1562774053-701939374585?w=1200'}
+          src={getImageUrl(university.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=1200'}
           alt={university.universityName}
           className="w-full h-full object-cover"
         />

@@ -1,6 +1,7 @@
 'use client';
 
 import { useSettings } from '@/components/providers/SettingsProvider';
+import { getImageUrl } from '@/lib/apiConfig';
 import Image from 'next/image';
 
 export default function FounderSection() {
@@ -19,7 +20,7 @@ export default function FounderSection() {
           <div className="w-full lg:w-5/12 relative">
             <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl">
               <img
-                src={settings.founderImageUrl || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800'}
+                src={getImageUrl(settings.founderImageUrl) || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800'}
                 alt={settings.founderName}
                 className="w-full h-full object-cover"
                 onError={(e) => {
