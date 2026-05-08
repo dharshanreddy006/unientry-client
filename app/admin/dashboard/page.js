@@ -41,6 +41,31 @@ export default function AdminDashboard() {
         </div>
       ) : (
         <div className="space-y-8">
+          {/* Quick Actions */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-gradient-to-br from-accent-500 to-accent-600 rounded-3xl p-8 text-white shadow-lg shadow-accent-500/20 relative overflow-hidden group">
+              <div className="relative z-10">
+                <h3 className="text-2xl font-black mb-2">Manage Universities</h3>
+                <p className="text-white/80 text-sm mb-6 max-w-[250px]">Add new universities and manage their profiles, locations, and fees.</p>
+                <Link href="/admin/universities" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-accent-600 rounded-2xl font-bold text-sm hover:shadow-xl hover:-translate-y-1 transition-all">
+                  Go to Universities ↗
+                </Link>
+              </div>
+              <div className="absolute right-[-20px] bottom-[-20px] text-[150px] opacity-10 group-hover:rotate-12 transition-transform duration-500">🎓</div>
+            </div>
+
+            <div className="bg-gradient-to-br from-primary-800 to-primary-900 rounded-3xl p-8 text-white shadow-lg shadow-primary-900/20 relative overflow-hidden group">
+              <div className="relative z-10">
+                <h3 className="text-2xl font-black mb-2">Upload Resources</h3>
+                <p className="text-white/80 text-sm mb-6 max-w-[250px]">Upload Handwritten Notes, PYQs, and Lab Records for your students.</p>
+                <Link href="/admin/universities" className="inline-flex items-center gap-2 px-6 py-3 bg-accent-500 text-white rounded-2xl font-bold text-sm hover:shadow-xl hover:-translate-y-1 transition-all">
+                  Upload Documents ↗
+                </Link>
+              </div>
+              <div className="absolute right-[-20px] bottom-[-20px] text-[150px] opacity-10 group-hover:-rotate-12 transition-transform duration-500">📄</div>
+            </div>
+          </div>
+
           {/* Stats Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {statCards.map((card) => (
