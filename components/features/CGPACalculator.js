@@ -9,7 +9,7 @@ export default function CGPACalculator() {
   const [cgpa, setCGPA] = useState(0);
 
   const gradePoints = {
-    'O': 10, 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C': 5, 'P': 4, 'F': 0
+    'O': 10, 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C+': 5.5, 'C': 5, 'D+': 4.5, 'D': 4, 'P': 4, 'F': 0
   };
 
   const addSemester = () => {
