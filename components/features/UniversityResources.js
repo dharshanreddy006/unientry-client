@@ -14,7 +14,7 @@ export default function UniversityResources() {
     fetch(`${API_URL}/universities`, { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
-        setUniversities(data);
+        setUniversities(data.data || data);
         setLoading(false);
       })
       .catch(err => {
@@ -26,7 +26,7 @@ export default function UniversityResources() {
   const filteredUnis = searchQuery.trim() === '' 
     ? [] 
     : (Array.isArray(universities) ? universities : []).filter(uni => 
-        uni?.universityName && uni.universityName.toLowerCase().includes(searchQuery.toLowerCase())
+        uni?.universityName?.toLowerCase().trim().includes(searchQuery.toLowerCase().trim())
       ).slice(0, 5);
 
   const handleSelect = (uni) => {
