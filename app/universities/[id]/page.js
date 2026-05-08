@@ -272,20 +272,61 @@ export default function UniversityDetailsPage() {
                   </a>
                 )}
 
-                {(university.uniCheats || []).map((cheat, index) => (
-                  <a
-                    key={index}
-                    href={cheat.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-3.5 mt-3 rounded-xl font-semibold text-sm bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors border border-primary-200"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    {cheat.note || 'Download Uni Cheats (PDF)'}
-                  </a>
-                ))}
+                {/* Uni Cheats Section (Cheat Sheets) */}
+                {(university.uniCheats || []).length > 0 && (
+                  <div className="mt-8">
+                    <h3 className="font-heading font-bold text-lg text-primary-900 mb-4 flex items-center gap-2">
+                      <svg className="w-5 h-5 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                      University Cheat Sheets
+                    </h3>
+                    
+                    {/* Group by category */}
+                    {Object.entries(
+                      (university.uniCheats || []).reduce((acc, cheat) => {
+                        const cat = cheat.category || 'General';
+                        if (!acc[cat]) acc[cat] = [];
+                        acc[cat].push(cheat);
+                        return acc;
+                      }, {})
+                    ).map(([category, items]) => (
+                      <div key={category} className="mb-6 last:mb-0">
+                        <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3 px-2 border-l-2 border-accent-500 ml-1">
+                          {category}
+                        </h4>
+                        <div className="space-y-2">
+                          {items.map((cheat, idx) => (
+                            <a
+                              key={idx}
+                              href={getImageUrl(cheat.url)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-between gap-4 w-full p-4 rounded-2xl bg-white border border-gray-100 hover:border-accent-200 hover:shadow-md transition-all group"
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-colors">
+                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                  </svg>
+                                </div>
+                                <div className="text-left">
+                                  <p className="text-sm font-semibold text-primary-900 group-hover:text-accent-600 transition-colors">
+                                    {cheat.note || 'University Document'}
+                                  </p>
+                                  <p className="text-xs text-gray-400">PDF Document</p>
+                                </div>
+                              </div>
+                              <svg className="w-5 h-5 text-gray-300 group-hover:text-accent-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                              </svg>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -293,6 +334,7 @@ export default function UniversityDetailsPage() {
       </section>
 
       <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

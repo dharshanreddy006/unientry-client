@@ -263,17 +263,30 @@ export default function AdminUniversities() {
                             setForm({ ...form, uniCheats: newCheats });
                           }} className="text-red-500 hover:text-red-600 text-xs font-semibold">Remove</button>
                         </div>
-                        <input 
-                          type="text" 
-                          placeholder="Document Note (e.g., Fee Structure 2024)" 
-                          value={cheat.note} 
-                          onChange={(e) => {
-                            const newCheats = [...form.uniCheats];
-                            newCheats[index].note = e.target.value;
-                            setForm({ ...form, uniCheats: newCheats });
-                          }}
-                          className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-accent-400 outline-none text-xs"
-                        />
+                        <div className="grid grid-cols-2 gap-2">
+                          <input 
+                            type="text" 
+                            placeholder="Category (e.g., Sem 1)" 
+                            value={cheat.category || ''} 
+                            onChange={(e) => {
+                              const newCheats = [...form.uniCheats];
+                              newCheats[index].category = e.target.value;
+                              setForm({ ...form, uniCheats: newCheats });
+                            }}
+                            className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-accent-400 outline-none text-xs"
+                          />
+                          <input 
+                            type="text" 
+                            placeholder="Document Note (e.g., Fee Structure)" 
+                            value={cheat.note} 
+                            onChange={(e) => {
+                              const newCheats = [...form.uniCheats];
+                              newCheats[index].note = e.target.value;
+                              setForm({ ...form, uniCheats: newCheats });
+                            }}
+                            className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-accent-400 outline-none text-xs"
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
