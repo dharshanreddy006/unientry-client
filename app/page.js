@@ -7,6 +7,7 @@ import StudyAbroad from '@/components/home/StudyAbroad';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import Testimonials from '@/components/home/Testimonials';
 import FounderSection from '@/components/home/FounderSection';
+import CGPACalculator from '@/components/features/CGPACalculator';
 import ContactSection from '@/components/home/ContactSection';
 
 export default function HomePage() {
@@ -19,6 +20,7 @@ export default function HomePage() {
       <WhyChooseUs />
       <Testimonials />
       <FounderSection />
+      <CGPACalculator />
       <ContactSection />
       <Footer />
       <FloatingWhatsApp />

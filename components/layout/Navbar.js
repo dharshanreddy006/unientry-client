@@ -9,6 +9,7 @@ const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Universities', href: '/universities' },
   { name: 'Internships', href: '/internships' },
+  { name: 'CGPA Calculator', href: '/#cgpa-calculator' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];
