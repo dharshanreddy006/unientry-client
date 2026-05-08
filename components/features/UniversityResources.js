@@ -80,25 +80,37 @@ export default function UniversityResources() {
           </div>
 
           {/* Search Results Dropdown */}
-          {filteredUnis.length > 0 && (
+          {searchQuery.trim().length > 1 && (
             <div className="absolute top-full left-0 right-0 mt-4 bg-primary-800 border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl z-50 backdrop-blur-2xl animate-slide-down">
-              {filteredUnis.map(uni => (
-                <button
-                  key={uni.id}
-                  onClick={() => handleSelect(uni)}
-                  className="w-full px-8 py-5 flex items-center gap-4 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0 text-left"
-                >
-                  <img 
-                    src={getImageUrl(uni?.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=100'} 
-                    className="w-12 h-12 rounded-xl object-cover" 
-                    alt="" 
-                  />
-                  <div>
-                    <p className="text-white font-bold">{uni.universityName}</p>
-                    <p className="text-white/40 text-xs">{uni.city}, {uni.country}</p>
-                  </div>
-                </button>
-              ))}
+              {loading ? (
+                <div className="px-8 py-10 text-center">
+                  <div className="w-6 h-6 border-2 border-white/20 border-t-accent-500 rounded-full animate-spin mx-auto mb-3" />
+                  <p className="text-white/40 text-sm">Fetching universities...</p>
+                </div>
+              ) : filteredUnis.length > 0 ? (
+                filteredUnis.map(uni => (
+                  <button
+                    key={uni.id}
+                    onClick={() => handleSelect(uni)}
+                    className="w-full px-8 py-5 flex items-center gap-4 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0 text-left group"
+                  >
+                    <img 
+                      src={getImageUrl(uni?.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=100'} 
+                      className="w-12 h-12 rounded-xl object-cover group-hover:scale-110 transition-transform" 
+                      alt="" 
+                    />
+                    <div>
+                      <p className="text-white font-bold group-hover:text-accent-400 transition-colors">{uni.universityName}</p>
+                      <p className="text-white/40 text-xs">{uni.city}, {uni.country}</p>
+                    </div>
+                  </button>
+                ))
+              ) : (
+                <div className="px-8 py-10 text-center">
+                   <p className="text-white/40 text-sm">No university found matching "{searchQuery}"</p>
+                   <p className="text-accent-400/60 text-xs mt-1">Try a different name or city</p>
+                </div>
+              )}
             </div>
           )}
         </div>

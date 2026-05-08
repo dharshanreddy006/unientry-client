@@ -278,18 +278,28 @@ export default function AdminUniversities() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="space-y-1">
-                            <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Category (e.g. Sem 1, Fee Details)</label>
-                            <input 
-                              type="text" 
-                              placeholder="Enter Category Name" 
-                              value={cheat.category || ''} 
-                              onChange={(e) => {
-                                const newCheats = [...form.uniCheats];
-                                newCheats[index].category = e.target.value;
-                                setForm({ ...form, uniCheats: newCheats });
-                              }}
-                              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/10 outline-none text-sm transition-all"
-                            />
+                                <div>
+                                  <label className="text-[9px] text-gray-400 uppercase font-bold ml-1">Resource Category</label>
+                                  <input 
+                                    list="resource-categories"
+                                    placeholder="Select or Type Category" 
+                                    value={cheat.category || ''} 
+                                    onChange={(e) => {
+                                      const newCheats = [...form.uniCheats];
+                                      newCheats[index].category = e.target.value;
+                                      setForm({ ...form, uniCheats: newCheats });
+                                    }}
+                                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-accent-400 outline-none text-xs"
+                                  />
+                                  <datalist id="resource-categories">
+                                    <option value="Handwritten Notes" />
+                                    <option value="Question Papers (PYQs)" />
+                                    <option value="Lab Records & Manuals" />
+                                    <option value="Syllabus" />
+                                    <option value="Semester 1" />
+                                    <option value="Semester 2" />
+                                  </datalist>
+                                </div>
                           </div>
                           <div className="space-y-1">
                             <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Document Name (e.g. Physics Notes)</label>
