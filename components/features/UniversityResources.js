@@ -25,8 +25,8 @@ export default function UniversityResources() {
 
   const filteredUnis = searchQuery.trim() === '' 
     ? [] 
-    : universities.filter(uni => 
-        uni.universityName.toLowerCase().includes(searchQuery.toLowerCase())
+    : (Array.isArray(universities) ? universities : []).filter(uni => 
+        uni?.universityName && uni.universityName.toLowerCase().includes(searchQuery.toLowerCase())
       ).slice(0, 5);
 
   const handleSelect = (uni) => {
@@ -88,7 +88,11 @@ export default function UniversityResources() {
                   onClick={() => handleSelect(uni)}
                   className="w-full px-8 py-5 flex items-center gap-4 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0 text-left"
                 >
-                  <img src={getImageUrl(uni.coverImage?.url)} className="w-12 h-12 rounded-xl object-cover" alt="" />
+                  <img 
+                    src={getImageUrl(uni?.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=100'} 
+                    className="w-12 h-12 rounded-xl object-cover" 
+                    alt="" 
+                  />
                   <div>
                     <p className="text-white font-bold">{uni.universityName}</p>
                     <p className="text-white/40 text-xs">{uni.city}, {uni.country}</p>
@@ -105,7 +109,11 @@ export default function UniversityResources() {
             <div className="bg-white/5 border border-white/10 rounded-[3rem] p-8 md:p-12 backdrop-blur-sm">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                 <div className="flex items-center gap-6">
-                  <img src={getImageUrl(selectedUni.coverImage?.url)} className="w-20 h-20 md:w-24 md:h-24 rounded-3xl object-cover shadow-2xl" alt="" />
+                  <img 
+                    src={getImageUrl(selectedUni?.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=200'} 
+                    className="w-20 h-20 md:w-24 md:h-24 rounded-3xl object-cover shadow-2xl" 
+                    alt="" 
+                  />
                   <div>
                     <h3 className="font-heading font-bold text-2xl md:text-4xl text-white mb-2">{selectedUni.universityName}</h3>
                     <div className="flex flex-wrap gap-3">
