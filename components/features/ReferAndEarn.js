@@ -6,15 +6,25 @@ import Link from 'next/link';
 
 export default function ReferAndEarn() {
   const [universities, setUniversities] = useState([]);
+  const [settings, setSettings] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUni, setSelectedUni] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Fetch Universities
     fetch(`${API_URL}/universities`, { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
         setUniversities(data.data || data);
+      })
+      .catch(err => console.error(err));
+
+    // Fetch Site Settings for WhatsApp Number
+    fetch(`${API_URL}/settings`, { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) setSettings(data.data);
         setLoading(false);
       })
       .catch(err => {
@@ -133,7 +143,7 @@ export default function ReferAndEarn() {
 
                   <div className="flex flex-col sm:flex-row gap-4">
                     <a 
-                      href={`https://wa.me/${selectedUni.whatsappNumber || '91'}?text=Hi! I want to refer a student to ${selectedUni.universityName}.`}
+                      href={`https://wa.me/${settings?.whatsappNumber || '919876543210'}?text=Hi UniEntry! I want to refer a student to ${selectedUni.universityName}.`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 px-8 py-4 bg-green-500 text-white rounded-2xl font-black text-center shadow-lg shadow-green-500/30 hover:-translate-y-1 transition-all"
