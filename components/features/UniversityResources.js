@@ -8,6 +8,7 @@ export default function UniversityResources() {
   const [universities, setUniversities] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUni, setSelectedUni] = useState(null);
+  const [expandedCategory, setExpandedCategory] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function UniversityResources() {
   const handleSelect = (uni) => {
     setSelectedUni(uni);
     setSearchQuery('');
+    setExpandedCategory(null);
   };
 
   return (
@@ -139,7 +141,10 @@ export default function UniversityResources() {
                   </div>
                 </div>
                 <button 
-                  onClick={() => setSelectedUni(null)}
+                  onClick={() => {
+                    setSelectedUni(null);
+                    setExpandedCategory(null);
+                  }}
                   className="px-6 py-3 bg-white/5 hover:bg-white/10 text-white rounded-2xl text-sm font-bold transition-all border border-white/10"
                 >
                   Change University
@@ -156,42 +161,72 @@ export default function UniversityResources() {
                       acc[cat].push(cheat);
                       return acc;
                     }, {})
-                  ).map(([category, items]) => (
-                    <div key={category}>
-                      <h4 className="text-accent-400 font-black uppercase tracking-[0.2em] text-xs mb-6 flex items-center gap-3">
-                        <span className="w-8 h-[1px] bg-accent-400/30" />
-                        {category}
-                      </h4>
-                      <div className="space-y-3">
-                        {items.map((item, idx) => (
-                          <a
-                            key={idx}
-                            href={getImageUrl(item.url)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-between p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-accent-500/50 hover:bg-white/10 transition-all group"
-                          >
-                            <div className="flex items-center gap-4">
-                              <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-all">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                </svg>
-                              </div>
-                              <div className="text-left">
-                                <p className="text-white font-bold group-hover:text-accent-400 transition-colors">
-                                  {item.note || 'University Document'}
-                                </p>
-                                <p className="text-white/30 text-xs uppercase tracking-widest font-medium">PDF File • Click to open</p>
-                              </div>
+                  ).map(([category, items]) => {
+                    const isExpanded = expandedCategory === category;
+                    return (
+                      <div 
+                        key={category} 
+                        className={`group/cat rounded-[2rem] transition-all duration-500 border ${
+                          isExpanded 
+                            ? 'bg-white/[0.08] border-white/20 shadow-2xl' 
+                            : 'bg-white/[0.03] border-white/5 hover:bg-white/[0.05] hover:border-white/10'
+                        }`}
+                      >
+                        <button 
+                          onClick={() => setExpandedCategory(isExpanded ? null : category)}
+                          className="w-full px-8 py-7 flex items-center justify-between text-left"
+                        >
+                          <div className="flex items-center gap-4">
+                            <div className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${isExpanded ? 'bg-accent-500 scale-150 shadow-[0_0_15px_rgba(var(--accent-500-rgb),0.5)]' : 'bg-white/20'}`} />
+                            <h4 className={`font-heading font-bold uppercase tracking-widest text-sm transition-colors duration-300 ${isExpanded ? 'text-white' : 'text-white/60 group-hover/cat:text-white/80'}`}>
+                              {category}
+                            </h4>
+                          </div>
+                          <div className={`flex items-center gap-3 transition-all duration-500 ${isExpanded ? 'opacity-100' : 'opacity-40 group-hover/cat:opacity-70'}`}>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-white/30">{items.length} Files</span>
+                            <div className={`w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center transition-all duration-500 ${isExpanded ? 'rotate-180 bg-accent-500/20 text-accent-400' : 'text-white'}`}>
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                              </svg>
                             </div>
-                            <svg className="w-5 h-5 text-white/20 group-hover:text-accent-500 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                          </a>
-                        ))}
+                          </div>
+                        </button>
+                        
+                        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-[2000px] opacity-100 mb-8' : 'max-h-0 opacity-0'}`}>
+                          <div className="px-8 space-y-3">
+                            {items.map((item, idx) => (
+                              <a
+                                key={idx}
+                                href={getImageUrl(item.url)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-between p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-accent-500/50 hover:bg-white/10 transition-all group/item"
+                              >
+                                <div className="flex items-center gap-4">
+                                  <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 group-hover/item:bg-red-500 group-hover/item:text-white transition-all shadow-inner">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                    </svg>
+                                  </div>
+                                  <div className="text-left">
+                                    <p className="text-white font-bold group-hover/item:text-accent-400 transition-colors">
+                                      {item.note || 'University Document'}
+                                    </p>
+                                    <p className="text-white/30 text-[10px] uppercase tracking-widest font-bold">PDF File • Click to open</p>
+                                  </div>
+                                </div>
+                                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white/0 group-hover/item:text-accent-500 group-hover/item:bg-accent-500/10 group-hover/item:translate-x-1 transition-all">
+                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                  </svg>
+                                </div>
+                              </a>
+                            ))}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="text-center py-20 bg-white/5 rounded-[2rem] border border-dashed border-white/10">
