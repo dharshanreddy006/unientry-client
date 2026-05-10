@@ -195,7 +195,8 @@ export default function UniversityResources() {
                 </div>
               ) : (
                 <div className="text-center py-20 bg-white/5 rounded-[2rem] border border-dashed border-white/10">
-                  <p className="text-white/40 font-medium">No resources have been uploaded for this university yet.</p>
+                  <p className="text-white/40 font-medium text-lg tracking-wider">Coming Soon</p>
+                  <p className="text-white/20 text-xs mt-2 uppercase tracking-widest">We are currently gathering resources for this university</p>
                 </div>
               )}
             </div>
