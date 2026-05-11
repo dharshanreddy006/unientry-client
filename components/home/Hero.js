@@ -51,7 +51,7 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-300">
           <Link
             href="/universities"
-            className="group relative px-8 py-4 bg-gradient-to-r from-accent-400 to-accent-600 text-white font-semibold rounded-2xl shadow-lg shadow-accent-500/30 hover:shadow-accent-500/50 transition-all duration-300 hover:scale-105 text-base"
+            className="group relative px-8 py-4 bg-gradient-to-r from-accent-400 to-accent-600 text-white font-semibold rounded-2xl shadow-lg shadow-accent-500/30 hover:shadow-accent-500/50 transition-smooth hover:scale-105 text-base"
           >
             <span className="relative z-10 flex items-center gap-2">
               Explore Universities

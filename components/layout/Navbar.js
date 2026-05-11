@@ -34,7 +34,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-smooth ${
         scrolled ? 'navbar-glass shadow-2xl py-3' : 'bg-transparent py-5'
       }`}
     >
@@ -56,7 +56,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-smooth ${
                   pathname === link.href
                     ? 'text-accent-400 bg-white/10'
                     : 'text-white/80 hover:text-white hover:bg-white/5'
