@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from 'react';
 import AdminShell from '@/components/admin/AdminShell';
 
@@ -52,7 +54,7 @@ export default function ResourceAccessPage() {
   };
 
   const handleRevokeAccess = async (email, universityId) => {
-    if (!confirm('Are you sure you want to revoke access?')) return;
+    if (typeof window !== 'undefined' && !window.confirm('Are you sure you want to revoke access?')) return;
     try {
       const res = await fetch(`${API}/resources/admin/revoke`, {
         method: 'POST',

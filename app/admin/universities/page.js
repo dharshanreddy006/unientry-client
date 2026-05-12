@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from 'react';
 import AdminShell from '@/components/admin/AdminShell';
 
@@ -53,7 +55,7 @@ export default function AdminUniversities() {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Are you sure you want to delete this university?')) return;
+    if (typeof window !== 'undefined' && !window.confirm('Are you sure you want to delete this university?')) return;
     try {
       await fetch(`${API}/universities/${id}`, { method: 'DELETE', headers });
       fetchUniversities();
