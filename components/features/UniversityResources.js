@@ -327,8 +327,10 @@ export default function UniversityResources() {
                 </div>
               )}
             </div>
-          </div>
-        ) : (
+          )}
+        </div>
+      </div>
+    ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Quick Access Cards */}
             <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-center group hover:-translate-y-2 transition-all duration-500">
