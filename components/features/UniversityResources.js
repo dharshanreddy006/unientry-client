@@ -51,7 +51,7 @@ export default function UniversityResources() {
       const res = await fetch(`${API_URL}/resources/check-access`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, universityId: selectedUni.id })
+        body: JSON.stringify({ email, universityId: selectedUni.id || selectedUni._id })
       });
       const data = await res.json();
       if (data.hasAccess) {
@@ -65,6 +65,167 @@ export default function UniversityResources() {
     } finally {
       setCheckingAccess(false);
     }
+  };
+
+  const renderGatedContent = () => {
+    if (showEmailForm) {
+      return (
+        <div className="max-w-md mx-auto text-center py-12">
+          <div className="w-20 h-20 bg-accent-500/10 rounded-3xl flex items-center justify-center text-accent-400 mx-auto mb-6">
+            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h4 className="text-white font-bold text-2xl mb-4">Verification Required</h4>
+          <p className="text-white/40 text-sm mb-8">Enter your email address to check your access status for {selectedUni.universityName} resources.</p>
+          <form onSubmit={checkAccess} className="space-y-4">
+            <input
+              type="email"
+              required
+              placeholder="Enter your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:border-accent-500 outline-none transition-all"
+            />
+            <button
+              type="submit"
+              disabled={checkingAccess}
+              className="w-full py-4 bg-accent-500 hover:bg-accent-600 text-white rounded-2xl font-bold transition-all disabled:opacity-50"
+            >
+              {checkingAccess ? 'Checking...' : 'Continue'}
+            </button>
+          </form>
+        </div>
+      );
+    }
+
+    if (!isAuthorized) {
+      return (
+        <div className="max-w-2xl mx-auto text-center py-12">
+          <div className="w-24 h-24 bg-yellow-500/10 rounded-full flex items-center justify-center text-yellow-500 mx-auto mb-8 animate-pulse">
+            <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m0 0v2m0-2h2m-2 0h-2m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h4 className="text-white font-bold text-3xl mb-4">Paid Resources Only</h4>
+          <p className="text-white/60 text-lg mb-2">Access to premium academic materials for {selectedUni.universityName} requires a one-time payment.</p>
+          <p className="text-accent-400 font-black text-4xl mb-10">Pay {selectedUni.resourcePrice || 25}Rs</p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={`https://wa.me/${selectedUni.whatsappNumber || '918121665671'}?text=Hi%20UniEntry!%20I%20want%20to%20get%20access%20to%20${selectedUni.universityName}%20resources.%20My%20email%20is%20${email}.%20Please%20provide%20payment%20details.`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="whatsapp-btn flex items-center justify-center gap-3 px-10 py-5 rounded-[2rem] font-bold text-lg shadow-2xl hover:scale-105 transition-all w-full sm:w-auto"
+            >
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12.012 2c-5.508 0-9.987 4.479-9.987 9.987 0 1.763.463 3.421 1.264 4.847l-1.341 4.904 5.018-1.315c1.403.763 3.007 1.197 4.712 1.197 5.508 0 9.988-4.479 9.988-9.987 0-5.508-4.48-9.987-9.988-9.987zm4.847 14.239c-.198.558-1.173 1.056-1.612 1.121-.401.059-.803.109-2.26-.479-1.856-.75-3.053-2.645-3.147-2.771-.095-.126-.772-.962-.772-1.836 0-.875.458-1.303.621-1.482.162-.179.356-.224.474-.224h.339c.109 0 .254-.041.396.302.147.356.502 1.221.545 1.31.042.089.071.192.012.31-.059.118-.089.191-.176.295-.089.103-.186.23-.265.308-.103.103-.209.215-.09.422.118.207.525.867 1.128 1.403.777.689 1.432.905 1.639.992.207.086.331.074.455-.068.125-.141.534-.622.676-.835.142-.213.284-.179.479-.107s1.242.585 1.454.693c.213.108.356.161.409.253.054.093.054.538-.145 1.096z"/>
+              </svg>
+              Pay via WhatsApp
+            </a>
+            <button
+              onClick={() => setShowEmailForm(true)}
+              className="px-8 py-5 rounded-[2rem] bg-white/5 border border-white/10 text-white/60 hover:text-white transition-all text-sm font-bold"
+            >
+              Use different email
+            </button>
+          </div>
+          <p className="mt-8 text-white/20 text-xs uppercase tracking-widest leading-relaxed">
+            Once payment is confirmed, access will be granted to your email.<br/>
+            You can then refresh this page to view all resources.
+          </p>
+        </div>
+      );
+    }
+
+    const categories = Object.entries(
+      (selectedUni.uniCheats || []).reduce((acc, cheat) => {
+        const cat = cheat.category || 'General';
+        if (!acc[cat]) acc[cat] = [];
+        acc[cat].push(cheat);
+        return acc;
+      }, {})
+    );
+
+    if (categories.length === 0) {
+      return (
+        <div className="text-center py-20 bg-white/5 rounded-[2rem] border border-dashed border-white/10">
+          <p className="text-white/40 font-medium text-lg tracking-wider">Coming Soon</p>
+          <p className="text-white/20 text-xs mt-2 uppercase tracking-widest">We are currently gathering resources for this university</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 animate-fade-in">
+        {categories.map(([category, items]) => {
+          const isExpanded = expandedCategory === category;
+          return (
+            <div 
+              key={category} 
+              className={`group/cat rounded-[2rem] transition-all duration-500 border ${
+                isExpanded 
+                  ? 'bg-white/[0.08] border-white/20 shadow-2xl' 
+                  : 'bg-white/[0.03] border-white/5 hover:bg-white/[0.05] hover:border-white/10'
+              }`}
+            >
+              <button 
+                onClick={() => setExpandedCategory(isExpanded ? null : category)}
+                className="w-full px-8 py-7 flex items-center justify-between text-left"
+              >
+                <div className="flex items-center gap-4">
+                  <div className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${isExpanded ? 'bg-accent-500 scale-150 shadow-[0_0_15px_rgba(var(--accent-500-rgb),0.5)]' : 'bg-white/20'}`} />
+                  <h4 className={`font-heading font-bold uppercase tracking-widest text-sm transition-colors duration-300 ${isExpanded ? 'text-white' : 'text-white/60 group-hover/cat:text-white/80'}`}>
+                    {category}
+                  </h4>
+                </div>
+                <div className={`flex items-center gap-3 transition-all duration-500 ${isExpanded ? 'opacity-100' : 'opacity-40 group-hover/cat:opacity-70'}`}>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white/30">{items.length} Files</span>
+                  <div className={`w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center transition-all duration-500 ${isExpanded ? 'rotate-180 bg-accent-500/20 text-accent-400' : 'text-white'}`}>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+              </button>
+              
+              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-[2000px] opacity-100 mb-8' : 'max-h-0 opacity-0'}`}>
+                <div className="px-8 space-y-3">
+                  {items.map((item, idx) => (
+                    <a
+                      key={idx}
+                      href={getImageUrl(item.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-accent-500/50 hover:bg-white/10 transition-all group/item"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 group-hover/item:bg-red-500 group-hover/item:text-white transition-all shadow-inner">
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                        <div className="text-left">
+                          <p className="text-white font-bold group-hover/item:text-accent-400 transition-colors">
+                            {item.note || 'University Document'}
+                          </p>
+                          <p className="text-white/30 text-[10px] uppercase tracking-widest font-bold">PDF File • Click to open</p>
+                        </div>
+                      </div>
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white/0 group-hover/item:text-accent-500 group-hover/item:bg-accent-500/10 group-hover/item:translate-x-1 transition-all">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   return (
@@ -123,7 +284,7 @@ export default function UniversityResources() {
               ) : filteredUnis.length > 0 ? (
                 filteredUnis.map(uni => (
                   <button
-                    key={uni.id}
+                    key={uni.id || uni._id}
                     onClick={() => handleSelect(uni)}
                     className="w-full px-8 py-5 flex items-center gap-4 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0 text-left group"
                   >
@@ -165,7 +326,7 @@ export default function UniversityResources() {
                       <span className="px-3 py-1 bg-accent-500/20 text-accent-400 rounded-full text-xs font-bold uppercase tracking-wider">
                         {selectedUni.uniCheats?.length || 0} Resources Available
                       </span>
-                      <Link href={`/universities/${selectedUni.id}`} className="text-white/40 hover:text-white text-xs font-medium flex items-center gap-1 transition-colors">
+                      <Link href={`/universities/${selectedUni.id || selectedUni._id}`} className="text-white/40 hover:text-white text-xs font-medium flex items-center gap-1 transition-colors">
                         View University Profile ↗
                       </Link>
                     </div>
@@ -182,155 +343,10 @@ export default function UniversityResources() {
                 </button>
               </div>
 
-              {showEmailForm ? (
-                <div className="max-w-md mx-auto text-center py-12">
-                  <div className="w-20 h-20 bg-accent-500/10 rounded-3xl flex items-center justify-center text-accent-400 mx-auto mb-6">
-                    <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-white font-bold text-2xl mb-4">Verification Required</h4>
-                  <p className="text-white/40 text-sm mb-8">Enter your email address to check your access status for {selectedUni.universityName} resources.</p>
-                  <form onSubmit={checkAccess} className="space-y-4">
-                    <input
-                      type="email"
-                      required
-                      placeholder="Enter your email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:border-accent-500 outline-none transition-all"
-                    />
-                    <button
-                      type="submit"
-                      disabled={checkingAccess}
-                      className="w-full py-4 bg-accent-500 hover:bg-accent-600 text-white rounded-2xl font-bold transition-all disabled:opacity-50"
-                    >
-                      {checkingAccess ? 'Checking...' : 'Continue'}
-                    </button>
-                  </form>
-                </div>
-              ) : !isAuthorized ? (
-                <div className="max-w-2xl mx-auto text-center py-12">
-                  <div className="w-24 h-24 bg-yellow-500/10 rounded-full flex items-center justify-center text-yellow-500 mx-auto mb-8 animate-pulse">
-                    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m0 0v2m0-2h2m-2 0h-2m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-white font-bold text-3xl mb-4">Paid Resources Only</h4>
-                  <p className="text-white/60 text-lg mb-2">Access to premium academic materials for {selectedUni.universityName} requires a one-time payment.</p>
-                  <p className="text-accent-400 font-black text-4xl mb-10">Pay {selectedUni.resourcePrice || 25}Rs</p>
-                  
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a
-                      href={`https://wa.me/${selectedUni.whatsappNumber || '918121665671'}?text=Hi%20UniEntry!%20I%20want%20to%20get%20access%20to%20${selectedUni.universityName}%20resources.%20My%20email%20is%20${email}.%20Please%20provide%20payment%20details.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="whatsapp-btn flex items-center justify-center gap-3 px-10 py-5 rounded-[2rem] font-bold text-lg shadow-2xl hover:scale-105 transition-all w-full sm:w-auto"
-                    >
-                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12.012 2c-5.508 0-9.987 4.479-9.987 9.987 0 1.763.463 3.421 1.264 4.847l-1.341 4.904 5.018-1.315c1.403.763 3.007 1.197 4.712 1.197 5.508 0 9.988-4.479 9.988-9.987 0-5.508-4.48-9.987-9.988-9.987zm4.847 14.239c-.198.558-1.173 1.056-1.612 1.121-.401.059-.803.109-2.26-.479-1.856-.75-3.053-2.645-3.147-2.771-.095-.126-.772-.962-.772-1.836 0-.875.458-1.303.621-1.482.162-.179.356-.224.474-.224h.339c.109 0 .254-.041.396.302.147.356.502 1.221.545 1.31.042.089.071.192.012.31-.059.118-.089.191-.176.295-.089.103-.186.23-.265.308-.103.103-.209.215-.09.422.118.207.525.867 1.128 1.403.777.689 1.432.905 1.639.992.207.086.331.074.455-.068.125-.141.534-.622.676-.835.142-.213.284-.179.479-.107s1.242.585 1.454.693c.213.108.356.161.409.253.054.093.054.538-.145 1.096z"/>
-                      </svg>
-                      Pay via WhatsApp
-                    </a>
-                    <button
-                      onClick={() => setShowEmailForm(true)}
-                      className="px-8 py-5 rounded-[2rem] bg-white/5 border border-white/10 text-white/60 hover:text-white transition-all text-sm font-bold"
-                    >
-                      Use different email
-                    </button>
-                  </div>
-                  <p className="mt-8 text-white/20 text-xs uppercase tracking-widest leading-relaxed">
-                    Once payment is confirmed, access will be granted to your email.<br/>
-                    You can then refresh this page to view all resources.
-                  </p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                  {Object.entries(
-                    (selectedUni.uniCheats || []).reduce((acc, cheat) => {
-                      const cat = cheat.category || 'General';
-                      if (!acc[cat]) acc[cat] = [];
-                      acc[cat].push(cheat);
-                      return acc;
-                    }, {})
-                  ).map(([category, items]) => {
-                    const isExpanded = expandedCategory === category;
-                    return (
-                      <div 
-                        key={category} 
-                        className={`group/cat rounded-[2rem] transition-all duration-500 border ${
-                          isExpanded 
-                            ? 'bg-white/[0.08] border-white/20 shadow-2xl' 
-                            : 'bg-white/[0.03] border-white/5 hover:bg-white/[0.05] hover:border-white/10'
-                        }`}
-                      >
-                        <button 
-                          onClick={() => setExpandedCategory(isExpanded ? null : category)}
-                          className="w-full px-8 py-7 flex items-center justify-between text-left"
-                        >
-                          <div className="flex items-center gap-4">
-                            <div className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${isExpanded ? 'bg-accent-500 scale-150 shadow-[0_0_15px_rgba(var(--accent-500-rgb),0.5)]' : 'bg-white/20'}`} />
-                            <h4 className={`font-heading font-bold uppercase tracking-widest text-sm transition-colors duration-300 ${isExpanded ? 'text-white' : 'text-white/60 group-hover/cat:text-white/80'}`}>
-                              {category}
-                            </h4>
-                          </div>
-                          <div className={`flex items-center gap-3 transition-all duration-500 ${isExpanded ? 'opacity-100' : 'opacity-40 group-hover/cat:opacity-70'}`}>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-white/30">{items.length} Files</span>
-                            <div className={`w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center transition-all duration-500 ${isExpanded ? 'rotate-180 bg-accent-500/20 text-accent-400' : 'text-white'}`}>
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                              </svg>
-                            </div>
-                          </div>
-                        </button>
-                        
-                        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-[2000px] opacity-100 mb-8' : 'max-h-0 opacity-0'}`}>
-                          <div className="px-8 space-y-3">
-                            {items.map((item, idx) => (
-                              <a
-                                key={idx}
-                                href={getImageUrl(item.url)}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center justify-between p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-accent-500/50 hover:bg-white/10 transition-all group/item"
-                              >
-                                <div className="flex items-center gap-4">
-                                  <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 group-hover/item:bg-red-500 group-hover/item:text-white transition-all shadow-inner">
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                    </svg>
-                                  </div>
-                                  <div className="text-left">
-                                    <p className="text-white font-bold group-hover/item:text-accent-400 transition-colors">
-                                      {item.note || 'University Document'}
-                                    </p>
-                                    <p className="text-white/30 text-[10px] uppercase tracking-widest font-bold">PDF File • Click to open</p>
-                                  </div>
-                                </div>
-                                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white/0 group-hover/item:text-accent-500 group-hover/item:bg-accent-500/10 group-hover/item:translate-x-1 transition-all">
-                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                  </svg>
-                                </div>
-                              </a>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="text-center py-20 bg-white/5 rounded-[2rem] border border-dashed border-white/10">
-                  <p className="text-white/40 font-medium text-lg tracking-wider">Coming Soon</p>
-                  <p className="text-white/20 text-xs mt-2 uppercase tracking-widest">We are currently gathering resources for this university</p>
-                </div>
-              )}
+              {renderGatedContent()}
             </div>
-          )}
-        </div>
-      </div>
-    ) : (
+          </div>
+        ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Quick Access Cards */}
             <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-center group hover:-translate-y-2 transition-all duration-500">
