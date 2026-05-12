@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 export default function UniversityResources() {
   const [universities, setUniversities] = useState([]);
+  const [settings, setSettings] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUni, setSelectedUni] = useState(null);
   const [expandedCategory, setExpandedCategory] = useState(null);
@@ -16,16 +17,22 @@ export default function UniversityResources() {
   const [showEmailForm, setShowEmailForm] = useState(true);
 
   useEffect(() => {
+    // Fetch Universities
     fetch(`${API_URL}/universities`, { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
         setUniversities(data.data || data);
-        setLoading(false);
       })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
+      .catch(err => console.error(err));
+
+    // Fetch Site Settings for global WhatsApp number
+    fetch(`${API_URL}/settings`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) setSettings(data.data);
+      })
+      .catch(err => console.error(err))
+      .finally(() => setLoading(false));
   }, []);
 
   const filteredUnis = searchQuery.trim() === '' 
@@ -48,16 +55,24 @@ export default function UniversityResources() {
     
     setCheckingAccess(true);
     try {
+      // 1. Check if email already has access
       const res = await fetch(`${API_URL}/resources/check-access`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, universityId: selectedUni.id || selectedUni._id })
       });
       const data = await res.json();
+      
       if (data.hasAccess) {
         setIsAuthorized(true);
         setShowEmailForm(false);
       } else {
+        // 2. If no access, create a pending request so admin sees it
+        await fetch(`${API_URL}/resources/request-access`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, universityId: selectedUni.id || selectedUni._id })
+        });
         setShowEmailForm(false);
       }
     } catch (err) {
@@ -100,6 +115,9 @@ export default function UniversityResources() {
     }
 
     if (!isAuthorized) {
+      // Prioritize University WhatsApp, then Global Settings WhatsApp, then Fallback
+      const waNumber = selectedUni.whatsappNumber || settings?.whatsappNumber || '918121665671';
+      
       return (
         <div className="max-w-2xl mx-auto text-center py-12">
           <div className="w-24 h-24 bg-yellow-500/10 rounded-full flex items-center justify-center text-yellow-500 mx-auto mb-8 animate-pulse">
@@ -113,7 +131,7 @@ export default function UniversityResources() {
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href={`https://wa.me/${selectedUni.whatsappNumber || '918121665671'}?text=Hi%20UniEntry!%20I%20want%20to%20get%20access%20to%20${selectedUni.universityName}%20resources.%20My%20email%20is%20${email}.%20Please%20provide%20payment%20details.`}
+              href={`https://wa.me/${waNumber}?text=Hi%20UniEntry!%20I%20want%20to%20get%20access%20to%20${selectedUni.universityName}%20resources.%20My%20email%20is%20${email}.%20Please%20provide%20payment%20details.`}
               target="_blank"
               rel="noopener noreferrer"
               className="whatsapp-btn flex items-center justify-center gap-3 px-10 py-5 rounded-[2rem] font-bold text-lg shadow-2xl hover:scale-105 transition-all w-full sm:w-auto"
