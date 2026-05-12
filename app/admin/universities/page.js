@@ -6,6 +6,7 @@ import AdminShell from '@/components/admin/AdminShell';
 const emptyForm = {
   universityName: '', country: '', city: '', description: '', duration: '4 Years',
   degreeType: 'Undergraduate', courses: '', featured: false, ranking: '', website: '',
+  resourcePrice: 0,
   fees: { tuition: '', hostel: '', livingCost: '' },
   eligibility: { marks: '', ielts: '', toefl: '', documents: '' },
   coverImage: { url: '', publicId: '' },
@@ -397,6 +398,13 @@ export default function AdminUniversities() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Website</label>
                   <input type="text" value={form.website} onChange={(e) => setForm({ ...form, website: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1 font-bold text-accent-600 uppercase">Resource Access Price (INR) *</label>
+                  <input type="number" required value={form.resourcePrice} onChange={(e) => setForm({ ...form, resourcePrice: parseInt(e.target.value) || 0 })}
+                    className="w-full px-4 py-3 rounded-xl border-2 border-accent-100 focus:border-accent-500 outline-none text-sm font-bold" placeholder="e.g., 25" />
+                  <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">Amount users pay to access the Knowledge Hub resources for this university.</p>
                 </div>
 
                 <div className="flex items-center gap-2">
