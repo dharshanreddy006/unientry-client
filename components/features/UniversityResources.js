@@ -117,6 +117,7 @@ export default function UniversityResources() {
     if (!isAuthorized) {
       // Prioritize University WhatsApp, then Global Settings WhatsApp, then Fallback
       const waNumber = selectedUni.whatsappNumber || settings?.whatsappNumber || '918121665671';
+      const isFree = selectedUni.isFreeResources;
       
       return (
         <div className="max-w-2xl mx-auto text-center py-12">
@@ -125,13 +126,21 @@ export default function UniversityResources() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m0 0v2m0-2h2m-2 0h-2m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h4 className="text-white font-bold text-3xl mb-4">Paid Resources Only</h4>
-          <p className="text-white/60 text-lg mb-2">Access to premium academic materials for {selectedUni.universityName} requires a one-time payment.</p>
-          <p className="text-accent-400 font-black text-4xl mb-10">Pay {selectedUni.resourcePrice || 25}Rs</p>
+          <h4 className="text-white font-bold text-3xl mb-4">
+            {isFree ? 'Free Access Request' : 'Paid Resources Only'}
+          </h4>
+          <p className="text-white/60 text-lg mb-2">
+            {isFree 
+              ? `Access to academic materials for ${selectedUni.universityName} is free, but requires admin approval.`
+              : `Access to premium academic materials for ${selectedUni.universityName} requires a one-time payment.`}
+          </p>
+          <p className="text-accent-400 font-black text-4xl mb-10">
+            {isFree ? 'FREE' : `Pay ${selectedUni.resourcePrice || 25}Rs`}
+          </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href={`https://wa.me/${waNumber}?text=Hi%20UniEntry!%20I%20want%20to%20get%20access%20to%20${selectedUni.universityName}%20resources.%20My%20email%20is%20${email}.%20Please%20provide%20payment%20details.`}
+              href={`https://wa.me/${waNumber}?text=Hi%20UniEntry!%20I%20want%20to%20get%20${isFree ? 'FREE' : 'PAID'}%20access%20to%20${selectedUni.universityName}%20resources.%20My%20email%20is%20${email}.%20Please%20grant%20me%20access.`}
               target="_blank"
               rel="noopener noreferrer"
               className="whatsapp-btn flex items-center justify-center gap-3 px-10 py-5 rounded-[2rem] font-bold text-lg shadow-2xl hover:scale-105 transition-all w-full sm:w-auto"
@@ -139,7 +148,7 @@ export default function UniversityResources() {
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12.012 2c-5.508 0-9.987 4.479-9.987 9.987 0 1.763.463 3.421 1.264 4.847l-1.341 4.904 5.018-1.315c1.403.763 3.007 1.197 4.712 1.197 5.508 0 9.988-4.479 9.988-9.987 0-5.508-4.48-9.987-9.988-9.987zm4.847 14.239c-.198.558-1.173 1.056-1.612 1.121-.401.059-.803.109-2.26-.479-1.856-.75-3.053-2.645-3.147-2.771-.095-.126-.772-.962-.772-1.836 0-.875.458-1.303.621-1.482.162-.179.356-.224.474-.224h.339c.109 0 .254-.041.396.302.147.356.502 1.221.545 1.31.042.089.071.192.012.31-.059.118-.089.191-.176.295-.089.103-.186.23-.265.308-.103.103-.209.215-.09.422.118.207.525.867 1.128 1.403.777.689 1.432.905 1.639.992.207.086.331.074.455-.068.125-.141.534-.622.676-.835.142-.213.284-.179.479-.107s1.242.585 1.454.693c.213.108.356.161.409.253.054.093.054.538-.145 1.096z"/>
               </svg>
-              Pay via WhatsApp
+              {isFree ? 'Request Free Access' : 'Pay via WhatsApp'}
             </a>
             <button
               onClick={() => setShowEmailForm(true)}
@@ -149,8 +158,9 @@ export default function UniversityResources() {
             </button>
           </div>
           <p className="mt-8 text-white/20 text-xs uppercase tracking-widest leading-relaxed">
-            Once payment is confirmed, access will be granted to your email.<br/>
-            You can then refresh this page to view all resources.
+            {isFree 
+              ? 'Once the admin approves your email, you can refresh this page to view all resources.'
+              : 'Once payment is confirmed, access will be granted to your email. You can then refresh this page to view all resources.'}
           </p>
         </div>
       );

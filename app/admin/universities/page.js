@@ -9,6 +9,7 @@ const emptyForm = {
   universityName: '', country: '', city: '', description: '', duration: '4 Years',
   degreeType: 'Undergraduate', courses: '', featured: false, ranking: '', website: '',
   resourcePrice: 0,
+  isFreeResources: false,
   fees: { tuition: '', hostel: '', livingCost: '' },
   eligibility: { marks: '', ielts: '', toefl: '', documents: '' },
   coverImage: { url: '', publicId: '' },
@@ -402,11 +403,21 @@ export default function AdminUniversities() {
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1 font-bold text-accent-600 uppercase">Resource Access Price (INR) *</label>
-                  <input type="number" required value={form.resourcePrice} onChange={(e) => setForm({ ...form, resourcePrice: parseInt(e.target.value) || 0 })}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-accent-100 focus:border-accent-500 outline-none text-sm font-bold" placeholder="e.g., 25" />
-                  <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">Amount users pay to access the Knowledge Hub resources for this university.</p>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-2 p-4 bg-accent-50 rounded-2xl border border-accent-100">
+                    <input type="checkbox" id="isFreeResources" checked={form.isFreeResources} onChange={(e) => setForm({ ...form, isFreeResources: e.target.checked })}
+                      className="w-5 h-5 rounded border-gray-300 text-accent-500 focus:ring-accent-500" />
+                    <label htmlFor="isFreeResources" className="text-sm font-bold text-accent-700 uppercase tracking-wider">Make Resources Free for this University</label>
+                  </div>
+
+                  {!form.isFreeResources && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1 font-bold text-accent-600 uppercase">Resource Access Price (INR) *</label>
+                      <input type="number" required value={form.resourcePrice} onChange={(e) => setForm({ ...form, resourcePrice: parseInt(e.target.value) || 0 })}
+                        className="w-full px-4 py-3 rounded-xl border-2 border-accent-100 focus:border-accent-500 outline-none text-sm font-bold" placeholder="e.g., 25" />
+                      <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">Amount users pay to access the Knowledge Hub resources for this university.</p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-2">
