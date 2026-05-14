@@ -5,11 +5,11 @@ import "./globals.css";
 
 export const metadata = {
   title: "UniEntry — Your Gateway to Global Education",
-  description: "UniEntry helps students explore top universities worldwide, get expert guidance for admissions, visas, and scholarships. Start your study abroad journey ",
-  keywords: "university admissions, study abroad, education consultancy, university fees, scholarships, visa guidance",
+  description: "UniEntry helps students across India easily access PYQs, important college resources, and trusted guidance for smarter course selection. Your one-stop student platform for academic support, career clarity, and campus success",
+  keywords: "university admissions, study abroad, education consultancy, university fees, scholarships, visa guidance, PYQs, college resources",
   openGraph: {
     title: "UniEntry — Your Gateway to Global Education",
-    description: "UniEntry helps students explore top universities worldwide, get expert guidance for admissions, visas, and scholarships. Start your study abroad journey ",
+    description: "UniEntry helps students across India easily access PYQs, important college resources, and trusted guidance for smarter course selection. Your one-stop student platform for academic support, career clarity, and campus success",
     type: "website",
   },
 };
