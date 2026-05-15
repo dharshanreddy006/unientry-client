@@ -17,22 +17,21 @@ export default function FounderSection() {
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           
           {/* Image Side */}
-          <div className="w-full lg:w-5/12 relative">
-            <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl">
+          <div className="w-full lg:w-4/12 relative flex justify-center">
+            <div className="relative w-52 h-52 md:w-64 md:h-64 rounded-[2rem] overflow-hidden shadow-2xl bg-white border border-gray-100">
               <img
                 src={getImageUrl(settings.founderImageUrl) || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800'}
                 alt={settings.founderName}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain p-4"
                 onError={(e) => {
                   e.target.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800';
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             </div>
             
             {/* Decorative elements */}
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent-100 rounded-full blur-2xl -z-10" />
-            <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary-100 rounded-full blur-2xl -z-10" />
+            <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-accent-100 rounded-full blur-2xl -z-10" />
+            <div className="absolute -top-6 -left-6 w-24 h-24 bg-primary-100 rounded-full blur-2xl -z-10" />
             
           </div>
 
