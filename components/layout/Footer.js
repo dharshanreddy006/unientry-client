@@ -33,9 +33,12 @@ export default function Footer() {
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center">
                 <span className="text-white font-bold text-lg font-heading">U</span>
               </div>
-              <span className="font-heading font-bold text-xl tracking-tight">
+            <div className="flex flex-col">
+              <span className="font-heading font-bold text-xl leading-none tracking-tight">
                 Uni<span className="text-accent-400">Entry</span>
               </span>
+              <span className="text-[9px] text-accent-400 font-black uppercase tracking-[0.3em] leading-none mt-1">Global</span>
+            </div>
             </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-6">
               UniEntry is a student-focused platform providing university resources, student services, and admission guidance across India. Our mission is to simplify student life by solving real problems through accessible and impactful solutions.

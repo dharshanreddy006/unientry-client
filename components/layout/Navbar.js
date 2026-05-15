@@ -44,9 +44,12 @@ export default function Navbar() {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center shadow-lg group-hover:shadow-accent-400/40 transition-shadow">
               <span className="text-white font-bold text-lg font-heading">U</span>
             </div>
-            <span className="text-slate-900 font-heading font-bold text-xl tracking-tight">
-              Uni<span className="text-blue-600">Entry</span>
-            </span>
+            <div className="flex flex-col">
+              <span className="text-slate-900 font-heading font-bold text-xl leading-none tracking-tight">
+                Uni<span className="text-blue-600">Entry</span>
+              </span>
+              <span className="text-[9px] text-blue-600 font-black uppercase tracking-[0.3em] leading-none mt-1">Global</span>
+            </div>
           </Link>
 
           {/* Desktop Links */}
