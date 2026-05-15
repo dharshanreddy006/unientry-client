@@ -127,18 +127,18 @@ export default function StudentMarketplace() {
 
           {/* Dropdown */}
           {searchQuery.trim().length > 1 && (
-            <div className="absolute top-full left-0 right-0 mt-3 bg-primary-800 border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl z-50 backdrop-blur-2xl">
+            <div className="absolute top-full left-0 right-0 mt-3 bg-white border border-gray-100 rounded-[2rem] overflow-hidden shadow-2xl z-50">
               {loadingUnis ? (
                 <div className="px-8 py-8 text-center">
-                  <div className="w-6 h-6 border-2 border-white/20 border-t-green-500 rounded-full animate-spin mx-auto mb-2" />
-                  <p className="text-white/40 text-sm">Searching universities...</p>
+                  <div className="w-6 h-6 border-2 border-gray-100 border-t-blue-500 rounded-full animate-spin mx-auto mb-2" />
+                  <p className="text-slate-400 text-sm">Searching universities...</p>
                 </div>
               ) : filteredUnis.length > 0 ? (
                 filteredUnis.map(uni => (
                   <button
                     key={uni.id || uni._id}
                     onClick={() => handleSelectUni(uni)}
-                    className="w-full px-8 py-5 flex items-center gap-4 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0 text-left group"
+                    className="w-full px-8 py-5 flex items-center gap-4 hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-0 text-left group"
                   >
                     <img
                       src={getImageUrl(uni?.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=100'}
@@ -146,10 +146,10 @@ export default function StudentMarketplace() {
                       alt=""
                     />
                     <div>
-                      <p className="text-white font-bold group-hover:text-green-400 transition-colors">{uni.universityName}</p>
-                      <p className="text-white/40 text-xs">{uni.city}, {uni.country}</p>
+                      <p className="text-slate-900 font-bold group-hover:text-blue-600 transition-colors">{uni.universityName}</p>
+                      <p className="text-slate-400 text-xs">{uni.city}, {uni.country}</p>
                     </div>
-                    <div className="ml-auto text-white/20 group-hover:text-green-400 transition-colors">
+                    <div className="ml-auto text-slate-200 group-hover:text-blue-600 transition-colors">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
@@ -158,7 +158,7 @@ export default function StudentMarketplace() {
                 ))
               ) : (
                 <div className="px-8 py-10 text-center">
-                  <p className="text-white/40 text-sm">No university found for "{searchQuery}"</p>
+                  <p className="text-slate-400 text-sm">No university found for "{searchQuery}"</p>
                 </div>
               )}
             </div>
@@ -169,7 +169,7 @@ export default function StudentMarketplace() {
         {selectedUni ? (
           <div className="animate-fade-in">
             {/* University Header */}
-            <div className="bg-white/5 border border-white/10 rounded-[3rem] p-8 md:p-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="bg-slate-50 border border-gray-200 rounded-[3rem] p-8 md:p-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex items-center gap-6">
                 <img
                   src={getImageUrl(selectedUni?.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=200'}
@@ -177,13 +177,13 @@ export default function StudentMarketplace() {
                   alt=""
                 />
                 <div>
-                  <h3 className="font-heading font-bold text-2xl md:text-3xl text-white">{selectedUni.universityName}</h3>
-                  <p className="text-white/40 text-sm mt-1">{selectedUni.city}, {selectedUni.country}</p>
+                  <h3 className="font-heading font-bold text-2xl md:text-3xl text-slate-900">{selectedUni.universityName}</h3>
+                  <p className="text-slate-500 text-sm mt-1">{selectedUni.city}, {selectedUni.country}</p>
                 </div>
               </div>
               <button
                 onClick={() => { setSelectedUni(null); setListings([]); }}
-                className="px-6 py-3 bg-white/5 hover:bg-white/10 text-white rounded-2xl text-sm font-bold transition-all border border-white/10 self-start md:self-auto"
+                className="px-6 py-3 bg-white hover:bg-gray-50 text-slate-700 rounded-2xl text-sm font-bold transition-all border border-gray-200 shadow-sm self-start md:self-auto"
               >
                 Change University
               </button>
@@ -193,7 +193,7 @@ export default function StudentMarketplace() {
             <div className="flex gap-3 mb-8">
               <button
                 onClick={() => handleTabChange('buy')}
-                className={`flex-1 py-4 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${activeTab === 'buy' ? 'bg-green-500 text-white shadow-lg shadow-green-500/30' : 'bg-white/5 text-white/60 hover:bg-white/10 border border-white/10'}`}
+                className={`flex-1 py-4 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${activeTab === 'buy' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -202,7 +202,7 @@ export default function StudentMarketplace() {
               </button>
               <button
                 onClick={() => handleTabChange('sell')}
-                className={`flex-1 py-4 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${activeTab === 'sell' ? 'bg-accent-500 text-white shadow-lg shadow-accent-500/20' : 'bg-white/5 text-white/60 hover:bg-white/10 border border-white/10'}`}
+                className={`flex-1 py-4 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${activeTab === 'sell' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -220,7 +220,7 @@ export default function StudentMarketplace() {
                     <button
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
-                      className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${selectedCategory === cat ? 'bg-green-500 text-white' : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white border border-white/10'}`}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${selectedCategory === cat ? 'bg-blue-600 text-white shadow-md' : 'bg-white text-slate-500 hover:bg-slate-50 border border-gray-200'}`}
                     >
                       {cat}
                     </button>
@@ -229,19 +229,19 @@ export default function StudentMarketplace() {
 
                 {loadingListings ? (
                   <div className="text-center py-20">
-                    <div className="w-8 h-8 border-2 border-white/20 border-t-green-500 rounded-full animate-spin mx-auto mb-3" />
-                    <p className="text-white/40 text-sm">Loading listings...</p>
+                    <div className="w-8 h-8 border-2 border-gray-100 border-t-blue-500 rounded-full animate-spin mx-auto mb-3" />
+                    <p className="text-slate-400 text-sm">Loading listings...</p>
                   </div>
                 ) : filteredListings.length === 0 ? (
-                  <div className="text-center py-20 bg-white/5 rounded-[2rem] border border-dashed border-white/10">
+                  <div className="text-center py-20 bg-slate-50 rounded-[2rem] border border-dashed border-gray-200">
                     <div className="text-5xl mb-4">🛍️</div>
-                    <p className="text-white/40 font-medium text-lg">No products listed yet</p>
-                    <p className="text-white/20 text-xs mt-2 uppercase tracking-widest">Be the first to sell something at {selectedUni.universityName}!</p>
+                    <p className="text-slate-400 font-medium text-lg">No products listed yet</p>
+                    <p className="text-slate-300 text-xs mt-2 uppercase tracking-widest">Be the first to sell something at {selectedUni.universityName}!</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredListings.map(listing => (
-                      <div key={listing.id} className="bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden group hover:border-green-500/30 hover:-translate-y-1 transition-all duration-300">
+                      <div key={listing.id} className="bg-white border border-gray-100 rounded-[2rem] overflow-hidden group hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 shadow-sm hover:shadow-xl">
                         {listing.imageUrl ? (
                           <div className="h-48 overflow-hidden">
                             <img
@@ -257,17 +257,17 @@ export default function StudentMarketplace() {
                         )}
                         <div className="p-6">
                           <div className="flex items-start justify-between gap-3 mb-3">
-                            <h4 className="text-white font-bold text-lg leading-tight">{listing.title}</h4>
-                            <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-xs font-bold whitespace-nowrap shrink-0">
+                            <h4 className="text-slate-900 font-bold text-lg leading-tight">{listing.title}</h4>
+                            <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-bold whitespace-nowrap shrink-0">
                               {listing.price ? `₹${listing.price}` : 'Negotiable'}
                             </span>
                           </div>
-                          <p className="text-white/50 text-sm leading-relaxed mb-4 line-clamp-2">{listing.description}</p>
+                          <p className="text-slate-500 text-sm leading-relaxed mb-4 line-clamp-2">{listing.description}</p>
                           <div className="flex items-center justify-between">
-                            <span className="text-white/20 text-xs uppercase tracking-widest font-bold">{listing.category}</span>
+                            <span className="text-slate-300 text-xs uppercase tracking-widest font-bold">{listing.category}</span>
                             <button
                               onClick={() => handleBuyWhatsApp(listing)}
-                              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-500 hover:bg-green-600 text-white text-sm font-bold transition-all hover:scale-105"
+                              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-all hover:scale-105 shadow-md shadow-blue-500/20"
                             >
                               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12.012 2c-5.508 0-9.987 4.479-9.987 9.987 0 1.763.463 3.421 1.264 4.847l-1.341 4.904 5.018-1.315c1.403.763 3.007 1.197 4.712 1.197 5.508 0 9.988-4.479 9.988-9.987 0-5.508-4.48-9.987-9.988-9.987zm4.847 14.239c-.198.558-1.173 1.056-1.612 1.121-.401.059-.803.109-2.26-.479-1.856-.75-3.053-2.645-3.147-2.771-.095-.126-.772-.962-.772-1.836 0-.875.458-1.303.621-1.482.162-.179.356-.224.474-.224h.339c.109 0 .254-.041.396.302.147.356.502 1.221.545 1.31.042.089.071.192.012.31-.059.118-.089.191-.176.295-.089.103-.186.23-.265.308-.103.103-.209.215-.09.422.118.207.525.867 1.128 1.403.777.689 1.432.905 1.639.992.207.086.331.074.455-.068.125-.141.534-.622.676-.835.142-.213.284-.179.479-.107s1.242.585 1.454.693c.213.108.356.161.409.253.054.093.054.538-.145 1.096z"/>
@@ -286,76 +286,76 @@ export default function StudentMarketplace() {
             {/* SELL TAB */}
             {activeTab === 'sell' && (
               <div className="max-w-2xl mx-auto">
-                <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-10">
+                <div className="bg-slate-50 border border-gray-200 rounded-[2.5rem] p-8 md:p-10 shadow-sm">
                   <div className="text-center mb-8">
-                    <div className="w-16 h-16 rounded-3xl bg-accent-500/10 text-accent-400 flex items-center justify-center mx-auto mb-4 text-3xl">
+                    <div className="w-16 h-16 rounded-3xl bg-blue-100 text-blue-600 flex items-center justify-center mx-auto mb-4 text-3xl">
                       📦
                     </div>
-                    <h4 className="text-white font-bold text-2xl mb-2">List Your Product</h4>
-                    <p className="text-white/40 text-sm">Fill in the details below and we'll list it via WhatsApp. Our team will add it to the marketplace.</p>
+                    <h4 className="text-slate-900 font-bold text-2xl mb-2">List Your Product</h4>
+                    <p className="text-slate-500 text-sm">Fill in the details below and we'll list it via WhatsApp. Our team will add it to the marketplace.</p>
                   </div>
 
                   <div className="space-y-5">
                     <div>
-                      <label className="block text-white/60 text-xs font-bold uppercase tracking-widest mb-2">Product Title *</label>
+                      <label className="block text-slate-700 text-xs font-bold uppercase tracking-widest mb-2">Product Title *</label>
                       <input
                         type="text"
                         placeholder="e.g., Engineering Mathematics Textbook"
                         value={sellForm.title}
                         onChange={e => setSellForm({ ...sellForm, title: e.target.value })}
-                        className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:border-accent-500 outline-none transition-all"
+                        className="w-full px-6 py-4 rounded-2xl bg-white border border-gray-200 text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all shadow-sm"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-white/60 text-xs font-bold uppercase tracking-widest mb-2">Category</label>
+                      <label className="block text-slate-700 text-xs font-bold uppercase tracking-widest mb-2">Category</label>
                       <select
                         value={sellForm.category}
                         onChange={e => setSellForm({ ...sellForm, category: e.target.value })}
-                        className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white focus:border-accent-500 outline-none transition-all"
+                        className="w-full px-6 py-4 rounded-2xl bg-white border border-gray-200 text-slate-800 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all shadow-sm"
                       >
                         {CATEGORIES.filter(c => c !== 'All').map(c => (
-                          <option key={c} value={c} className="bg-gray-900">{c}</option>
+                          <option key={c} value={c} className="bg-white">{c}</option>
                         ))}
                       </select>
                     </div>
 
                     <div>
-                      <label className="block text-white/60 text-xs font-bold uppercase tracking-widest mb-2">Price (₹)</label>
+                      <label className="block text-slate-700 text-xs font-bold uppercase tracking-widest mb-2">Price (₹)</label>
                       <input
                         type="text"
                         placeholder="e.g., 299 (leave blank for Negotiable)"
                         value={sellForm.price}
                         onChange={e => setSellForm({ ...sellForm, price: e.target.value })}
-                        className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:border-accent-500 outline-none transition-all"
+                        className="w-full px-6 py-4 rounded-2xl bg-white border border-gray-200 text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all shadow-sm"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-white/60 text-xs font-bold uppercase tracking-widest mb-2">Description *</label>
+                      <label className="block text-slate-700 text-xs font-bold uppercase tracking-widest mb-2">Description *</label>
                       <textarea
                         rows={4}
                         placeholder="Describe the condition, edition, or any details about the product..."
                         value={sellForm.description}
                         onChange={e => setSellForm({ ...sellForm, description: e.target.value })}
-                        className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:border-accent-500 outline-none transition-all resize-none"
+                        className="w-full px-6 py-4 rounded-2xl bg-white border border-gray-200 text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all shadow-sm resize-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-white/60 text-xs font-bold uppercase tracking-widest mb-2">Your Name (Optional)</label>
+                      <label className="block text-slate-700 text-xs font-bold uppercase tracking-widest mb-2">Your Name (Optional)</label>
                       <input
                         type="text"
                         placeholder="Your name for the listing"
                         value={sellForm.sellerName}
                         onChange={e => setSellForm({ ...sellForm, sellerName: e.target.value })}
-                        className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:border-accent-500 outline-none transition-all"
+                        className="w-full px-6 py-4 rounded-2xl bg-white border border-gray-200 text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all shadow-sm"
                       />
                     </div>
 
                     <button
                       onClick={handleSellWhatsApp}
-                      className="w-full py-5 rounded-2xl bg-green-500 hover:bg-green-600 text-white font-bold text-lg flex items-center justify-center gap-3 transition-all hover:scale-[1.02] shadow-lg shadow-green-500/30"
+                      className="w-full py-5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg flex items-center justify-center gap-3 transition-all hover:scale-[1.02] shadow-lg shadow-blue-500/30"
                     >
                       <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12.012 2c-5.508 0-9.987 4.479-9.987 9.987 0 1.763.463 3.421 1.264 4.847l-1.341 4.904 5.018-1.315c1.403.763 3.007 1.197 4.712 1.197 5.508 0 9.988-4.479 9.988-9.987 0-5.508-4.48-9.987-9.988-9.987zm4.847 14.239c-.198.558-1.173 1.056-1.612 1.121-.401.059-.803.109-2.26-.479-1.856-.75-3.053-2.645-3.147-2.771-.095-.126-.772-.962-.772-1.836 0-.875.458-1.303.621-1.482.162-.179.356-.224.474-.224h.339c.109 0 .254-.041.396.302.147.356.502 1.221.545 1.31.042.089.071.192.012.31-.059.118-.089.191-.176.295-.089.103-.186.23-.265.308-.103.103-.209.215-.09.422.118.207.525.867 1.128 1.403.777.689 1.432.905 1.639.992.207.086.331.074.455-.068.125-.141.534-.622.676-.835.142-.213.284-.179.479-.107s1.242.585 1.454.693c.213.108.356.161.409.253.054.093.054.538-.145 1.096z"/>
@@ -363,7 +363,7 @@ export default function StudentMarketplace() {
                       List Product via WhatsApp
                     </button>
 
-                    <p className="text-center text-white/20 text-xs uppercase tracking-widest">
+                    <p className="text-center text-slate-300 text-xs uppercase tracking-widest leading-relaxed">
                       Your product details will be sent to our team via WhatsApp.<br />We'll add it to the marketplace shortly.
                     </p>
                   </div>
@@ -374,20 +374,20 @@ export default function StudentMarketplace() {
         ) : (
           /* Default State - How it works */
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-4">
-            <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-center group hover:-translate-y-2 transition-all duration-500">
+            <div className="p-8 rounded-[2.5rem] bg-white border border-gray-100 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl">
               <div className="text-5xl mb-6">🔍</div>
-              <h4 className="text-white font-bold text-xl mb-3">Search Your University</h4>
-              <p className="text-white/40 text-sm leading-relaxed">Type your college or university name in the search bar above to find your campus marketplace.</p>
+              <h4 className="text-slate-900 font-bold text-xl mb-3">Search Your University</h4>
+              <p className="text-slate-500 text-sm leading-relaxed">Type your college or university name in the search bar above to find your campus marketplace.</p>
             </div>
-            <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-center group hover:-translate-y-2 transition-all duration-500">
+            <div className="p-8 rounded-[2.5rem] bg-white border border-gray-100 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl">
               <div className="text-5xl mb-6">🛒</div>
-              <h4 className="text-white font-bold text-xl mb-3">Browse & Buy</h4>
-              <p className="text-white/40 text-sm leading-relaxed">Find books, electronics, notes, and more listed by students from your campus. Contact them via WhatsApp.</p>
+              <h4 className="text-slate-900 font-bold text-xl mb-3">Browse & Buy</h4>
+              <p className="text-slate-500 text-sm leading-relaxed">Find books, electronics, notes, and more listed by students from your campus. Contact them via WhatsApp.</p>
             </div>
-            <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-center group hover:-translate-y-2 transition-all duration-500">
+            <div className="p-8 rounded-[2.5rem] bg-white border border-gray-100 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl">
               <div className="text-5xl mb-6">💸</div>
-              <h4 className="text-white font-bold text-xl mb-3">Sell Your Stuff</h4>
-              <p className="text-white/40 text-sm leading-relaxed">Got something to sell? List it instantly via WhatsApp. Our team will add it to the marketplace within minutes.</p>
+              <h4 className="text-slate-900 font-bold text-xl mb-3">Sell Your Stuff</h4>
+              <p className="text-slate-500 text-sm leading-relaxed">Got something to sell? List it instantly via WhatsApp. Our team will add it to the marketplace within minutes.</p>
             </div>
           </div>
         )}
