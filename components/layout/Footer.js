@@ -38,7 +38,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-6">
-              Your trusted partner for university admissions worldwide. We help students navigate the complex journey of studying abroad.
+              UniEntry is a student-focused platform providing university resources, student services, and admission guidance across India. Our mission is to simplify student life by solving real problems through accessible and impactful solutions.
             </p>
             {/* Social Links */}
             <div className="flex gap-3">
