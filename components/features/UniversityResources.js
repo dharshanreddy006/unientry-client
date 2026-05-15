@@ -264,13 +264,13 @@ export default function UniversityResources() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center mb-12">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 text-accent-400 text-xs font-bold mb-4 tracking-widest uppercase border border-white/10">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-white border border-blue-100 text-blue-600 text-xs font-bold mb-4 tracking-widest uppercase shadow-sm">
             KNOWLEDGE HUB
           </span>
-          <h2 className="font-heading font-bold text-3xl md:text-5xl text-white mb-4">
-            University <span className="text-accent-400">Resources</span>
+          <h2 className="font-heading font-bold text-3xl md:text-5xl text-slate-900 mb-4">
+            University <span className="text-blue-600">Resources</span>
           </h2>
-          <p className="text-white/60 max-w-2xl mx-auto">
+          <p className="text-slate-500 max-w-2xl mx-auto">
             Access previous year question papers, handwritten notes, and academic materials for your university.
           </p>
         </div>
@@ -283,11 +283,11 @@ export default function UniversityResources() {
               placeholder="Search your university (e.g. UPES, Graphic Era...)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-8 py-6 rounded-[2rem] bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:bg-white/10 focus:border-accent-500 outline-none transition-all shadow-2xl text-lg backdrop-blur-xl"
+              className="w-full px-8 py-6 rounded-[2rem] bg-white border border-gray-200 text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all shadow-sm text-lg"
             />
             <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-3">
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="text-white/40 hover:text-white">
+                <button onClick={() => setSearchQuery('')} className="text-slate-400 hover:text-slate-700">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -303,18 +303,18 @@ export default function UniversityResources() {
 
           {/* Search Results Dropdown */}
           {searchQuery.trim().length > 1 && (
-            <div className="absolute top-full left-0 right-0 mt-4 bg-primary-800 border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl z-50 backdrop-blur-2xl animate-slide-down">
+            <div className="absolute top-full left-0 right-0 mt-4 bg-white border border-gray-100 rounded-[2rem] overflow-hidden shadow-2xl z-50 animate-slide-down">
               {loading ? (
                 <div className="px-8 py-10 text-center">
-                  <div className="w-6 h-6 border-2 border-white/20 border-t-accent-500 rounded-full animate-spin mx-auto mb-3" />
-                  <p className="text-white/40 text-sm">Fetching universities...</p>
+                  <div className="w-6 h-6 border-2 border-gray-200 border-t-blue-500 rounded-full animate-spin mx-auto mb-3" />
+                  <p className="text-slate-400 text-sm">Fetching universities...</p>
                 </div>
               ) : filteredUnis.length > 0 ? (
                 filteredUnis.map(uni => (
                   <button
                     key={uni.id || uni._id}
                     onClick={() => handleSelect(uni)}
-                    className="w-full px-8 py-5 flex items-center gap-4 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0 text-left group"
+                    className="w-full px-8 py-5 flex items-center gap-4 hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-0 text-left group"
                   >
                     <img 
                       src={getImageUrl(uni?.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=100'} 
@@ -322,8 +322,8 @@ export default function UniversityResources() {
                       alt="" 
                     />
                     <div>
-                      <p className="text-white font-bold group-hover:text-accent-400 transition-colors">{uni.universityName}</p>
-                      <p className="text-white/40 text-xs">{uni.city}, {uni.country}</p>
+                      <p className="text-slate-900 font-bold group-hover:text-blue-600 transition-colors">{uni.universityName}</p>
+                      <p className="text-slate-400 text-xs">{uni.city}, {uni.country}</p>
                     </div>
                   </button>
                 ))

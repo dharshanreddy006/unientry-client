@@ -46,10 +46,10 @@ export default function InternshipsPage() {
       {/* Hero */}
       <section className="hero-gradient pt-32 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <h1 className="font-heading font-bold text-3xl md:text-5xl text-white mb-4">
+          <h1 className="font-heading font-bold text-3xl md:text-5xl text-slate-900 mb-4">
             Internship Opportunities
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto mb-8">
+          <p className="text-slate-500 max-w-2xl mx-auto mb-8">
             Kickstart your career with top internship opportunities worldwide
           </p>
 
@@ -63,7 +63,7 @@ export default function InternshipsPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by company or role..."
-                className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:bg-white/15 focus:border-accent-400 outline-none transition-all text-sm"
+                className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white border border-gray-200 text-slate-800 placeholder-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm shadow-sm"
               />
             </div>
             <button type="submit" className="px-8 py-4 bg-accent-500 text-white rounded-2xl font-semibold hover:bg-accent-600 transition-colors">

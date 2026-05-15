@@ -60,13 +60,13 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="hero-gradient pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-accent-400 text-sm font-medium mb-6">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-white border border-blue-100 text-blue-600 text-sm font-medium mb-6 shadow-sm">
             🏢 About Us
           </span>
-          <h1 className="font-heading font-bold text-3xl md:text-5xl text-white mb-6">
-            Helping Students Achieve Their <span className="text-accent-400">Global Dreams</span>
+          <h1 className="font-heading font-bold text-3xl md:text-5xl text-slate-900 mb-6">
+            Helping Students Achieve Their <span className="text-blue-600">Global Dreams</span>
           </h1>
-          <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed">
             {settings?.aboutText || 'UniEntry is a trusted educational consultancy that has helped thousands of students achieve their dream of studying at top universities worldwide.'}
           </p>
         </div>

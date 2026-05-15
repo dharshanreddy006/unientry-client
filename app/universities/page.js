@@ -63,10 +63,10 @@ function UniversitiesContent() {
       {/* Hero banner */}
       <section className="hero-gradient pt-32 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <h1 className="font-heading font-bold text-3xl md:text-5xl text-white mb-4">
+          <h1 className="font-heading font-bold text-3xl md:text-5xl text-slate-900 mb-4">
             Explore Universities
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto mb-8">
+          <p className="text-slate-500 max-w-2xl mx-auto mb-8">
             Browse our curated list of top universities from around the world
           </p>
 
@@ -82,7 +82,7 @@ function UniversitiesContent() {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search universities, countries, or courses..."
-                  className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:bg-white/15 focus:border-accent-400 outline-none transition-all text-sm backdrop-blur-sm"
+                  className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white border border-gray-200 text-slate-800 placeholder-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm shadow-sm"
                 />
               </div>
               <button

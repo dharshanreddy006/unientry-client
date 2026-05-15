@@ -15,10 +15,10 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="hero-gradient pt-32 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <h1 className="font-heading font-bold text-3xl md:text-5xl text-white mb-4">
+          <h1 className="font-heading font-bold text-3xl md:text-5xl text-slate-900 mb-4">
             Contact Us
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <p className="text-slate-500 max-w-2xl mx-auto">
             Have questions? Our expert counselors are here to help you. Reach out today!
           </p>
         </div>
