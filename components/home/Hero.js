@@ -17,14 +17,13 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center justify-center hero-gradient overflow-hidden">
       {/* Animated background shapes */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-accent-400/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-500/8 rounded-full blur-3xl animate-float delay-300" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-600/20 rounded-full blur-3xl" />
-        
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-5"
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200/40 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl animate-float delay-300" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-100/30 rounded-full blur-3xl" />
+        {/* Subtle dot grid */}
+        <div className="absolute inset-0 opacity-[0.04]"
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 1px 1px, #3B82F6 1px, transparent 0)`,
             backgroundSize: '40px 40px',
           }}
         />
@@ -32,18 +31,18 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-white/80 text-sm mb-8 animate-fade-in">
-          <span className="w-2 h-2 rounded-full bg-accent-400 animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-blue-100 text-slate-600 text-sm mb-8 animate-fade-in shadow-sm">
+          <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
           Trusted by {stats[2]?.number || '5000+'} Students Worldwide
         </div>
 
         {/* Main heading */}
-        <h1 className="font-heading font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-tight mb-6 animate-fade-in-up">
+        <h1 className="font-heading font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-slate-900 leading-tight mb-6 animate-fade-in-up">
           {settings?.heroTitle || 'Your Gateway to Global Education'}
         </h1>
 
         {/* Subtitle */}
-        <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-200 whitespace-pre-wrap">
+        <p className="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-200 whitespace-pre-wrap">
           {settings?.heroSubtitle || 'Discover top universities worldwide. Get expert guidance for admissions, visas, and scholarships — all in one place.'}
         </p>
 
@@ -76,9 +75,9 @@ export default function Hero() {
         {/* Stats */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 animate-fade-in-up delay-500">
           {stats.map((stat) => (
-            <div key={stat.label} className="glass rounded-2xl p-4">
-              <p className="font-heading font-bold text-2xl md:text-3xl text-white">{stat.number}</p>
-              <p className="text-white/50 text-sm mt-1">{stat.label}</p>
+            <div key={stat.label} className="bg-white rounded-2xl p-4 shadow-md border border-gray-100">
+              <p className="font-heading font-bold text-2xl md:text-3xl text-slate-900">{stat.number}</p>
+              <p className="text-slate-400 text-sm mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -86,7 +85,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
       </div>

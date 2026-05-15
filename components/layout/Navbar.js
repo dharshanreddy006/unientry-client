@@ -44,8 +44,8 @@ export default function Navbar() {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center shadow-lg group-hover:shadow-accent-400/40 transition-shadow">
               <span className="text-white font-bold text-lg font-heading">U</span>
             </div>
-            <span className="text-white font-heading font-bold text-xl tracking-tight">
-              Uni<span className="text-accent-400">Entry</span>
+            <span className="text-slate-900 font-heading font-bold text-xl tracking-tight">
+              Uni<span className="text-blue-600">Entry</span>
             </span>
           </Link>
 
@@ -57,8 +57,8 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-smooth ${
                   pathname === link.href
-                    ? 'text-accent-400 bg-white/10'
-                    : 'text-white/80 hover:text-white hover:bg-white/5'
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
                 }`}
               >
                 {link.name}

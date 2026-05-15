@@ -210,16 +210,18 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Hero gradient */
+/* Hero gradient — professional white aesthetic */
 .hero-gradient {
-  background: linear-gradient(135deg, #0B0F19 0%, #0F1B35 40%, #1E3A8A 70%, #3B82F6 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #F0F9FF 40%, #E0F2FE 70%, #DBEAFE 100%);
   background-size: 200% 200%;
-  animation: gradient-shift 8s ease infinite;
+  animation: gradient-shift 10s ease infinite;
 }
 
-/* Navbar glass */
+/* Navbar glass — light mode */
 .navbar-glass {
-  background: rgba(10, 22, 40, 0.92);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 1px 12px rgba(0,0,0,0.06);
 }
