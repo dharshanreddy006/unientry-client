@@ -257,10 +257,10 @@ export default function UniversityResources() {
   };
 
   return (
-    <section className="section-padding bg-primary-900 relative overflow-hidden" id="university-resources">
+    <section className="section-padding relative overflow-hidden" style={{background: 'linear-gradient(160deg, #0D3461 0%, #0B2545 40%, #0E7490 100%)'}} id="university-resources">
       {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-500/10 rounded-full blur-[120px] -mr-64 -mt-64" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-500/10 rounded-full blur-[120px] -ml-64 -mb-64" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-64 -mt-64" style={{background: 'rgba(20,184,166,0.1)'}} />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full blur-[120px] -ml-64 -mb-64" style={{background: 'rgba(14,116,144,0.12)'}} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center mb-12">

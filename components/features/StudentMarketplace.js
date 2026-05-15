@@ -87,19 +87,19 @@ export default function StudentMarketplace() {
     : listings.filter(l => l.category === selectedCategory);
 
   return (
-    <section className="section-padding bg-primary-900 relative overflow-hidden" id="marketplace">
+    <section className="section-padding relative overflow-hidden" style={{background: 'linear-gradient(160deg, #0B2545 0%, #0D3461 50%, #0E7490 100%)'}} id="marketplace">
       {/* Background Decorations */}
-      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-green-500/5 rounded-full blur-[150px] -ml-64 -mt-64 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-accent-500/5 rounded-full blur-[150px] -mr-64 -mb-64 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[150px] -ml-64 -mt-64 pointer-events-none" style={{background: 'rgba(20, 184, 166, 0.12)'}} />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] -mr-64 -mb-64 pointer-events-none" style={{background: 'rgba(14, 116, 144, 0.15)'}} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 text-green-400 text-xs font-bold mb-4 tracking-widest uppercase border border-white/10">
+          <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold mb-4 tracking-widest uppercase border" style={{background: 'rgba(20,184,166,0.15)', color: '#5EEAD4', borderColor: 'rgba(20,184,166,0.3)'}}>
             STUDENT MARKETPLACE
           </span>
           <h2 className="font-heading font-bold text-3xl md:text-5xl text-white mb-4">
-            Buy & Sell <span className="text-green-400">Within Your Campus</span>
+            Buy & Sell <span style={{color: '#2DD4BF'}}>Within Your Campus</span>
           </h2>
           <p className="text-white/60 max-w-2xl mx-auto">
             Books, electronics, notes — trade with students from your university. Select your university below to get started.
@@ -108,16 +108,17 @@ export default function StudentMarketplace() {
 
         {/* University Search */}
         <div className="max-w-3xl mx-auto mb-10 relative">
-          <div className="relative">
+            <div className="relative">
             <input
               type="text"
               placeholder="Search your university to start buying or selling..."
               value={searchQuery}
               onChange={e => handleSearch(e.target.value)}
-              className="w-full px-8 py-6 rounded-[2rem] bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:bg-white/10 focus:border-green-500 outline-none transition-all text-lg backdrop-blur-xl"
+              className="w-full px-8 py-6 rounded-[2rem] border text-white placeholder:text-white/40 outline-none transition-all text-lg backdrop-blur-xl"
+              style={{background: 'rgba(255,255,255,0.07)', borderColor: 'rgba(255,255,255,0.15)'}}
             />
             <div className="absolute right-6 top-1/2 -translate-y-1/2">
-              <div className="w-10 h-10 rounded-2xl bg-green-500 flex items-center justify-center text-white shadow-lg shadow-green-500/30">
+              <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-lg" style={{background: 'linear-gradient(135deg, #0E7490, #14B8A6)'}}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
