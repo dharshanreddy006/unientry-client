@@ -50,9 +50,6 @@ export default function ContactSection() {
             <h2 className="font-heading font-bold text-3xl md:text-4xl text-primary-900 mb-4">
               Start Your Journey Today
             </h2>
-            <p className="text-gray-500 mb-8 leading-relaxed">
-              Have questions about studying abroad? Our expert counselors are here to help you every step of the way. Reach out and let&apos;s plan your future together.
-            </p>
 
             {/* Contact details */}
             <div className="space-y-5 mb-8">

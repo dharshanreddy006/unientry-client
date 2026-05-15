@@ -32,8 +32,8 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
           <div className="bg-primary-900 rounded-3xl p-12 text-center">
             <h2 className="font-heading font-bold text-2xl text-white mb-4">Visit Our Office</h2>
-            <p className="text-white/60 mb-2">UniEntry Education Consultancy</p>
-            <p className="text-white/60 mb-6">Mumbai, Maharashtra, India</p>
+            <p className="text-white/60 mb-2">UniEntry GLOBAL</p>
+            <p className="text-white/60 mb-6">UPES Dehradun, Uttarakhand, India</p>
             <div className="flex items-center justify-center gap-6">
               <div className="text-center">
                 <p className="text-accent-400 font-semibold">Mon - Fri</p>
