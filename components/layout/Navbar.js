@@ -70,7 +70,7 @@ export default function Navbar() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition"
+            className="md:hidden text-slate-900 p-2 rounded-lg hover:bg-blue-50 transition-colors"
             aria-label="Toggle menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,15 +86,15 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {mobileOpen && (
           <div className="md:hidden mt-4 pb-4 animate-slide-down">
-            <div className="glass rounded-2xl p-4 space-y-1">
+            <div className="bg-white border border-blue-50 rounded-2xl p-2 space-y-1 shadow-2xl">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                  className={`block px-5 py-4 rounded-xl text-base font-bold transition-all ${
                     pathname === link.href
-                      ? 'text-accent-400 bg-white/10'
-                      : 'text-white/80 hover:text-white hover:bg-white/5'
+                      ? 'text-blue-600 bg-blue-50'
+                      : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
                   }`}
                 >
                   {link.name}

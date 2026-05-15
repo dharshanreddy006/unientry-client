@@ -73,11 +73,11 @@ export default function Hero() {
         </div>
 
         {/* Stats */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 animate-fade-in-up delay-500">
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 animate-fade-in-up delay-500">
           {stats.map((stat) => (
-            <div key={stat.label} className="bg-white rounded-2xl p-4 shadow-md border border-gray-100">
-              <p className="font-heading font-bold text-2xl md:text-3xl text-slate-900">{stat.number}</p>
-              <p className="text-slate-400 text-sm mt-1">{stat.label}</p>
+            <div key={stat.label} className="bg-sky-50/50 rounded-2xl p-4 shadow-sm border border-blue-100">
+              <p className="font-heading font-extrabold text-2xl md:text-3xl text-slate-900">{stat.number}</p>
+              <p className="text-slate-500 text-[10px] md:text-sm mt-1 uppercase tracking-wider font-bold">{stat.label}</p>
             </div>
           ))}
         </div>

@@ -87,10 +87,10 @@ export default function StudentMarketplace() {
     : listings.filter(l => l.category === selectedCategory);
 
   return (
-    <section className="section-padding relative overflow-hidden bg-white" id="marketplace">
+    <section className="section-padding relative overflow-hidden bg-white md:bg-slate-50" id="marketplace">
       {/* Background Decorations */}
-      <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[150px] -ml-64 -mt-64 pointer-events-none" style={{background: 'rgba(59,130,246,0.05)'}} />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] -mr-64 -mb-64 pointer-events-none" style={{background: 'rgba(147,197,253,0.08)'}} />
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[150px] -ml-64 -mt-64 pointer-events-none" style={{background: 'rgba(186,230,253,0.4)'}} />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] -mr-64 -mb-64 pointer-events-none" style={{background: 'rgba(186,230,253,0.3)'}} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
@@ -127,7 +127,7 @@ export default function StudentMarketplace() {
 
           {/* Dropdown */}
           {searchQuery.trim().length > 1 && (
-            <div className="absolute top-full left-0 right-0 mt-3 bg-white border border-gray-100 rounded-[2rem] overflow-hidden shadow-2xl z-50">
+            <div className="absolute top-full left-0 right-0 mt-3 bg-white border border-blue-100 rounded-[2rem] overflow-hidden shadow-2xl z-50">
               {loadingUnis ? (
                 <div className="px-8 py-8 text-center">
                   <div className="w-6 h-6 border-2 border-gray-100 border-t-blue-500 rounded-full animate-spin mx-auto mb-2" />
@@ -169,7 +169,7 @@ export default function StudentMarketplace() {
         {selectedUni ? (
           <div className="animate-fade-in">
             {/* University Header */}
-            <div className="bg-slate-50 border border-gray-200 rounded-[3rem] p-8 md:p-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="bg-sky-50/50 border border-blue-100 rounded-[3rem] p-6 md:p-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex items-center gap-6">
                 <img
                   src={getImageUrl(selectedUni?.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=200'}
@@ -241,7 +241,7 @@ export default function StudentMarketplace() {
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredListings.map(listing => (
-                      <div key={listing.id} className="bg-white border border-gray-100 rounded-[2rem] overflow-hidden group hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 shadow-sm hover:shadow-xl">
+                      <div key={listing.id} className="bg-white border border-blue-50 rounded-[2rem] overflow-hidden group hover:border-blue-300 hover:-translate-y-1 transition-all duration-300 shadow-sm hover:shadow-xl">
                         {listing.imageUrl ? (
                           <div className="h-48 overflow-hidden">
                             <img
@@ -286,7 +286,7 @@ export default function StudentMarketplace() {
             {/* SELL TAB */}
             {activeTab === 'sell' && (
               <div className="max-w-2xl mx-auto">
-                <div className="bg-slate-50 border border-gray-200 rounded-[2.5rem] p-8 md:p-10 shadow-sm">
+                <div className="bg-sky-50/20 border border-blue-100 rounded-[2.5rem] p-6 md:p-10 shadow-sm">
                   <div className="text-center mb-8">
                     <div className="w-16 h-16 rounded-3xl bg-blue-100 text-blue-600 flex items-center justify-center mx-auto mb-4 text-3xl">
                       📦
@@ -373,20 +373,20 @@ export default function StudentMarketplace() {
           </div>
         ) : (
           /* Default State - How it works */
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-4">
-            <div className="p-8 rounded-[2.5rem] bg-white border border-gray-100 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+            <div className="p-8 rounded-[2.5rem] bg-white border border-blue-50 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl hover:border-blue-200">
               <div className="text-5xl mb-6">🔍</div>
-              <h4 className="text-slate-900 font-bold text-xl mb-3">Search Your University</h4>
+              <h4 className="text-slate-900 font-extrabold text-xl mb-3">Search Your University</h4>
               <p className="text-slate-500 text-sm leading-relaxed">Type your college or university name in the search bar above to find your campus marketplace.</p>
             </div>
-            <div className="p-8 rounded-[2.5rem] bg-white border border-gray-100 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl">
+            <div className="p-8 rounded-[2.5rem] bg-white border border-blue-50 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl hover:border-blue-200">
               <div className="text-5xl mb-6">🛒</div>
-              <h4 className="text-slate-900 font-bold text-xl mb-3">Browse & Buy</h4>
+              <h4 className="text-slate-900 font-extrabold text-xl mb-3">Browse & Buy</h4>
               <p className="text-slate-500 text-sm leading-relaxed">Find books, electronics, notes, and more listed by students from your campus. Contact them via WhatsApp.</p>
             </div>
-            <div className="p-8 rounded-[2.5rem] bg-white border border-gray-100 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl">
+            <div className="p-8 rounded-[2.5rem] bg-white border border-blue-50 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl hover:border-blue-200">
               <div className="text-5xl mb-6">💸</div>
-              <h4 className="text-slate-900 font-bold text-xl mb-3">Sell Your Stuff</h4>
+              <h4 className="text-slate-900 font-extrabold text-xl mb-3">Sell Your Stuff</h4>
               <p className="text-slate-500 text-sm leading-relaxed">Got something to sell? List it instantly via WhatsApp. Our team will add it to the marketplace within minutes.</p>
             </div>
           </div>

@@ -257,10 +257,10 @@ export default function UniversityResources() {
   };
 
   return (
-    <section className="section-padding relative overflow-hidden bg-slate-50" id="university-resources">
+    <section className="section-padding relative overflow-hidden bg-white md:bg-slate-50" id="university-resources">
       {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-64 -mt-64" style={{background: 'rgba(59,130,246,0.06)'}} />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full blur-[120px] -ml-64 -mb-64" style={{background: 'rgba(147,197,253,0.07)'}} />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-64 -mt-64" style={{background: 'rgba(186,230,253,0.3)'}} />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full blur-[120px] -ml-64 -mb-64" style={{background: 'rgba(186,230,253,0.2)'}} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center mb-12">
@@ -303,7 +303,7 @@ export default function UniversityResources() {
 
           {/* Search Results Dropdown */}
           {searchQuery.trim().length > 1 && (
-            <div className="absolute top-full left-0 right-0 mt-4 bg-white border border-gray-100 rounded-[2rem] overflow-hidden shadow-2xl z-50 animate-slide-down">
+            <div className="absolute top-full left-0 right-0 mt-4 bg-white border border-blue-100 rounded-[2rem] overflow-hidden shadow-2xl z-50 animate-slide-down">
               {loading ? (
                 <div className="px-8 py-10 text-center">
                   <div className="w-6 h-6 border-2 border-gray-200 border-t-blue-500 rounded-full animate-spin mx-auto mb-3" />
@@ -340,7 +340,7 @@ export default function UniversityResources() {
         {/* Resources Display */}
         {selectedUni ? (
           <div className="animate-fade-in">
-            <div className="bg-slate-50 border border-gray-200 rounded-[3rem] p-8 md:p-12 shadow-sm">
+            <div className="bg-sky-50/30 border border-blue-100 rounded-[3rem] p-6 md:p-12 shadow-sm">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                 <div className="flex items-center gap-6">
                   <img 
@@ -375,10 +375,10 @@ export default function UniversityResources() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Quick Access Cards */}
-            <div className="p-8 rounded-[2.5rem] bg-white border border-gray-100 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl">
-              <div className="w-16 h-16 rounded-3xl bg-blue-100 text-blue-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+            <div className="p-8 rounded-[2.5rem] bg-white border border-blue-50 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl hover:border-blue-200">
+              <div className="w-16 h-16 rounded-3xl bg-sky-100 text-sky-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
@@ -386,8 +386,8 @@ export default function UniversityResources() {
               <h4 className="text-slate-900 font-bold text-xl mb-3">Handwritten Notes</h4>
               <p className="text-slate-500 text-sm leading-relaxed">Access high-quality notes prepared by toppers and faculty members.</p>
             </div>
-            <div className="p-8 rounded-[2.5rem] bg-white border border-gray-100 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl">
-              <div className="w-16 h-16 rounded-3xl bg-blue-100 text-blue-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+            <div className="p-8 rounded-[2.5rem] bg-white border border-blue-50 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl hover:border-blue-200">
+              <div className="w-16 h-16 rounded-3xl bg-sky-100 text-sky-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -395,8 +395,8 @@ export default function UniversityResources() {
               <h4 className="text-slate-900 font-bold text-xl mb-3">Question Papers</h4>
               <p className="text-slate-500 text-sm leading-relaxed">Practice with previous years' papers to excel in your semester exams.</p>
             </div>
-            <div className="p-8 rounded-[2.5rem] bg-white border border-gray-100 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl">
-              <div className="w-16 h-16 rounded-3xl bg-blue-100 text-blue-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+            <div className="p-8 rounded-[2.5rem] bg-white border border-blue-50 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl hover:border-blue-200">
+              <div className="w-16 h-16 rounded-3xl bg-sky-100 text-sky-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                 </svg>
