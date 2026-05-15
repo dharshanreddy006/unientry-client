@@ -2,7 +2,6 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import FloatingWhatsApp from '@/components/common/FloatingWhatsApp';
 import Hero from '@/components/home/Hero';
-import FeaturedUniversities from '@/components/home/FeaturedUniversities';
 import ReferAndEarn from '@/components/features/ReferAndEarn';
 import AttendanceCalculator from '@/components/features/AttendanceCalculator';
 import UniversityResources from '@/components/features/UniversityResources';
@@ -16,7 +15,6 @@ export default function HomePage() {
     <main>
       <Navbar />
       <Hero />
-      <FeaturedUniversities />
       <ReferAndEarn />
       <AttendanceCalculator />
       <UniversityResources />
