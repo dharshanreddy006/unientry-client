@@ -87,19 +87,19 @@ export default function StudentMarketplace() {
     : listings.filter(l => l.category === selectedCategory);
 
   return (
-    <section className="section-padding relative overflow-hidden" style={{background: 'linear-gradient(160deg, #042F2E 0%, #0D6E6A 50%, #14B8A6 100%)'}} id="marketplace">
+    <section className="section-padding relative overflow-hidden" style={{background: 'linear-gradient(160deg, #0F172A 0%, #1E3A8A 50%, #2563EB 80%, #06B6D4 100%)'}} id="marketplace">
       {/* Background Decorations */}
-      <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[150px] -ml-64 -mt-64 pointer-events-none" style={{background: 'rgba(255,255,255,0.07)'}} />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] -mr-64 -mb-64 pointer-events-none" style={{background: 'rgba(45,212,191,0.1)'}} />
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[150px] -ml-64 -mt-64 pointer-events-none" style={{background: 'rgba(6,182,212,0.1)'}} />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] -mr-64 -mb-64 pointer-events-none" style={{background: 'rgba(37,99,235,0.15)'}} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold mb-4 tracking-widest uppercase border" style={{background: 'rgba(255,255,255,0.12)', color: '#CCFBF1', borderColor: 'rgba(255,255,255,0.2)'}}>
+          <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold mb-4 tracking-widest uppercase border" style={{background: 'rgba(6,182,212,0.15)', color: '#67E8F9', borderColor: 'rgba(6,182,212,0.3)'}}>
             STUDENT MARKETPLACE
           </span>
           <h2 className="font-heading font-bold text-3xl md:text-5xl text-white mb-4">
-            Buy & Sell <span style={{color: '#5EEAD4'}}>Within Your Campus</span>
+            Buy & Sell <span style={{color: '#06B6D4'}}>Within Your Campus</span>
           </h2>
           <p className="text-white/60 max-w-2xl mx-auto">
             Books, electronics, notes — trade with students from your university. Select your university below to get started.
@@ -118,7 +118,7 @@ export default function StudentMarketplace() {
               style={{background: 'rgba(255,255,255,0.07)', borderColor: 'rgba(255,255,255,0.15)'}}
             />
             <div className="absolute right-6 top-1/2 -translate-y-1/2">
-              <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-lg" style={{background: '#0D9488'}}>
+              <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-lg" style={{background: '#2563EB'}}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>

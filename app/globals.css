@@ -11,7 +11,7 @@
   --color-primary-600: #284492;
   --color-primary-700: #223b88;
   --color-primary-800: #1c327e;
-  --color-primary-900: #042F2E;
+  --color-primary-900: #0F172A;
   --color-primary-950: #060d1a;
 
   --color-accent-50: #e0f4ff;
@@ -212,7 +212,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hero gradient */
 .hero-gradient {
-  background: linear-gradient(135deg, #042F2E 0%, #0D6E6A 40%, #0D9488 70%, #2DD4BF 100%);
+  background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 35%, #2563EB 65%, #06B6D4 100%);
   background-size: 200% 200%;
   animation: gradient-shift 8s ease infinite;
 }
