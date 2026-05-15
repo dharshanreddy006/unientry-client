@@ -1,6 +1,5 @@
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import FloatingWhatsApp from '@/components/common/FloatingWhatsApp';
 import Hero from '@/components/home/Hero';
 import ReferAndEarn from '@/components/features/ReferAndEarn';
 import StudentMarketplace from '@/components/features/StudentMarketplace';
@@ -23,7 +22,6 @@ export default function HomePage() {
       <CGPACalculator />
       <ContactSection />
       <Footer />
-      <FloatingWhatsApp />
     </main>
   );
 }

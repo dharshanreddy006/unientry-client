@@ -18,11 +18,11 @@ export default function FounderSection() {
           
           {/* Image Side */}
           <div className="w-full lg:w-4/12 relative flex justify-center">
-            <div className="relative w-52 h-52 md:w-64 md:h-64 rounded-[2rem] overflow-hidden shadow-2xl bg-white border border-gray-100">
+            <div className="relative w-52 h-52 md:w-64 md:h-64 rounded-[2rem] overflow-hidden shadow-2xl">
               <img
                 src={getImageUrl(settings.founderImageUrl) || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800'}
                 alt={settings.founderName}
-                className="w-full h-full object-contain p-4"
+                className="w-full h-full object-cover"
                 onError={(e) => {
                   e.target.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800';
                 }}
