@@ -4,7 +4,7 @@ import Hero from '@/components/home/Hero';
 import ReferAndEarn from '@/components/features/ReferAndEarn';
 import StudentMarketplace from '@/components/features/StudentMarketplace';
 import UniversityResources from '@/components/features/UniversityResources';
-import Testimonials from '@/components/home/Testimonials';
+import AccommodationSection from '@/components/home/AccommodationSection';
 import FounderSection from '@/components/home/FounderSection';
 import CGPACalculator from '@/components/features/CGPACalculator';
 import ContactSection from '@/components/home/ContactSection';
@@ -17,7 +17,7 @@ export default function HomePage() {
       <ReferAndEarn />
       <StudentMarketplace />
       <UniversityResources />
-      <Testimonials />
+      <AccommodationSection />
       <FounderSection />
       <CGPACalculator />
       <ContactSection />
