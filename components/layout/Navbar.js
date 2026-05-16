@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSettings } from '@/components/providers/SettingsProvider';
+import { getImageUrl } from '@/lib/apiConfig';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -42,7 +43,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             {settings?.logoUrl ? (
-              <img src={settings.logoUrl} alt="Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
+              <img src={getImageUrl(settings.logoUrl)} alt="Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
             ) : (
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center shadow-lg group-hover:shadow-accent-400/40 transition-shadow">
                 <span className="text-white font-bold text-lg font-heading">U</span>

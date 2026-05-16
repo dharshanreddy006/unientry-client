@@ -11,7 +11,17 @@ export async function generateMetadata() {
 
     const title = settings.heroTitle || "UniEntry — Your Gateway to Global Education";
     const description = settings.heroSubtitle || "UniEntry helps students across India easily access PYQs, important college resources, and trusted guidance for smarter course selection.";
-    const favicon = settings.faviconUrl || "/favicon.ico";
+    const getProxiedUrl = (url) => {
+      if (!url) return null;
+      if (url.includes('up.railway.app')) {
+        const parts = url.split('/uploads/');
+        return parts[1] ? `/uploads/${parts[1]}?v=${new Date().getTime()}` : url;
+      }
+      return url;
+    };
+
+    const favicon = getProxiedUrl(settings.faviconUrl) || "/favicon.ico";
+    const ogImage = getProxiedUrl(settings.logoUrl);
 
     return {
       title,
@@ -26,6 +36,7 @@ export async function generateMetadata() {
         title,
         description,
         type: "website",
+        images: ogImage ? [{ url: ogImage }] : [],
       },
     };
   } catch (error) {
