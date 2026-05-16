@@ -74,8 +74,8 @@ export default function Hero() {
 
         {/* Stats */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 animate-fade-in-up delay-500">
-          {stats.map((stat) => (
-            <div key={stat.label} className="bg-sky-50/50 rounded-2xl p-4 shadow-sm border border-blue-100">
+          {stats.map((stat, idx) => (
+            <div key={stat.label} className={`${idx % 2 === 0 ? 'bg-amber-50/50 border-amber-100' : 'bg-sky-50/50 border-blue-100'} rounded-2xl p-4 shadow-sm border`}>
               <p className="font-heading font-extrabold text-2xl md:text-3xl text-slate-900">{stat.number}</p>
               <p className="text-slate-500 text-[10px] md:text-sm mt-1 uppercase tracking-wider font-bold">{stat.label}</p>
             </div>

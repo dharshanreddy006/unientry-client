@@ -87,9 +87,9 @@ export default function StudentMarketplace() {
     : listings.filter(l => l.category === selectedCategory);
 
   return (
-    <section className="section-padding relative overflow-hidden bg-white md:bg-slate-50" id="marketplace">
+    <section className="section-padding relative overflow-hidden bg-cream md:bg-white" id="marketplace">
       {/* Background Decorations */}
-      <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[150px] -ml-64 -mt-64 pointer-events-none" style={{background: 'rgba(186,230,253,0.4)'}} />
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[150px] -ml-64 -mt-64 pointer-events-none" style={{background: 'rgba(254,243,199,0.5)'}} />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] -mr-64 -mb-64 pointer-events-none" style={{background: 'rgba(186,230,253,0.3)'}} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
@@ -169,7 +169,7 @@ export default function StudentMarketplace() {
         {selectedUni ? (
           <div className="animate-fade-in">
             {/* University Header */}
-            <div className="bg-sky-50/50 border border-blue-100 rounded-[3rem] p-6 md:p-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="bg-white/80 backdrop-blur-md border border-amber-100/50 rounded-[3rem] p-6 md:p-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex items-center gap-6">
                 <img
                   src={getImageUrl(selectedUni?.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=200'}
@@ -374,7 +374,7 @@ export default function StudentMarketplace() {
         ) : (
           /* Default State - How it works */
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-            <div className="p-8 rounded-[2.5rem] bg-white border border-blue-50 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl hover:border-blue-200">
+            <div className="p-8 rounded-[2.5rem] bg-white border border-amber-100/30 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl hover:border-amber-200">
               <div className="text-5xl mb-6">🔍</div>
               <h4 className="text-slate-900 font-extrabold text-xl mb-3">Search Your University</h4>
               <p className="text-slate-500 text-sm leading-relaxed">Type your college or university name in the search bar above to find your campus marketplace.</p>
@@ -384,7 +384,7 @@ export default function StudentMarketplace() {
               <h4 className="text-slate-900 font-extrabold text-xl mb-3">Browse & Buy</h4>
               <p className="text-slate-500 text-sm leading-relaxed">Find books, electronics, notes, and more listed by students from your campus. Contact them via WhatsApp.</p>
             </div>
-            <div className="p-8 rounded-[2.5rem] bg-white border border-blue-50 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl hover:border-blue-200">
+            <div className="p-8 rounded-[2.5rem] bg-white border border-amber-100/30 text-center group hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-xl hover:border-amber-200">
               <div className="text-5xl mb-6">💸</div>
               <h4 className="text-slate-900 font-extrabold text-xl mb-3">Sell Your Stuff</h4>
               <p className="text-slate-500 text-sm leading-relaxed">Got something to sell? List it instantly via WhatsApp. Our team will add it to the marketplace within minutes.</p>
