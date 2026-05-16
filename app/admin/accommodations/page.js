@@ -24,10 +24,37 @@ export default function AdminAccommodations() {
   const [editId, setEditId] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const API = 'https://unientry-server-production.up.railway.app/api';
   const token = typeof window !== 'undefined' ? localStorage.getItem('unientry_token') : '';
   const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      const res = await fetch(`${API}/upload`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        setForm({ ...form, imageUrl: data.data.url });
+      } else {
+        alert('Upload failed: ' + data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Upload failed');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -67,7 +94,7 @@ export default function AdminAccommodations() {
     try {
       const body = { 
         ...form, 
-        amenities: form.amenities.split(',').map(s => s.trim()).filter(Boolean),
+        amenities: typeof form.amenities === 'string' ? form.amenities.split(',').map(s => s.trim()).filter(Boolean) : form.amenities,
         universityId: form.universityId ? parseInt(form.universityId) : null
       };
       const url = editId ? `${API}/accommodations/${editId}` : `${API}/accommodations`;
@@ -149,6 +176,31 @@ export default function AdminAccommodations() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Amenities (comma separated)</label>
                   <input type="text" value={form.amenities} onChange={(e) => setForm({ ...form, amenities: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="Wifi, Laundry, Gym" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Property Image</label>
+                  <div className="flex items-center gap-4">
+                    {form.imageUrl && (
+                      <div className="w-20 h-20 rounded-xl border border-gray-200 overflow-hidden bg-gray-50">
+                        <img src={form.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        disabled={uploading}
+                        className="block w-full text-xs text-gray-500
+                          file:mr-4 file:py-2.5 file:px-4
+                          file:rounded-xl file:border-0
+                          file:text-xs file:font-semibold
+                          file:bg-accent-50 file:text-accent-700
+                          hover:file:bg-accent-100 transition-all"
+                      />
+                      {uploading && <p className="text-[10px] text-accent-600 mt-2 animate-pulse">Uploading...</p>}
+                    </div>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <input type="checkbox" id="active" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} className="w-4 h-4 rounded" />
