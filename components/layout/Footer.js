@@ -6,7 +6,7 @@ import { useSettings } from '@/components/providers/SettingsProvider';
 const quickLinks = [
   { name: 'Home', href: '/' },
   { name: 'Universities', href: '/universities' },
-  { name: 'Internships', href: '/internships' },
+  { name: 'Accommodation', href: '/accommodation' },
   { name: 'About Us', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];

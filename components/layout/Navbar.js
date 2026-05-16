@@ -8,7 +8,7 @@ import { useSettings } from '@/components/providers/SettingsProvider';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Universities', href: '/universities' },
-  { name: 'Internships', href: '/internships' },
+  { name: 'Accommodation', href: '/accommodation' },
   { name: 'CGPA Calculator', href: '/#cgpa-calculator' },
   { name: 'Resources', href: '/#university-resources' },
   { name: 'About', href: '/about' },

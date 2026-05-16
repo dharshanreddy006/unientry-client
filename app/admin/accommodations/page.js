@@ -3,10 +3,22 @@
 import { useState, useEffect } from 'react';
 import AdminShell from '@/components/admin/AdminShell';
 
-const emptyForm = { companyName: '', role: '', duration: '', stipend: '', description: '', skills: '', location: '', type: 'Remote', active: true };
+const emptyForm = { 
+  propertyName: '', 
+  roomType: '', 
+  price: '', 
+  distance: '', 
+  description: '', 
+  amenities: '', 
+  location: '', 
+  universityId: '', 
+  imageUrl: '', 
+  active: true 
+};
 
-export default function AdminInternships() {
-  const [internships, setInternships] = useState([]);
+export default function AdminAccommodations() {
+  const [accommodations, setAccommodations] = useState([]);
+  const [universities, setUniversities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -17,29 +29,35 @@ export default function AdminInternships() {
   const token = typeof window !== 'undefined' ? localStorage.getItem('unientry_token') : '';
   const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` };
 
-  const fetchInternships = async () => {
+  const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API}/internships/all`, { headers });
-      const data = await res.json();
-      if (data.success) setInternships(data.data);
+      const [accRes, uniRes] = await Promise.all([
+        fetch(`${API}/accommodations/all`, { headers }),
+        fetch(`${API}/universities`)
+      ]);
+      const accData = await accRes.json();
+      const uniData = await uniRes.json();
+      
+      if (accData.success) setAccommodations(accData.data);
+      if (uniData.success) setUniversities(uniData.data);
     } catch (err) { console.error(err); }
     finally { setLoading(false); }
   };
 
-  useEffect(() => { fetchInternships(); }, []);
+  useEffect(() => { fetchData(); }, []);
 
-  const handleEdit = (intern) => {
-    setEditId(intern._id);
-    setForm({ ...intern, skills: intern.skills?.join(', ') || '' });
+  const handleEdit = (acc) => {
+    setEditId(acc._id);
+    setForm({ ...acc, amenities: acc.amenities?.join(', ') || '' });
     setShowForm(true);
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Delete this internship?')) return;
+    if (!confirm('Delete this accommodation?')) return;
     try {
-      await fetch(`${API}/internships/${id}`, { method: 'DELETE', headers });
-      fetchInternships();
+      await fetch(`${API}/accommodations/${id}`, { method: 'DELETE', headers });
+      fetchData();
     } catch (err) { console.error(err); }
   };
 
@@ -47,27 +65,31 @@ export default function AdminInternships() {
     e.preventDefault();
     setSaving(true);
     try {
-      const body = { ...form, skills: form.skills.split(',').map(s => s.trim()).filter(Boolean) };
-      const url = editId ? `${API}/internships/${editId}` : `${API}/internships`;
+      const body = { 
+        ...form, 
+        amenities: form.amenities.split(',').map(s => s.trim()).filter(Boolean),
+        universityId: form.universityId ? parseInt(form.universityId) : null
+      };
+      const url = editId ? `${API}/accommodations/${editId}` : `${API}/accommodations`;
       const method = editId ? 'PUT' : 'POST';
       const res = await fetch(url, { method, headers, body: JSON.stringify(body) });
       const data = await res.json();
       if (data.success) {
-        setShowForm(false); setEditId(null); setForm(emptyForm); fetchInternships();
+        setShowForm(false); setEditId(null); setForm(emptyForm); fetchData();
       }
     } catch (err) { console.error(err); }
     finally { setSaving(false); }
   };
 
   return (
-    <AdminShell title="Internship Management">
+    <AdminShell title="Accommodation Management">
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <p className="text-gray-500">{internships.length} internships total</p>
+          <p className="text-gray-500">{accommodations.length} properties listed</p>
           <button onClick={() => { setShowForm(true); setEditId(null); setForm(emptyForm); }}
             className="px-5 py-2.5 bg-accent-500 text-white rounded-xl text-sm font-semibold hover:bg-accent-600 transition-colors flex items-center gap-2">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
-            Add Internship
+            Add Property
           </button>
         </div>
 
@@ -75,7 +97,7 @@ export default function AdminInternships() {
           <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
             <div className="bg-white rounded-3xl p-8 w-full max-w-2xl shadow-2xl my-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-heading font-semibold text-xl text-primary-900">{editId ? 'Edit' : 'Add'} Internship</h2>
+                <h2 className="font-heading font-semibold text-xl text-primary-900">{editId ? 'Edit' : 'Add'} Property</h2>
                 <button onClick={() => { setShowForm(false); setEditId(null); }} className="p-2 hover:bg-gray-100 rounded-lg">
                   <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
@@ -83,36 +105,39 @@ export default function AdminInternships() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Company Name *</label>
-                    <input type="text" required value={form.companyName} onChange={(e) => setForm({ ...form, companyName: e.target.value })}
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Property Name *</label>
+                    <input type="text" required value={form.propertyName} onChange={(e) => setForm({ ...form, propertyName: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Role *</label>
-                    <input type="text" required value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Room Type *</label>
+                    <input type="text" required value={form.roomType} onChange={(e) => setForm({ ...form, roomType: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. Single, Shared, Studio" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Duration *</label>
-                    <input type="text" required value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Price *</label>
+                    <input type="text" required value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. £800/month" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Stipend</label>
-                    <input type="text" value={form.stipend} onChange={(e) => setForm({ ...form, stipend: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Distance *</label>
+                    <input type="text" required value={form.distance} onChange={(e) => setForm({ ...form, distance: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. 5 mins walk" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                    <input type="text" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                    <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Linked University *</label>
+                    <select required value={form.universityId} onChange={(e) => setForm({ ...form, universityId: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm">
-                      <option>Remote</option><option>On-site</option><option>Hybrid</option>
+                      <option value="">Select University</option>
+                      {universities.map(uni => (
+                        <option key={uni.id} value={uni.id}>{uni.universityName}</option>
+                      ))}
                     </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
+                    <input type="text" required value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="City, Country" />
                   </div>
                 </div>
                 <div>
@@ -121,9 +146,9 @@ export default function AdminInternships() {
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm resize-none" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Skills (comma separated)</label>
-                  <input type="text" value={form.skills} onChange={(e) => setForm({ ...form, skills: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="React, Node.js, Python" />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Amenities (comma separated)</label>
+                  <input type="text" value={form.amenities} onChange={(e) => setForm({ ...form, amenities: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="Wifi, Laundry, Gym" />
                 </div>
                 <div className="flex items-center gap-2">
                   <input type="checkbox" id="active" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} className="w-4 h-4 rounded" />
@@ -131,7 +156,7 @@ export default function AdminInternships() {
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="submit" disabled={saving} className="flex-1 py-3 bg-accent-500 text-white rounded-xl font-semibold text-sm hover:bg-accent-600 disabled:opacity-50">
-                    {saving ? 'Saving...' : (editId ? 'Update' : 'Add Internship')}
+                    {saving ? 'Saving...' : (editId ? 'Update' : 'Add Property')}
                   </button>
                   <button type="button" onClick={() => { setShowForm(false); setEditId(null); }} className="px-6 py-3 bg-gray-100 text-gray-600 rounded-xl font-semibold text-sm">Cancel</button>
                 </div>
@@ -147,31 +172,32 @@ export default function AdminInternships() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead><tr className="bg-gray-50 border-b border-gray-100">
-                  <th className="text-left py-4 px-5 text-gray-400 font-medium">Company</th>
-                  <th className="text-left py-4 px-5 text-gray-400 font-medium">Role</th>
-                  <th className="text-left py-4 px-5 text-gray-400 font-medium">Stipend</th>
-                  <th className="text-left py-4 px-5 text-gray-400 font-medium">Type</th>
-                  <th className="text-left py-4 px-5 text-gray-400 font-medium">Status</th>
+                  <th className="text-left py-4 px-5 text-gray-400 font-medium">Property</th>
+                  <th className="text-left py-4 px-5 text-gray-400 font-medium">Room Type</th>
+                  <th className="text-left py-4 px-5 text-gray-400 font-medium">Price</th>
+                  <th className="text-left py-4 px-5 text-gray-400 font-medium">Distance</th>
+                  <th className="text-left py-4 px-5 text-gray-400 font-medium">University</th>
                   <th className="text-right py-4 px-5 text-gray-400 font-medium">Actions</th>
                 </tr></thead>
                 <tbody>
-                  {internships.map((intern) => (
-                    <tr key={intern._id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                      <td className="py-4 px-5 font-medium text-primary-900">{intern.companyName}</td>
-                      <td className="py-4 px-5 text-gray-500">{intern.role}</td>
-                      <td className="py-4 px-5 text-gray-500">{intern.stipend}</td>
-                      <td className="py-4 px-5"><span className="px-2.5 py-1 bg-accent-50 text-accent-700 rounded-lg text-xs font-medium">{intern.type}</span></td>
+                  {accommodations.map((acc) => (
+                    <tr key={acc._id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                       <td className="py-4 px-5">
-                        <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${intern.active ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
-                          {intern.active ? 'Active' : 'Inactive'}
-                        </span>
+                        <div className="font-medium text-primary-900">{acc.propertyName}</div>
+                        <div className="text-[10px] text-gray-400">{acc.location}</div>
+                      </td>
+                      <td className="py-4 px-5 text-gray-500">{acc.roomType}</td>
+                      <td className="py-4 px-5 text-gray-500 font-semibold text-accent-600">{acc.price}</td>
+                      <td className="py-4 px-5 text-gray-500">{acc.distance}</td>
+                      <td className="py-4 px-5 text-gray-500">
+                        {universities.find(u => u.id === acc.universityId)?.universityName || 'Not Linked'}
                       </td>
                       <td className="py-4 px-5 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <button onClick={() => handleEdit(intern)} className="p-2 hover:bg-accent-50 rounded-lg text-accent-600">
+                          <button onClick={() => handleEdit(acc)} className="p-2 hover:bg-accent-50 rounded-lg text-accent-600">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                           </button>
-                          <button onClick={() => handleDelete(intern._id)} className="p-2 hover:bg-red-50 rounded-lg text-red-500">
+                          <button onClick={() => handleDelete(acc._id)} className="p-2 hover:bg-red-50 rounded-lg text-red-500">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                           </button>
                         </div>
