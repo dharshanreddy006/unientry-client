@@ -15,7 +15,7 @@ export default function AboutPage() {
     const fetchSettings = async () => {
       try {
         const res = await fetch(`${API_URL}/settings`, {
-          cache: 'no-store'
+          cache: 'no-store',
         });
         const data = await res.json();
         if (data.success) setSettings(data.data);

@@ -20,7 +20,7 @@ export default function AccommodationPage() {
   useEffect(() => {
     const fetchUnis = async () => {
       try {
-        const res = await fetch(`${API_URL}/universities`);
+        const res = await fetch(`${API_URL}/universities`, { cache: 'no-store' });
         const data = await res.json();
         if (data.success) setUniversities(data.data);
       } catch (err) { console.error(err); }
@@ -34,7 +34,7 @@ export default function AccommodationPage() {
       const fetchAcc = async () => {
         setLoading(true);
         try {
-          const res = await fetch(`${API_URL}/accommodations?universityId=${selectedUni.id}`);
+          const res = await fetch(`${API_URL}/accommodations?universityId=${selectedUni.id}`, { cache: 'no-store' });
           const data = await res.json();
           if (data.success) setAccommodations(data.data);
         } catch (err) { console.error(err); }

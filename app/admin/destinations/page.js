@@ -11,7 +11,7 @@ export default function AdminDestinations() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  const API = 'https://unientry-server-production.up.railway.app/api';
+  const API = '/api';
   const token = typeof window !== 'undefined' ? localStorage.getItem('unientry_token') : '';
 
   const fetchDestinations = async () => {

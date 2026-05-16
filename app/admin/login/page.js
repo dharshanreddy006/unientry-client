@@ -17,7 +17,7 @@ export default function AdminLoginPage() {
 
     try {
       const res = await fetch(
-        `${'https://unientry-server-production.up.railway.app/api'}/admin/login`,
+        `${'/api'}/admin/login`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

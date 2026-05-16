@@ -10,14 +10,14 @@ export default function AdminSettings() {
   const [saved, setSaved] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  const API = 'https://unientry-server-production.up.railway.app/api';
+  const API = '/api';
   const token = typeof window !== 'undefined' ? localStorage.getItem('unientry_token') : '';
   const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` };
 
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await fetch(`${API}/settings`);
+        const res = await fetch(`${API}/settings`, { cache: 'no-store' });
         const data = await res.json();
         if (data.success) setSettings(data.data);
       } catch (err) { console.error(err); }

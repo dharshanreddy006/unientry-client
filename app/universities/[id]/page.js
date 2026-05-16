@@ -197,7 +197,7 @@ export default function UniversityDetailsPage() {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {university.images.map((img, i) => (
                       <div key={i} className="rounded-xl overflow-hidden h-40">
-                        <img src={img.url} alt={`Campus ${i + 1}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+                        <img src={getImageUrl(img.url)} alt={`Campus ${i + 1}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
                       </div>
                     ))}
                   </div>

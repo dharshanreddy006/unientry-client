@@ -32,13 +32,16 @@ export default function AdminShell({ children, title }) {
     if (adminData) setAdmin(JSON.parse(adminData));
     setAuthChecked(true);
 
-    // Fetch settings for logo
-    fetch('https://unientry-server-production.up.railway.app/api/settings')
-      .then(res => res.json())
-      .then(data => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('/api/settings', { cache: 'no-store' });
+        const data = await res.json();
         if (data.success) setSettings(data.data);
-      })
-      .catch(err => console.error(err));
+      } catch (err) {
+        console.error('Error fetching settings for logo:', err);
+      }
+    };
+    fetchSettings();
   }, [router]);
 
   const handleLogout = () => {

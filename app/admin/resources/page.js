@@ -12,7 +12,7 @@ export default function ResourceAccessPage() {
   const [emailInput, setEmailInput] = useState('');
   const [selectedUniId, setSelectedUniId] = useState('');
 
-  const API = 'https://unientry-server-production.up.railway.app/api';
+  const API = '/api';
   const token = typeof window !== 'undefined' ? localStorage.getItem('unientry_token') : '';
   const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` };
 

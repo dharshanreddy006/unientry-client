@@ -26,14 +26,14 @@ export default function AdminUniversities() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  const API = 'https://unientry-server-production.up.railway.app/api';
+  const API = '/api';
   const token = typeof window !== 'undefined' ? localStorage.getItem('unientry_token') : '';
   const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` };
 
   const fetchUniversities = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API}/universities?limit=100`);
+      const res = await fetch(`${API}/universities?limit=100`, { cache: 'no-store' });
       const data = await res.json();
       if (data.success) setUniversities(data.data);
     } catch (err) { console.error(err); }

@@ -26,7 +26,7 @@ export default function UniversityResources() {
       .catch(err => console.error(err));
 
     // Fetch Site Settings for global WhatsApp number
-    fetch(`${API_URL}/settings`)
+    fetch(`${API_URL}/settings`, { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
         if (data.success) setSettings(data.data);

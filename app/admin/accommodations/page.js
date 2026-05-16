@@ -26,7 +26,7 @@ export default function AdminAccommodations() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  const API = 'https://unientry-server-production.up.railway.app/api';
+  const API = '/api';
   const token = typeof window !== 'undefined' ? localStorage.getItem('unientry_token') : '';
   const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` };
 
@@ -60,8 +60,8 @@ export default function AdminAccommodations() {
     setLoading(true);
     try {
       const [accRes, uniRes] = await Promise.all([
-        fetch(`${API}/accommodations/all`, { headers }),
-        fetch(`${API}/universities`)
+        fetch(`${API}/accommodations/all`, { headers, cache: 'no-store' }),
+        fetch(`${API}/universities`, { cache: 'no-store' })
       ]);
       const accData = await accRes.json();
       const uniData = await uniRes.json();

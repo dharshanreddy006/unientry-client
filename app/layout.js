@@ -5,7 +5,7 @@ import "./globals.css";
 
 export async function generateMetadata() {
   try {
-    const res = await fetch('https://unientry-server-production.up.railway.app/api/settings', { next: { revalidate: 3600 } });
+    const res = await fetch('https://unientry-server-production.up.railway.app/api/settings', { cache: 'no-store' });
     const data = await res.json();
     const settings = data.data || {};
 

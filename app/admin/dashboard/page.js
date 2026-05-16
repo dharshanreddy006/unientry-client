@@ -13,8 +13,11 @@ export default function AdminDashboard() {
       try {
         const token = localStorage.getItem('unientry_token');
         const res = await fetch(
-          `${'https://unientry-server-production.up.railway.app/api'}/settings/stats`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          '/api/settings/stats',
+          { 
+            headers: { Authorization: `Bearer ${token}` },
+            cache: 'no-store'
+          }
         );
         const data = await res.json();
         if (data.success) setStats(data.data);
