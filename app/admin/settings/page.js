@@ -85,6 +85,70 @@ export default function AdminSettings() {
           </div>
         )}
 
+        {/* Branding Section */}
+        <div className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
+          <h2 className="font-heading font-semibold text-lg text-primary-900 mb-5">Branding</h2>
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Website Logo</label>
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center overflow-hidden">
+                  {settings.logoUrl ? (
+                    <img src={settings.logoUrl} alt="Logo" className="max-w-full max-h-full object-contain" />
+                  ) : (
+                    <span className="text-gray-300 text-xs font-bold uppercase">U</span>
+                  )}
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, 'logoUrl')}
+                    disabled={uploading === 'logoUrl'}
+                    className="block w-full text-sm text-gray-500
+                      file:mr-4 file:py-2 file:px-4
+                      file:rounded-xl file:border-0
+                      file:text-xs file:font-bold
+                      file:bg-blue-50 file:text-blue-700
+                      hover:file:bg-blue-100 transition-all"
+                  />
+                  {uploading === 'logoUrl' && <p className="text-xs text-blue-600 mt-2 font-medium">Uploading logo...</p>}
+                </div>
+              </div>
+              <p className="text-[10px] text-gray-400 mt-2">Transparent PNG or SVG recommended. Will replace the "U" symbol in navbar.</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Website Favicon</label>
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center overflow-hidden">
+                  {settings.faviconUrl ? (
+                    <img src={settings.faviconUrl} alt="Favicon" className="w-6 h-6 object-contain" />
+                  ) : (
+                    <div className="w-4 h-4 bg-gray-200 rounded-sm" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="file"
+                    accept="image/x-icon,image/png,image/svg+xml"
+                    onChange={(e) => handleImageUpload(e, 'faviconUrl')}
+                    disabled={uploading === 'faviconUrl'}
+                    className="block w-full text-sm text-gray-500
+                      file:mr-4 file:py-2 file:px-4
+                      file:rounded-xl file:border-0
+                      file:text-xs file:font-bold
+                      file:bg-blue-50 file:text-blue-700
+                      hover:file:bg-blue-100 transition-all"
+                  />
+                  {uploading === 'faviconUrl' && <p className="text-xs text-blue-600 mt-2 font-medium">Uploading favicon...</p>}
+                </div>
+              </div>
+              <p className="text-[10px] text-gray-400 mt-2">Recommended: 32x32 or 48x48 PNG/ICO. This appears in Google search and browser tabs.</p>
+            </div>
+          </div>
+        </div>
+
         {/* Contact Settings */}
         <div className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
           <h2 className="font-heading font-semibold text-lg text-primary-900 mb-5">Contact Information</h2>
