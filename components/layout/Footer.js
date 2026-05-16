@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useSettings } from '@/components/providers/SettingsProvider';
+import { getImageUrl } from '@/lib/apiConfig';
 
 const quickLinks = [
   { name: 'Home', href: '/' },
@@ -31,7 +32,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-5">
               {settings?.logoUrl ? (
-                <img src={settings.logoUrl} alt="Logo" className="h-10 w-auto object-contain" />
+                <img src={getImageUrl(settings.logoUrl)} alt="Logo" className="h-10 w-auto object-contain" />
               ) : (
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center">
                   <span className="text-white font-bold text-lg font-heading">U</span>
