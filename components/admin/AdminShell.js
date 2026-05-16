@@ -18,6 +18,7 @@ export default function AdminShell({ children, title }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [admin, setAdmin] = useState(null);
   const [authChecked, setAuthChecked] = useState(false);
+  const [settings, setSettings] = useState(null);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -30,6 +31,14 @@ export default function AdminShell({ children, title }) {
     }
     if (adminData) setAdmin(JSON.parse(adminData));
     setAuthChecked(true);
+
+    // Fetch settings for logo
+    fetch('https://unientry-server-production.up.railway.app/api/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) setSettings(data.data);
+      })
+      .catch(err => console.error(err));
   }, [router]);
 
   const handleLogout = () => {
@@ -60,9 +69,13 @@ export default function AdminShell({ children, title }) {
         <div className="flex flex-col h-full">
           <div className="p-6 border-b border-white/10">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center">
-                <span className="text-white font-bold text-lg font-heading">U</span>
-              </div>
+              {settings?.logoUrl ? (
+                <img src={settings.logoUrl} alt="Logo" className="w-10 h-10 object-contain rounded-lg" />
+              ) : (
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center">
+                  <span className="text-white font-bold text-lg font-heading">U</span>
+                </div>
+              )}
               <div>
                 <span className="font-heading font-bold text-lg text-white">UniEntry</span>
                 <p className="text-white/40 text-xs">Admin Panel</p>

@@ -26,10 +26,10 @@ export default function AdminSettings() {
     fetchSettings();
   }, []);
 
-  const handleImageUpload = async (e) => {
+  const handleImageUpload = async (e, field) => {
     const file = e.target.files[0];
     if (!file) return;
-    setUploading(true);
+    setUploading(field);
     try {
       const formData = new FormData();
       formData.append('image', file);
@@ -40,7 +40,7 @@ export default function AdminSettings() {
       });
       const data = await res.json();
       if (data.success) {
-        setSettings({ ...settings, founderImageUrl: data.data.url });
+        setSettings({ ...settings, [field]: data.data.url });
       } else {
         alert('Upload failed: ' + data.message);
       }
@@ -273,8 +273,8 @@ export default function AdminSettings() {
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={handleImageUpload}
-                    disabled={uploading}
+                    onChange={(e) => handleImageUpload(e, 'founderImageUrl')}
+                    disabled={uploading === 'founderImageUrl'}
                     className="block w-full text-sm text-gray-500
                       file:mr-4 file:py-2.5 file:px-4
                       file:rounded-xl file:border-0

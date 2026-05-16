@@ -3,16 +3,39 @@ import "./globals.css";
 
 // Build timestamp: 2026-05-07T11:41:00Z
 
-export const metadata = {
-  title: "UniEntry — Your Gateway to Global Education",
-  description: "UniEntry helps students across India easily access PYQs, important college resources, and trusted guidance for smarter course selection. Your one-stop student platform for academic support, career clarity, and campus success",
-  keywords: "university admissions, study abroad, education consultancy, university fees, scholarships, visa guidance, PYQs, college resources",
-  openGraph: {
-    title: "UniEntry — Your Gateway to Global Education",
-    description: "UniEntry helps students across India easily access PYQs, important college resources, and trusted guidance for smarter course selection. Your one-stop student platform for academic support, career clarity, and campus success",
-    type: "website",
-  },
-};
+export async function generateMetadata() {
+  try {
+    const res = await fetch('https://unientry-server-production.up.railway.app/api/settings', { next: { revalidate: 3600 } });
+    const data = await res.json();
+    const settings = data.data || {};
+
+    const title = settings.heroTitle || "UniEntry — Your Gateway to Global Education";
+    const description = settings.heroSubtitle || "UniEntry helps students across India easily access PYQs, important college resources, and trusted guidance for smarter course selection.";
+    const favicon = settings.faviconUrl || "/favicon.ico";
+
+    return {
+      title,
+      description,
+      keywords: "university admissions, study abroad, education consultancy, university fees, scholarships, visa guidance, PYQs, college resources",
+      icons: {
+        icon: favicon,
+        shortcut: favicon,
+        apple: favicon,
+      },
+      openGraph: {
+        title,
+        description,
+        type: "website",
+      },
+    };
+  } catch (error) {
+    return {
+      title: "UniEntry — Your Gateway to Global Education",
+      description: "UniEntry helps students across India easily access PYQs...",
+      icons: { icon: "/favicon.ico" }
+    };
+  }
+}
 
 export default function RootLayout({ children }) {
   return (
