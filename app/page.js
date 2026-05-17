@@ -6,7 +6,7 @@ import StudentMarketplace from '@/components/features/StudentMarketplace';
 import UniversityResources from '@/components/features/UniversityResources';
 import AccommodationSection from '@/components/home/AccommodationSection';
 import FounderSection from '@/components/home/FounderSection';
-import CGPACalculator from '@/components/features/CGPACalculator';
+import RentAndRide from '@/components/features/RentAndRide';
 import ContactSection from '@/components/home/ContactSection';
 
 export default function HomePage() {
@@ -18,8 +18,8 @@ export default function HomePage() {
       <StudentMarketplace />
       <UniversityResources />
       <AccommodationSection />
+      <RentAndRide />
       <FounderSection />
-      <CGPACalculator />
       <ContactSection />
       <Footer />
     </main>
