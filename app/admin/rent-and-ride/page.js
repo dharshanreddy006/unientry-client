@@ -61,7 +61,9 @@ export default function RentAndRideAdmin() {
       });
       const data = await res.json();
       if (data.success) {
-        setFormData(prev => ({ ...prev, imageUrl: data.url }));
+        setFormData(prev => ({ ...prev, imageUrl: data.data ? data.data.url : data.url }));
+      } else {
+        alert('Upload failed: ' + data.message);
       }
     } catch (err) {
       console.error('Upload error:', err);
