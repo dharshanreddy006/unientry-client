@@ -270,9 +270,17 @@ export default function RentAndRide() {
                           </div>
                           <p className="text-slate-500 text-sm leading-relaxed mb-4 flex-1 line-clamp-2">{listing.description}</p>
                           <div className="flex items-center justify-between mt-auto">
-                            <span className="text-slate-400 text-xs uppercase tracking-widest font-bold">
-                              {listing.vehicleType}
-                            </span>
+                            <div className="flex flex-col">
+                              <span className="text-slate-400 text-xs uppercase tracking-widest font-bold">
+                                {listing.vehicleType}
+                              </span>
+                              {listing.availableHours > 0 && listing.isAvailable && (
+                                <span className="text-emerald-500 text-[10px] font-bold uppercase tracking-wider mt-1.5 flex items-center gap-1 bg-emerald-50 px-2 py-0.5 rounded-md">
+                                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                  Avail: {listing.availableHours} Hrs
+                                </span>
+                              )}
+                            </div>
                             <button
                               onClick={() => handleRentWhatsApp(listing)}
                               disabled={!listing.isAvailable}
