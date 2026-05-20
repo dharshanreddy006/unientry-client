@@ -31,14 +31,15 @@ export function SettingsProvider({ children }) {
           headers: {
             'Accept': 'application/json',
           },
-          mode: 'cors'
+          mode: 'cors',
+          signal: AbortSignal.timeout(3000), // Fail fast if server is down
         });
         const data = await res.json();
         if (data.success && data.data) {
           setSettings({ ...defaultSettings, ...data.data });
         }
       } catch (err) {
-        console.error('Settings fetch error:', err);
+        // Silently fall back to defaults — no console noise
       }
     };
     fetchSettings();

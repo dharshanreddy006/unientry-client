@@ -18,20 +18,20 @@ export default function UniversityResources() {
 
   useEffect(() => {
     // Fetch Universities
-    fetch(`${API_URL}/universities`, { cache: 'no-store' })
+    fetch(`${API_URL}/universities`, { cache: 'no-store', signal: AbortSignal.timeout(3000) })
       .then(res => res.json())
       .then(data => {
         setUniversities(data.data || data);
       })
-      .catch(err => console.error(err));
+      .catch(() => {});
 
     // Fetch Site Settings for global WhatsApp number
-    fetch(`${API_URL}/settings`, { cache: 'no-store' })
+    fetch(`${API_URL}/settings`, { cache: 'no-store', signal: AbortSignal.timeout(3000) })
       .then(res => res.json())
       .then(data => {
         if (data.success) setSettings(data.data);
       })
-      .catch(err => console.error(err))
+      .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 

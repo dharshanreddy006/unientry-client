@@ -13,22 +13,21 @@ export default function ReferAndEarn() {
 
   useEffect(() => {
     // Fetch Universities
-    fetch(`${API_URL}/universities`, { cache: 'no-store' })
+    fetch(`${API_URL}/universities`, { cache: 'no-store', signal: AbortSignal.timeout(3000) })
       .then(res => res.json())
       .then(data => {
         setUniversities(data.data || data);
       })
-      .catch(err => console.error(err));
+      .catch(() => {});
 
     // Fetch Site Settings for WhatsApp Number
-    fetch(`${API_URL}/settings`, { cache: 'no-store' })
+    fetch(`${API_URL}/settings`, { cache: 'no-store', signal: AbortSignal.timeout(3000) })
       .then(res => res.json())
       .then(data => {
         if (data.success) setSettings(data.data);
         setLoading(false);
       })
-      .catch(err => {
-        console.error(err);
+      .catch(() => {
         setLoading(false);
       });
   }, []);

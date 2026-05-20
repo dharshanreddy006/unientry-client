@@ -9,18 +9,19 @@ import WhatsAppButton from '@/components/common/WhatsAppButton';
 
 export default function AboutPage() {
   const [settings, setSettings] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchSettings = async () => {
       try {
         const res = await fetch(`${API_URL}/settings`, {
           cache: 'no-store',
+          signal: AbortSignal.timeout(3000),
         });
         const data = await res.json();
         if (data.success) setSettings(data.data);
       } catch (err) {
-        console.error('Error fetching settings:', err);
+        // Silently fall back to defaults
       } finally {
         setLoading(false);
       }

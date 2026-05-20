@@ -20,10 +20,10 @@ export default function AccommodationPage() {
   useEffect(() => {
     const fetchUnis = async () => {
       try {
-        const res = await fetch(`${API_URL}/universities`, { cache: 'no-store' });
+        const res = await fetch(`${API_URL}/universities`, { cache: 'no-store', signal: AbortSignal.timeout(3000) });
         const data = await res.json();
         if (data.success) setUniversities(data.data);
-      } catch (err) { console.error(err); }
+      } catch (err) { }
     };
     fetchUnis();
   }, []);
@@ -34,10 +34,10 @@ export default function AccommodationPage() {
       const fetchAcc = async () => {
         setLoading(true);
         try {
-          const res = await fetch(`${API_URL}/accommodations?universityId=${selectedUni.id}`, { cache: 'no-store' });
+          const res = await fetch(`${API_URL}/accommodations?universityId=${selectedUni.id}`, { cache: 'no-store', signal: AbortSignal.timeout(5000) });
           const data = await res.json();
           if (data.success) setAccommodations(data.data);
-        } catch (err) { console.error(err); }
+        } catch (err) { }
         finally { setLoading(false); }
       };
       fetchAcc();
