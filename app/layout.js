@@ -1,4 +1,5 @@
 import { SettingsProvider } from '@/components/providers/SettingsProvider';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import "./globals.css";
 
 // Build timestamp: 2026-05-07T11:41:00Z
@@ -55,6 +56,7 @@ export default function RootLayout({ children }) {
         <SettingsProvider>
           {children}
         </SettingsProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
