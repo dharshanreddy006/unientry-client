@@ -395,6 +395,19 @@ export default function RentAndRide() {
                     <p className="text-center text-emerald-600/70 text-xs uppercase tracking-widest leading-relaxed">
                       Your details will be sent to our team via WhatsApp.<br />We'll verify and add it to Rent & Ride.
                     </p>
+
+                    {/* Compliance Notice */}
+                    <div className="mt-6 p-5 bg-amber-50 border border-amber-200 rounded-2xl">
+                      <div className="flex items-start gap-3">
+                        <span className="text-amber-500 text-xl flex-shrink-0 mt-0.5">⚠️</span>
+                        <div>
+                          <h5 className="text-amber-800 font-bold text-sm mb-1.5">Compliance Notice</h5>
+                          <p className="text-amber-700 text-xs leading-relaxed">
+                            Only commercially registered rental vehicles and authorized rental operators are permitted to list vehicles on this platform. Personal vehicles with private (white) number plates are not allowed for commercial rental use, in accordance with applicable Indian transport regulations.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
