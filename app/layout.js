@@ -8,11 +8,11 @@ import "./globals.css";
  * on the client side instead.
  */
 export const metadata = {
-  title: "UniEntry — Your Gateway to Global Education",
+  title: "UniEntry GLOBAL — Your Gateway to Global Education",
   description:
-    "UniEntry is a student-focused platform providing university resources, student services, and admission guidance across India. Access PYQs, notes, marketplace, and accommodation — all in one place.",
+    "UniEntry GLOBAL is a student-focused platform providing university resources, student services, and admission guidance across India. Access PYQs, notes, marketplace, and accommodation — all in one place.",
   keywords:
-    "UniEntry, university admissions, study abroad, education consultancy, university fees, scholarships, visa guidance, PYQs, college resources, student marketplace, accommodation, rent and ride",
+    "UniEntry GLOBAL, UniEntry, university admissions, study abroad, education consultancy, university fees, scholarships, visa guidance, PYQs, college resources, student marketplace, accommodation, rent and ride",
   metadataBase: new URL("https://unientry.online"),
   alternates: {
     canonical: "/",
@@ -37,9 +37,9 @@ export const metadata = {
     shortcut: "/favicon.ico",
   },
   openGraph: {
-    title: "UniEntry — Your Gateway to Global Education",
+    title: "UniEntry GLOBAL — Your Gateway to Global Education",
     description:
-      "UniEntry is a student-focused platform providing university resources, student services, and admission guidance across India.",
+      "UniEntry GLOBAL is a student-focused platform providing university resources, student services, and admission guidance across India.",
     url: "https://unientry.online",
     siteName: "UniEntry Global",
     type: "website",
@@ -55,15 +55,15 @@ export const metadata = {
   },
   twitter: {
     card: "summary",
-    title: "UniEntry — Your Gateway to Global Education",
+    title: "UniEntry GLOBAL — Your Gateway to Global Education",
     description:
-      "UniEntry is a student-focused platform providing university resources, student services, and admission guidance across India.",
+      "UniEntry GLOBAL is a student-focused platform providing university resources, student services, and admission guidance across India.",
     images: ["/logo.png"],
   },
   verification: {},
   other: {
     "theme-color": "#0EA5E9",
-    "apple-mobile-web-app-title": "UniEntry",
+    "apple-mobile-web-app-title": "UniEntry GLOBAL",
   },
 };
 

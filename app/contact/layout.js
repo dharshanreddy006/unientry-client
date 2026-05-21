@@ -1,11 +1,11 @@
 export const metadata = {
-  title: "Contact Us — Get in Touch | UniEntry Global",
+  title: "Contact Us — Get in Touch | UniEntry GLOBAL",
   description:
-    "Contact UniEntry Global for university admissions guidance, accommodation help, and student services. Reach us via WhatsApp or email.",
+    "Contact UniEntry GLOBAL for university admissions guidance, accommodation help, and student services. Reach us via WhatsApp or email.",
   openGraph: {
-    title: "Contact Us — UniEntry Global",
+    title: "Contact Us — UniEntry GLOBAL",
     description:
-      "Contact UniEntry Global for university admissions guidance, accommodation help, and student services.",
+      "Contact UniEntry GLOBAL for university admissions guidance, accommodation help, and student services.",
   },
 };
 

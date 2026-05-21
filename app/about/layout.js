@@ -1,11 +1,11 @@
 export const metadata = {
-  title: "About UniEntry — Our Mission & Team | UniEntry Global",
+  title: "About UniEntry GLOBAL — Our Mission & Team",
   description:
-    "Learn about UniEntry Global, a trusted student-focused education consultancy helping students across India with university admissions, resources, and career guidance.",
+    "Learn about UniEntry GLOBAL, a trusted student-focused education consultancy helping students across India with university admissions, resources, and career guidance.",
   openGraph: {
-    title: "About UniEntry — Our Mission & Team",
+    title: "About UniEntry GLOBAL — Our Mission & Team",
     description:
-      "Learn about UniEntry Global, a trusted student-focused education consultancy helping students across India.",
+      "Learn about UniEntry GLOBAL, a trusted student-focused education consultancy helping students across India.",
   },
 };
 
