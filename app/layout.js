@@ -1,59 +1,81 @@
 import { SettingsProvider } from '@/components/providers/SettingsProvider';
 import "./globals.css";
 
-// Build timestamp: 2026-05-07T11:41:00Z
-
-export async function generateMetadata() {
-  // Static favicon — always use the local logo files (not dependent on backend API)
-  const faviconConfig = {
+/**
+ * Static metadata — NOT dependent on Railway API.
+ * This ensures Google always sees the correct title, description, and favicon,
+ * even when the backend is down. The SettingsProvider handles dynamic content
+ * on the client side instead.
+ */
+export const metadata = {
+  title: "UniEntry — Your Gateway to Global Education",
+  description:
+    "UniEntry is a student-focused platform providing university resources, student services, and admission guidance across India. Access PYQs, notes, marketplace, and accommodation — all in one place.",
+  keywords:
+    "UniEntry, university admissions, study abroad, education consultancy, university fees, scholarships, visa guidance, PYQs, college resources, student marketplace, accommodation, rent and ride",
+  metadataBase: new URL("https://unientry.online"),
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
     icon: [
-      { url: '/favicon.png', sizes: '64x64', type: 'image/png' },
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/favicon.png", sizes: "64x64", type: "image/png" },
     ],
-    apple: '/apple-icon.png',
-  };
-
-  try {
-    const res = await fetch('https://unientry-server-production.up.railway.app/api/settings', {
-      cache: 'no-store',
-      signal: AbortSignal.timeout(5000),
-    });
-    const data = await res.json();
-    const settings = data.data || {};
-
-    const title = settings.heroTitle || "UniEntry — Your Gateway to Global Education";
-    const description = settings.heroSubtitle || "UniEntry helps students across India easily access PYQs, important college resources, and trusted guidance for smarter course selection.";
-
-    return {
-      title,
-      description,
-      keywords: "university admissions, study abroad, education consultancy, university fees, scholarships, visa guidance, PYQs, college resources",
-      icons: faviconConfig,
-      openGraph: {
-        title,
-        description,
-        type: "website",
-        images: [{ url: '/logo.png' }],
+    apple: "/apple-icon.png",
+    shortcut: "/favicon.ico",
+  },
+  openGraph: {
+    title: "UniEntry — Your Gateway to Global Education",
+    description:
+      "UniEntry is a student-focused platform providing university resources, student services, and admission guidance across India.",
+    url: "https://unientry.online",
+    siteName: "UniEntry Global",
+    type: "website",
+    locale: "en_IN",
+    images: [
+      {
+        url: "/logo.png",
+        width: 512,
+        height: 512,
+        alt: "UniEntry Global Logo",
       },
-    };
-  } catch (error) {
-    return {
-      title: "UniEntry — Your Gateway to Global Education",
-      description: "UniEntry helps students across India easily access PYQs, important college resources, and trusted guidance for smarter course selection. Your one-stop student platform for academic support, career clarity, and campus success.",
-      keywords: "university admissions, study abroad, education consultancy, university fees, scholarships, visa guidance, PYQs, college resources",
-      icons: faviconConfig,
-      openGraph: {
-        title: "UniEntry — Your Gateway to Global Education",
-        description: "UniEntry helps students across India easily access PYQs, important college resources, and trusted guidance for smarter course selection.",
-        type: "website",
-        images: [{ url: '/logo.png' }],
-      },
-    };
-  }
-}
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "UniEntry — Your Gateway to Global Education",
+    description:
+      "UniEntry is a student-focused platform providing university resources, student services, and admission guidance across India.",
+    images: ["/logo.png"],
+  },
+  verification: {},
+  other: {
+    "theme-color": "#0EA5E9",
+    "apple-mobile-web-app-title": "UniEntry",
+  },
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {/* Force Google to use our favicon */}
+        <link rel="icon" href="/favicon.ico" sizes="48x48" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+      </head>
       <body className="antialiased">
         <SettingsProvider>
           {children}
