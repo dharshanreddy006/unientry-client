@@ -60,7 +60,9 @@ export const metadata = {
       "UniEntry GLOBAL is a student-focused platform providing university resources, student services, and admission guidance across India.",
     images: ["/logo.png"],
   },
-  verification: {},
+  verification: {
+    google: "TCK7weXOCDsw0g_rutSi5OV0NjiaywbDo4Rl6uckLRY",
+  },
   other: {
     "theme-color": "#0EA5E9",
     "apple-mobile-web-app-title": "UniEntry GLOBAL",
