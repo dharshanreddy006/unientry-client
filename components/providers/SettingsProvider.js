@@ -32,7 +32,7 @@ export function SettingsProvider({ children }) {
             'Accept': 'application/json',
           },
           mode: 'cors',
-          signal: AbortSignal.timeout(3000), // Fail fast if server is down
+          signal: AbortSignal.timeout(1500), // Fail fast if server is down
         });
         const data = await res.json();
         if (data.success && data.data) {

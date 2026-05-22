@@ -20,7 +20,7 @@ export default function RentAndRide() {
   const [listForm, setListForm] = useState({ vehicleName: '', description: '', price: '', vehicleType: 'Bike', availableHours: '', providerName: '' });
 
   useEffect(() => {
-    fetch(`${API_URL}/settings`, { cache: 'no-store', signal: AbortSignal.timeout(3000) })
+    fetch(`${API_URL}/settings`, { cache: 'no-store', signal: AbortSignal.timeout(1500) })
       .then(r => r.json())
       .then(d => { if (d.success) setSettings(d.data); })
       .catch(() => {});
@@ -35,7 +35,7 @@ export default function RentAndRide() {
     if (q.trim().length > 1 && universities.length === 0) {
       setLoadingUnis(true);
       try {
-        const res = await fetch(`${API_URL}/universities?limit=200`, { cache: 'no-store', signal: AbortSignal.timeout(5000) });
+        const res = await fetch(`${API_URL}/universities?limit=200`, { cache: 'no-store', signal: AbortSignal.timeout(2000) });
         const data = await res.json();
         setUniversities(data.data || []);
       } catch (e) {}
@@ -54,7 +54,7 @@ export default function RentAndRide() {
   const fetchListings = async (uniId) => {
     setLoadingListings(true);
     try {
-      const res = await fetch(`${API_URL}/rent-and-rides?universityId=${uniId}`, { cache: 'no-store', signal: AbortSignal.timeout(5000) });
+      const res = await fetch(`${API_URL}/rent-and-rides?universityId=${uniId}`, { cache: 'no-store', signal: AbortSignal.timeout(2000) });
       const data = await res.json();
       setListings(data.data || []);
     } catch (e) { setListings([]); }

@@ -16,7 +16,7 @@ export default function AboutPage() {
       try {
         const res = await fetch(`${API_URL}/settings`, {
           cache: 'no-store',
-          signal: AbortSignal.timeout(3000),
+          signal: AbortSignal.timeout(1500),
         });
         const data = await res.json();
         if (data.success) setSettings(data.data);

@@ -73,7 +73,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Force Google to use our favicon */}
+        {/* Preconnect to Google Fonts for faster load */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Non-blocking font load with display=swap */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800&display=swap"
+        />
+        {/* Preload critical logo for instant display */}
+        <link rel="preload" href="/logo.png" as="image" type="image/png" />
+        {/* Favicons */}
         <link rel="icon" href="/favicon.ico" sizes="48x48" />
         <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
