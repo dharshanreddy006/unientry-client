@@ -1,13 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { API_URL, getImageUrl } from '@/lib/apiConfig';
+import { useSettings } from '@/components/providers/SettingsProvider';
 
 const VEHICLE_TYPES = ['Bike', 'Car'];
 
 export default function RentAndRide() {
   const [universities, setUniversities] = useState([]);
-  const [settings, setSettings] = useState(null);
+  const settings = useSettings();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUni, setSelectedUni] = useState(null);
   const [activeTab, setActiveTab] = useState('rent');
@@ -18,13 +19,6 @@ export default function RentAndRide() {
 
   // List form
   const [listForm, setListForm] = useState({ vehicleName: '', description: '', price: '', vehicleType: 'Bike', availableHours: '', providerName: '' });
-
-  useEffect(() => {
-    fetch(`${API_URL}/settings`, { cache: 'no-store', signal: AbortSignal.timeout(1500) })
-      .then(r => r.json())
-      .then(d => { if (d.success) setSettings(d.data); })
-      .catch(() => {});
-  }, []);
 
   const filteredUnis = searchQuery.trim().length > 1
     ? (universities).filter(u => u?.universityName?.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 5)

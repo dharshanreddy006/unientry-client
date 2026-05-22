@@ -1,36 +1,31 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { API_URL, getImageUrl } from '@/lib/apiConfig';
+import { useSettings } from '@/components/providers/SettingsProvider';
 import Link from 'next/link';
 
 export default function ReferAndEarn() {
   const [universities, setUniversities] = useState([]);
-  const [settings, setSettings] = useState(null);
+  const settings = useSettings();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUni, setSelectedUni] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [loadingUnis, setLoadingUnis] = useState(false);
 
-  useEffect(() => {
-    // Fetch Universities
-    fetch(`${API_URL}/universities`, { cache: 'no-store', signal: AbortSignal.timeout(1500) })
-      .then(res => res.json())
-      .then(data => {
+  // Fetch universities only when user starts searching (not on mount)
+  const handleSearch = async (q) => {
+    setSearchQuery(q);
+    if (q.trim().length > 1 && universities.length === 0) {
+      setLoadingUnis(true);
+      try {
+        const res = await fetch(`${API_URL}/universities`, { cache: 'no-store', signal: AbortSignal.timeout(2000) });
+        const data = await res.json();
         setUniversities(data.data || data);
-      })
-      .catch(() => {});
-
-    // Fetch Site Settings for WhatsApp Number
-    fetch(`${API_URL}/settings`, { cache: 'no-store', signal: AbortSignal.timeout(1500) })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) setSettings(data.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, []);
+      } catch {}
+      setLoadingUnis(false);
+    }
+  };
 
   const filteredUnis = searchQuery.trim() === '' 
     ? [] 
@@ -65,7 +60,7 @@ export default function ReferAndEarn() {
                 type="text"
                 placeholder="Search university to see referral rewards..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearch(e.target.value)}
                 className="w-full px-8 py-6 rounded-[2.5rem] bg-white border-2 border-gray-100 text-primary-900 placeholder:text-gray-300 focus:border-green-500 focus:ring-8 focus:ring-green-500/5 outline-none transition-all shadow-xl text-lg"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2">

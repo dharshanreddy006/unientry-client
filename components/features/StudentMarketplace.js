@@ -1,13 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { API_URL, getImageUrl } from '@/lib/apiConfig';
+import { useSettings } from '@/components/providers/SettingsProvider';
 
 const CATEGORIES = ['All', 'Books', 'Electronics', 'Notes & Study Material', 'Clothing', 'Furniture', 'Sports', 'Other'];
 
 export default function StudentMarketplace() {
   const [universities, setUniversities] = useState([]);
-  const [settings, setSettings] = useState(null);
+  const settings = useSettings();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUni, setSelectedUni] = useState(null);
   const [activeTab, setActiveTab] = useState('buy');
@@ -18,13 +19,6 @@ export default function StudentMarketplace() {
 
   // Sell form
   const [sellForm, setSellForm] = useState({ title: '', description: '', price: '', category: 'Books', sellerName: '' });
-
-  useEffect(() => {
-    fetch(`${API_URL}/settings`, { cache: 'no-store', signal: AbortSignal.timeout(1500) })
-      .then(r => r.json())
-      .then(d => { if (d.success) setSettings(d.data); })
-      .catch(() => {});
-  }, []);
 
   const filteredUnis = searchQuery.trim().length > 1
     ? (universities).filter(u => u?.universityName?.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 5)

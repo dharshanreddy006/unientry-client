@@ -1,39 +1,36 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { API_URL, getImageUrl } from '@/lib/apiConfig';
+import { useSettings } from '@/components/providers/SettingsProvider';
 import Link from 'next/link';
 
 export default function UniversityResources() {
   const [universities, setUniversities] = useState([]);
-  const [settings, setSettings] = useState(null);
+  const settings = useSettings();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUni, setSelectedUni] = useState(null);
   const [expandedCategory, setExpandedCategory] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [loadingUnis, setLoadingUnis] = useState(false);
   const [email, setEmail] = useState('');
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [checkingAccess, setCheckingAccess] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(true);
 
-  useEffect(() => {
-    // Fetch Universities
-    fetch(`${API_URL}/universities`, { cache: 'no-store', signal: AbortSignal.timeout(1500) })
-      .then(res => res.json())
-      .then(data => {
+  // Fetch universities only when user starts searching (not on mount)
+  const handleSearch = async (q) => {
+    setSearchQuery(q);
+    if (q.trim().length > 1 && universities.length === 0) {
+      setLoadingUnis(true);
+      try {
+        const res = await fetch(`${API_URL}/universities`, { cache: 'no-store', signal: AbortSignal.timeout(2000) });
+        const data = await res.json();
         setUniversities(data.data || data);
-      })
-      .catch(() => {});
-
-    // Fetch Site Settings for global WhatsApp number
-    fetch(`${API_URL}/settings`, { cache: 'no-store', signal: AbortSignal.timeout(1500) })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) setSettings(data.data);
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
+      } catch {}
+      setLoadingUnis(false);
+    }
+  };
 
   const filteredUnis = searchQuery.trim() === '' 
     ? [] 
@@ -278,7 +275,7 @@ export default function UniversityResources() {
               type="text"
               placeholder="Search your university (e.g. UPES, Graphic Era...)"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
               className="w-full px-8 py-6 rounded-[2rem] bg-white border border-gray-200 text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all shadow-sm text-lg"
             />
             <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-3">
