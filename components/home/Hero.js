@@ -38,12 +38,12 @@ export default function Hero() {
 
         {/* Main heading */}
         <h1 className="font-heading font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-slate-900 leading-tight mb-6 animate-fade-in-up">
-          {settings?.heroTitle || 'Your Gateway to Global Education'}
+          {settings?.heroTitle || 'Built to Simplify Student Life'}
         </h1>
 
         {/* Subtitle */}
         <p className="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-200 whitespace-pre-wrap">
-          {settings?.heroSubtitle || 'Discover top universities worldwide. Get expert guidance for admissions, visas, and scholarships — all in one place.'}
+          {settings?.heroSubtitle || 'Simplify Student Life By Solving Real Problems'}
         </p>
 
         {/* CTA Buttons */}
