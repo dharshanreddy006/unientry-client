@@ -14,11 +14,11 @@ export default function HomePage() {
     <main>
       <Navbar />
       <Hero />
-      <ReferAndEarn />
       <StudentMarketplace />
       <UniversityResources />
       <AccommodationSection />
       <RentAndRide />
+      <ReferAndEarn />
       <FounderSection />
       <ContactSection />
       <Footer />
