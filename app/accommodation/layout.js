@@ -1,11 +1,11 @@
 export const metadata = {
-  title: "Student Accommodation — Find Housing | UniEntry GLOBAL",
+  title: "Student Accommodation — Find Verified Housing | UniEntry GLOBAL",
   description:
-    "Find safe, comfortable, and affordable student accommodation near top universities. Verified properties with transparent pricing at UniEntry GLOBAL.",
+    "Find safe, comfortable, and affordable student accommodation near your university. Verified properties with transparent pricing on the UniEntry GLOBAL student ecosystem.",
   openGraph: {
     title: "Student Accommodation — UniEntry GLOBAL",
     description:
-      "Find safe, comfortable, and affordable student accommodation near top universities.",
+      "Find verified student accommodation near your university. Part of the UniEntry GLOBAL student tech ecosystem.",
   },
 };
 

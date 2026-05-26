@@ -1,11 +1,11 @@
 export const metadata = {
-  title: "Explore Universities — Admissions & Fees | UniEntry GLOBAL",
+  title: "Explore Universities — Courses, Fees & Resources | UniEntry GLOBAL",
   description:
-    "Browse top universities worldwide. Compare courses, fees, eligibility, and get expert guidance for admissions at UniEntry GLOBAL.",
+    "Browse universities and access student resources like PYQs, notes, and study materials. Compare courses, fees, and eligibility — all on the UniEntry GLOBAL student ecosystem.",
   openGraph: {
-    title: "Explore Universities — UniEntry GLOBAL",
+    title: "Explore Universities & Resources — UniEntry GLOBAL",
     description:
-      "Browse top universities worldwide. Compare courses, fees, eligibility, and get expert guidance for admissions.",
+      "Browse universities, access PYQs, notes, and study materials. Part of the UniEntry GLOBAL student tech ecosystem.",
   },
 };
 
