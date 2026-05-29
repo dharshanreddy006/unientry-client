@@ -1,4 +1,5 @@
 import { SettingsProvider } from '@/components/providers/SettingsProvider';
+import { Analytics } from '@vercel/analytics/next';
 import "./globals.css";
 
 /**
@@ -163,6 +164,7 @@ export default function RootLayout({ children }) {
         <SettingsProvider>
           {children}
         </SettingsProvider>
+        <Analytics />
       </body>
     </html>
   );
