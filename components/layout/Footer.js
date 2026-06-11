@@ -31,13 +31,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-5">
-              {settings?.logoUrl ? (
-                <img src={getImageUrl(settings.logoUrl)} alt="Logo" className="h-10 w-auto object-contain" />
-              ) : (
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center">
-                  <span className="text-white font-bold text-lg font-heading">U</span>
-                </div>
-              )}
+              <img src="/logo.png" alt="Logo" className="h-10 w-auto object-contain" />
             <div className="flex flex-col">
               <span className="font-heading font-bold text-xl leading-none tracking-tight">
                 Uni<span className="text-accent-400">Entry</span>

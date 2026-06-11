@@ -78,6 +78,9 @@ export default function FeaturedUniversities() {
                   src={getImageUrl(uni.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=600'}
                   alt={uni.universityName}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  onError={(e) => {
+                    e.target.src = 'https://images.unsplash.com/photo-1562774053-701939374585?w=600';
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-primary-900 flex items-center gap-1">

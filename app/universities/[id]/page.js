@@ -69,6 +69,9 @@ export default function UniversityDetailsPage() {
           src={getImageUrl(university.coverImage?.url) || 'https://images.unsplash.com/photo-1562774053-701939374585?w=1200'}
           alt={university.universityName}
           className="w-full h-full object-cover"
+          onError={(e) => {
+            e.target.src = 'https://images.unsplash.com/photo-1562774053-701939374585?w=1200';
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-primary-900 via-primary-900/60 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
@@ -197,7 +200,14 @@ export default function UniversityDetailsPage() {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {university.images.map((img, i) => (
                       <div key={i} className="rounded-xl overflow-hidden h-40">
-                        <img src={getImageUrl(img.url)} alt={`Campus ${i + 1}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+                        <img 
+                          src={getImageUrl(img.url)} 
+                          alt={`Campus ${i + 1}`} 
+                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" 
+                          onError={(e) => {
+                            e.target.src = 'https://images.unsplash.com/photo-1562774053-701939374585?w=600';
+                          }}
+                        />
                       </div>
                     ))}
                   </div>
