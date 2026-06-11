@@ -60,7 +60,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <img
-              src="/logo.png"
+              src={settings?.logoUrl ? getImageUrl(settings.logoUrl) : "/logo.png"}
               alt="UniEntry GLOBAL"
               className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />

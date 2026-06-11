@@ -3,11 +3,14 @@
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
+import { useSettings } from '@/components/providers/SettingsProvider';
+import { getImageUrl } from '@/lib/apiConfig';
 
 export default function AuthGate({ children }) {
   const pathname = usePathname();
   const { user, loading, isAuthenticated, login, signup } = useAuth();
   const [mode, setMode] = useState('login'); // 'login' | 'signup'
+  const settings = useSettings();
 
   // Skip auth gate for admin routes (admin has its own auth)
   const isAdminRoute = pathname?.startsWith('/admin');
@@ -77,7 +80,7 @@ export default function AuthGate({ children }) {
     return (
       <div className="fixed inset-0 bg-slate-50 flex items-center justify-center z-[9999]">
         <div className="flex flex-col items-center gap-4">
-          <img src="/logo.png" alt="UniEntry GLOBAL" className="w-16 h-16 animate-pulse" />
+          <img src={settings?.logoUrl ? getImageUrl(settings.logoUrl) : "/logo.png"} alt="UniEntry GLOBAL" className="w-16 h-16 animate-pulse" />
           <div className="w-8 h-8 border-3 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
         </div>
       </div>
@@ -211,7 +214,7 @@ export default function AuthGate({ children }) {
         {/* Logo */}
         <div className="text-center mb-8" style={{ animation: 'fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both' }}>
           <div className="inline-flex items-center gap-3 mb-4">
-            <img src="/logo.png" alt="UniEntry GLOBAL" className="w-14 h-14" />
+            <img src={settings?.logoUrl ? getImageUrl(settings.logoUrl) : "/logo.png"} alt="UniEntry GLOBAL" className="w-14 h-14" />
             <div className="text-left">
               <span className="text-slate-900 font-heading font-bold text-2xl leading-none">
                 Uni<span className="text-blue-600">Entry</span>
