@@ -59,7 +59,7 @@ export function SettingsProvider({ children }) {
           cache: 'no-store',
           headers: { 'Accept': 'application/json' },
           mode: 'cors',
-          signal: AbortSignal.timeout(1500),
+          signal: AbortSignal.timeout(5000),
         });
         const data = await res.json();
         if (data.success && data.data) {

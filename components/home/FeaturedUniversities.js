@@ -21,7 +21,8 @@ export default function FeaturedUniversities() {
     const fetchFeatured = async () => {
       try {
         const res = await fetch(`${API_URL}/universities/featured`, {
-          cache: 'no-store'
+          cache: 'no-store',
+          signal: AbortSignal.timeout(5000),
         });
         const data = await res.json();
         if (data.success) {

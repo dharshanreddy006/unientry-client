@@ -19,7 +19,7 @@ export default function ReferAndEarn() {
     if (q.trim().length > 1 && universities.length === 0) {
       setLoadingUnis(true);
       try {
-        const res = await fetch(`${API_URL}/universities`, { cache: 'no-store', signal: AbortSignal.timeout(2000) });
+        const res = await fetch(`${API_URL}/universities`, { cache: 'no-store', signal: AbortSignal.timeout(5000) });
         const data = await res.json();
         setUniversities(data.data || data);
       } catch {}

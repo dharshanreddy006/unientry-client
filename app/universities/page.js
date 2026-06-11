@@ -30,7 +30,7 @@ function UniversitiesContent() {
 
       const res = await fetch(
         `${API_URL}/universities?${params}`,
-        { cache: 'no-store', signal: AbortSignal.timeout(2000) }
+        { cache: 'no-store', signal: AbortSignal.timeout(5000) }
       );
       const data = await res.json();
       if (data.success) {

@@ -29,7 +29,7 @@ export default function StudentMarketplace() {
     if (q.trim().length > 1 && universities.length === 0) {
       setLoadingUnis(true);
       try {
-        const res = await fetch(`${API_URL}/universities?limit=200`, { cache: 'no-store', signal: AbortSignal.timeout(2000) });
+        const res = await fetch(`${API_URL}/universities?limit=200`, { cache: 'no-store', signal: AbortSignal.timeout(5000) });
         const data = await res.json();
         setUniversities(data.data || []);
       } catch (e) {}
@@ -48,7 +48,7 @@ export default function StudentMarketplace() {
   const fetchListings = async (uniId, type) => {
     setLoadingListings(true);
     try {
-      const res = await fetch(`${API_URL}/marketplace?universityId=${uniId}&type=${type}`, { cache: 'no-store', signal: AbortSignal.timeout(2000) });
+      const res = await fetch(`${API_URL}/marketplace?universityId=${uniId}&type=${type}`, { cache: 'no-store', signal: AbortSignal.timeout(5000) });
       const data = await res.json();
       setListings(data.data || []);
     } catch (e) { setListings([]); }
