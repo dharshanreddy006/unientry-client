@@ -7,9 +7,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useSettings } from '@/components/providers/SettingsProvider';
 
-function AccommodationCard({ acc, settings, selectedUni }) {
-  const [activeIdx, setActiveIdx] = useState(0);
-
+function AccommodationCard({ acc, settings, selectedUni, onOpenDetails }) {
   let images = [];
   if (acc.imageUrl) {
     if (Array.isArray(acc.imageUrl)) {
@@ -29,63 +27,38 @@ function AccommodationCard({ acc, settings, selectedUni }) {
     }
   }
 
+  const coverImage = images[0] || '';
+
   return (
-    <div className="group bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 flex flex-col md:flex-row gap-8">
-      {/* Image Gallery */}
-      <div className="md:w-56 h-48 md:h-auto rounded-2xl bg-slate-100 flex-shrink-0 relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-500">
-        {images.length > 0 ? (
-          <>
-            <img src={images[activeIdx]} alt={acc.propertyName} className="w-full h-full object-cover transition-all duration-300" />
-            {images.length > 1 && (
-              <>
-                <button
-                  type="button"
-                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setActiveIdx((prev) => (prev - 1 + images.length) % images.length); }}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-slate-700 hover:bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10 font-bold"
-                >
-                  &larr;
-                </button>
-                <button
-                  type="button"
-                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setActiveIdx((prev) => (prev + 1) % images.length); }}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-slate-700 hover:bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10 font-bold"
-                >
-                  &rarr;
-                </button>
-                <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1 z-10">
-                  {images.map((_, i) => (
-                    <span
-                      key={i}
-                      className={`w-1.5 h-1.5 rounded-full transition-all ${i === activeIdx ? 'bg-blue-600 w-3' : 'bg-white/60'}`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </>
+    <div className="group bg-white rounded-3xl p-5 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-300 flex flex-col sm:flex-row gap-6">
+      {/* Cover Image */}
+      <div className="sm:w-48 h-40 rounded-2xl bg-slate-100 flex-shrink-0 relative overflow-hidden">
+        {coverImage ? (
+          <img src={coverImage} alt={acc.propertyName} className="w-full h-full object-cover" />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <svg className="w-12 h-12 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-10 h-10 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
           </div>
         )}
-        <div className="absolute top-4 left-4 z-10">
-          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-[10px] font-bold text-blue-600 uppercase tracking-wider shadow-sm">
+        <div className="absolute top-3 left-3 z-10">
+          <span className="px-2.5 py-0.5 bg-white/95 backdrop-blur-sm rounded-lg text-[9px] font-bold text-blue-600 uppercase tracking-wider shadow-sm">
             {acc.roomType}
           </span>
         </div>
       </div>
 
+      {/* Main Info */}
       <div className="flex-1 flex flex-col justify-between">
         <div>
-          <div className="flex items-start justify-between mb-2">
+          <div className="flex items-start justify-between gap-2 mb-2">
             <div>
-              <h3 className="font-heading font-bold text-xl text-slate-900 group-hover:text-blue-600 transition-colors">
+              <h3 className="font-heading font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors">
                 {acc.propertyName}
               </h3>
-              <div className="flex items-center gap-1 text-slate-400 text-sm mt-1">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex items-center gap-1 text-slate-400 text-xs mt-1">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
@@ -93,40 +66,37 @@ function AccommodationCard({ acc, settings, selectedUni }) {
               </div>
             </div>
             <div className="text-right">
-              <p className="text-xs text-slate-400 uppercase font-bold tracking-wider leading-none mb-1">Starts From</p>
-              <p className="text-2xl font-black text-blue-600 leading-none">{acc.price}</p>
+              <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider leading-none mb-1">Starts From</p>
+              <p className="text-xl font-black text-blue-600 leading-none">{acc.price}</p>
             </div>
           </div>
 
-          <p className="text-slate-500 text-sm line-clamp-2 mb-4 leading-relaxed">
-            {acc.description}
-          </p>
-
-          <div className="flex flex-wrap gap-2 mb-6">
-            <div className="px-3 py-1.5 bg-slate-50 rounded-xl text-xs font-medium text-slate-600 flex items-center gap-1.5">
-              <svg className="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex flex-wrap gap-2 mt-4 mb-4">
+            <div className="px-2.5 py-1 bg-slate-50 rounded-lg text-[10px] font-medium text-slate-500 flex items-center gap-1">
+              <svg className="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
               {acc.distance}
             </div>
-            {acc.amenities?.slice(0, 3).map((amenity, i) => (
-              <div key={i} className="px-3 py-1.5 bg-slate-50 rounded-xl text-xs font-medium text-slate-600">
-                • {amenity}
-              </div>
-            ))}
+            <span className="px-2.5 py-1 bg-green-50 rounded-lg text-[10px] font-bold text-green-600 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+              Verified
+            </span>
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-6 border-t border-slate-50">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-green-500" />
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Available Now</span>
-          </div>
+        <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+          <button
+            onClick={() => onOpenDetails(acc)}
+            className="px-4 py-2 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 text-slate-700 rounded-xl text-xs font-bold transition-all"
+          >
+            More Details &rarr;
+          </button>
           <a
-            href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I'm%20interested%20in%20the%20property%20"${acc.propertyName}"%20near%20${selectedUni.universityName}.`}
+            href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I'm%20interested%20in%20the%20property%20"${acc.propertyName}"%20near%20${selectedUni?.universityName}.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-sm font-bold transition-all shadow-lg shadow-blue-600/20 active:scale-95"
+            className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-blue-600/10 active:scale-95"
           >
             Check Availability
           </a>
@@ -144,6 +114,8 @@ export default function AccommodationPage() {
   const [loading, setLoading] = useState(false);
   const [uniSearch, setUniSearch] = useState('');
   const [isSearching, setIsSearching] = useState(true);
+  const [activeTab, setActiveTab] = useState('rooms');
+  const [activeDetails, setActiveDetails] = useState(null);
 
   // Fetch all universities for selection
   useEffect(() => {
@@ -268,9 +240,26 @@ export default function AccommodationPage() {
       {!isSearching && (
         <section className="pb-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            
+            {/* Tab Selector for Mobile / Tablet */}
+            <div className="flex bg-slate-100 p-1.5 rounded-2xl mb-8 lg:hidden shadow-inner max-w-md mx-auto">
+              <button
+                onClick={() => setActiveTab('rooms')}
+                className={`flex-1 py-3 text-center text-xs font-bold rounded-xl transition-all duration-300 ${activeTab === 'rooms' ? 'bg-white text-blue-600 shadow-sm scale-[1.02]' : 'text-slate-500 hover:text-slate-800'}`}
+              >
+                Available Rooms
+              </button>
+              <button
+                onClick={() => setActiveTab('list')}
+                className={`flex-1 py-3 text-center text-xs font-bold rounded-xl transition-all duration-300 ${activeTab === 'list' ? 'bg-white text-blue-600 shadow-sm scale-[1.02]' : 'text-slate-500 hover:text-slate-800'}`}
+              >
+                List Your Property
+              </button>
+            </div>
+
             <div className="flex flex-col lg:flex-row gap-10">
               {/* Sidebar/CTA */}
-              <div className="lg:w-1/3">
+              <div className={`lg:w-1/3 ${activeTab === 'list' ? 'block' : 'hidden lg:block'}`}>
                 <div className="sticky top-32 space-y-6">
                   <div className="bg-primary-900 rounded-3xl p-8 text-white shadow-2xl shadow-primary-900/20 relative overflow-hidden">
                     <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-3xl" />
@@ -317,20 +306,20 @@ export default function AccommodationPage() {
               </div>
 
               {/* List */}
-              <div className="lg:w-2/3">
+              <div className={`lg:w-2/3 ${activeTab === 'rooms' ? 'block' : 'hidden lg:block'}`}>
                 {loading ? (
                   <div className="flex flex-col items-center justify-center py-20 gap-4">
                     <div className="w-12 h-12 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin" />
                     <p className="text-slate-400 font-medium animate-pulse">Finding the best rooms for you...</p>
                   </div>
                 ) : accommodations.length > 0 ? (
-                  <div className="space-y-6 animate-fade-in">
+                  <div className="space-y-6 custom-fade-in">
                     {accommodations.map((acc) => (
-                      <AccommodationCard key={acc._id} acc={acc} settings={settings} selectedUni={selectedUni} />
+                      <AccommodationCard key={acc._id} acc={acc} settings={settings} selectedUni={selectedUni} onOpenDetails={setActiveDetails} />
                     ))}
                   </div>
                 ) : (
-                  <div className="bg-white rounded-[40px] p-12 text-center border border-slate-100 shadow-sm animate-fade-in">
+                  <div className="bg-white rounded-[40px] p-12 text-center border border-slate-100 shadow-sm custom-fade-in">
                     <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
                       <svg className="w-12 h-12 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -355,6 +344,146 @@ export default function AccommodationPage() {
           </div>
         </section>
       )}
+
+      {/* Details Modal Overlay */}
+      {activeDetails && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm custom-fade-in">
+          <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto overflow-x-hidden custom-scale-up">
+            {/* Sticky Header with Close */}
+            <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                  <svg className="w-3.5 h-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Verified Property
+                </span>
+              </div>
+              <button 
+                onClick={() => setActiveDetails(null)}
+                className="p-2 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-900 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {/* Photos grid */}
+              <div>
+                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Property Gallery</h4>
+                {(() => {
+                  const imgs = Array.isArray(activeDetails.imageUrl) 
+                    ? activeDetails.imageUrl 
+                    : (activeDetails.imageUrl && activeDetails.imageUrl.startsWith('[') 
+                        ? JSON.parse(activeDetails.imageUrl) 
+                        : (activeDetails.imageUrl ? [activeDetails.imageUrl] : [])
+                      );
+                  return imgs.length > 0 ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {imgs.map((url, idx) => (
+                        <div 
+                          key={idx} 
+                          className="aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 cursor-zoom-in group relative shadow-sm"
+                          onClick={() => window.open(url, '_blank')}
+                        >
+                          <img src={url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="py-12 bg-slate-50 rounded-2xl text-center text-slate-400 text-sm">No photos available</div>
+                  );
+                })()}
+              </div>
+
+              {/* Title & Stats */}
+              <div className="border-t border-slate-100 pt-6">
+                <h3 className="font-heading font-black text-2xl text-slate-900 mb-1">{activeDetails.propertyName}</h3>
+                <div className="flex items-center gap-1 text-slate-500 text-sm mb-4">
+                  <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  {activeDetails.location}
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className="p-4 bg-blue-50/50 rounded-2xl border border-blue-100/50">
+                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Room Type</p>
+                    <p className="text-sm font-bold text-slate-800">{activeDetails.roomType}</p>
+                  </div>
+                  <div className="p-4 bg-blue-50/50 rounded-2xl border border-blue-100/50">
+                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Starts From</p>
+                    <p className="text-sm font-black text-blue-600">{activeDetails.price}</p>
+                  </div>
+                  <div className="p-4 bg-blue-50/50 rounded-2xl border border-blue-100/50">
+                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Distance</p>
+                    <p className="text-sm font-bold text-slate-800">{activeDetails.distance}</p>
+                  </div>
+                  <div className="p-4 bg-blue-50/50 rounded-2xl border border-blue-100/50">
+                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Status</p>
+                    <p className="text-sm font-bold text-green-600 flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                      Available
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="border-t border-slate-100 pt-6">
+                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">About this property</h4>
+                <p className="text-slate-600 text-sm leading-relaxed whitespace-pre-wrap">{activeDetails.description}</p>
+              </div>
+
+              {/* Amenities */}
+              {activeDetails.amenities && activeDetails.amenities.length > 0 && (
+                <div className="border-t border-slate-100 pt-6">
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Amenities</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {activeDetails.amenities.map((amenity, i) => (
+                      <span key={i} className="px-3 py-1.5 bg-slate-50 text-slate-600 rounded-xl text-xs font-semibold border border-slate-100">
+                        ✓ {amenity}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Sticky Bottom Actions */}
+            <div className="sticky bottom-0 bg-white/95 backdrop-blur-md px-6 py-4 border-t border-slate-100 flex gap-3">
+              <a 
+                href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I'm%20interested%20in%20the%20property%20"${activeDetails.propertyName}"%20near%20${selectedUni?.universityName}.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-bold text-center text-sm shadow-xl shadow-blue-600/20 active:scale-95 transition-all duration-300"
+              >
+                Check Availability on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes scaleUp {
+          from { transform: scale(0.92); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+        .custom-fade-in {
+          animation: fadeIn 0.25s ease-out forwards;
+        }
+        .custom-scale-up {
+          animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+      `}} />
 
       {/* Default view when no uni selected */}
       {isSearching && !uniSearch && (
