@@ -59,6 +59,23 @@ export default function Hero() {
               </svg>
             </span>
           </Link>
+          <button
+            onClick={() => {
+              const el = document.getElementById('services-hub');
+              if (el) {
+                const y = el.getBoundingClientRect().top + window.pageYOffset - 40;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+              }
+            }}
+            className="group px-8 py-4 bg-white/80 backdrop-blur border border-slate-200 text-slate-700 font-semibold rounded-2xl shadow-sm hover:shadow-md hover:border-blue-200 hover:text-blue-600 transition-smooth hover:scale-105 text-base"
+          >
+            <span className="flex items-center gap-2">
+              Our Services
+              <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </span>
+          </button>
         </div>
 
         {/* Stats */}
@@ -72,12 +89,22 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      {/* Scroll indicator — points to services */}
+      <button
+        onClick={() => {
+          const el = document.getElementById('services-hub');
+          if (el) {
+            const y = el.getBoundingClientRect().top + window.pageYOffset - 40;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer p-2 rounded-full hover:bg-white/50 transition-colors"
+        aria-label="Scroll to services"
+      >
         <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
-      </div>
+      </button>
     </section>
   );
 }
