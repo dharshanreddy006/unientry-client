@@ -60,13 +60,13 @@ export default function AdminDashboard() {
 
             <div className="bg-gradient-to-br from-primary-800 to-primary-900 rounded-3xl p-8 text-white shadow-lg shadow-primary-900/20 relative overflow-hidden group">
               <div className="relative z-10">
-                <h3 className="text-2xl font-black mb-2">Upload Resources</h3>
-                <p className="text-white/80 text-sm mb-6 max-w-[250px]">Upload Handwritten Notes, PYQs, and Lab Records for your students.</p>
-                <Link href="/admin/universities" className="inline-flex items-center gap-2 px-6 py-3 bg-accent-500 text-white rounded-2xl font-bold text-sm hover:shadow-xl hover:-translate-y-1 transition-all">
-                  Upload Documents ↗
+                <h3 className="text-2xl font-black mb-2">Manage Accommodations</h3>
+                <p className="text-white/80 text-sm mb-6 max-w-[250px]">Manage student housing listings, multiple image uploads, and locations.</p>
+                <Link href="/admin/accommodations" className="inline-flex items-center gap-2 px-6 py-3 bg-accent-500 text-white rounded-2xl font-bold text-sm hover:shadow-xl hover:-translate-y-1 transition-all">
+                  Go to Accommodations ↗
                 </Link>
               </div>
-              <div className="absolute right-[-20px] bottom-[-20px] text-[150px] opacity-10 group-hover:-rotate-12 transition-transform duration-500">📄</div>
+              <div className="absolute right-[-20px] bottom-[-20px] text-[150px] opacity-10 group-hover:-rotate-12 transition-transform duration-500">🏠</div>
             </div>
           </div>
 

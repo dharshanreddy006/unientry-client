@@ -28,31 +28,6 @@ const services = [
     borderAccent: 'border-sky-100',
   },
   {
-    id: 'university-resources',
-    name: 'Resources',
-    subtitle: 'PYQs, Notes & More',
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
-        <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#resources-bg)" />
-        <rect x="14" y="12" width="20" height="24" rx="3" stroke="#fff" strokeWidth="2" />
-        <path d="M19 19h10M19 24h7M19 29h10" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-        <circle cx="34" cy="14" r="6" fill="#FDE68A" />
-        <path d="M34 11v3l2 1" stroke="#B45309" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <defs>
-          <linearGradient id="resources-bg" x1="4" y1="4" x2="44" y2="44">
-            <stop stopColor="#8B5CF6" />
-            <stop offset="1" stopColor="#6D28D9" />
-          </linearGradient>
-        </defs>
-      </svg>
-    ),
-    gradient: 'from-violet-500 to-purple-700',
-    glow: 'shadow-violet-500/20',
-    bgAccent: 'bg-violet-50',
-    textAccent: 'text-violet-600',
-    borderAccent: 'border-violet-100',
-  },
-  {
     id: 'accommodation',
     name: 'Stay',
     subtitle: 'Accommodation',

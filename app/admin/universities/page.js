@@ -413,22 +413,7 @@ export default function AdminUniversities() {
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" />
                 </div>
 
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-2 p-4 bg-accent-50 rounded-2xl border border-accent-100">
-                    <input type="checkbox" id="isFreeResources" checked={form.isFreeResources} onChange={(e) => setForm({ ...form, isFreeResources: e.target.checked })}
-                      className="w-5 h-5 rounded border-gray-300 text-accent-500 focus:ring-accent-500" />
-                    <label htmlFor="isFreeResources" className="text-sm font-bold text-accent-700 uppercase tracking-wider">Make Resources Free for this University</label>
-                  </div>
 
-                  {!form.isFreeResources && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1 font-bold text-accent-600 uppercase">Resource Access Price (INR) *</label>
-                      <input type="number" required value={form.resourcePrice} onChange={(e) => setForm({ ...form, resourcePrice: parseInt(e.target.value) || 0 })}
-                        className="w-full px-4 py-3 rounded-xl border-2 border-accent-100 focus:border-accent-500 outline-none text-sm font-bold" placeholder="e.g., 25" />
-                      <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">Amount users pay to access the Knowledge Hub resources for this university.</p>
-                    </div>
-                  )}
-                </div>
 
                 <div className="flex items-center gap-2">
                   <input type="checkbox" id="featured" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })}
@@ -497,13 +482,6 @@ export default function AdminUniversities() {
                       </td>
                       <td className="py-4 px-5 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <button onClick={() => handleEdit(uni)}
-                            className="flex items-center gap-1 px-3 py-1.5 bg-accent-500/10 text-accent-600 rounded-lg text-xs font-bold hover:bg-accent-500 hover:text-white transition-all" title="Add PDF Resources">
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                            </svg>
-                            Add Resources
-                          </button>
                           <button onClick={() => handleEdit(uni)}
                             className="p-2 hover:bg-gray-100 rounded-lg text-gray-500 transition-colors" title="Edit Profile">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

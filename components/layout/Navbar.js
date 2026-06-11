@@ -12,7 +12,6 @@ const navLinks = [
   { name: 'Universities', href: '/universities' },
   { name: 'Accommodation', href: '/accommodation' },
   { name: 'Rent & Ride', href: '/#rent-and-ride' },
-  { name: 'Resources', href: '/#university-resources' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];
