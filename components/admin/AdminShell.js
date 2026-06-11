@@ -31,8 +31,37 @@ export default function AdminShell({ children, title }) {
       router.push('/admin/login');
       return;
     }
-    if (adminData) setAdmin(JSON.parse(adminData));
-    setAuthChecked(true);
+
+    const verifyToken = async () => {
+      try {
+        const res = await fetch('/api/admin/me', {
+          headers: { Authorization: `Bearer ${token}` },
+          cache: 'no-store'
+        });
+        if (res.status === 401) {
+          localStorage.removeItem('unientry_token');
+          localStorage.removeItem('unientry_admin');
+          router.push('/admin/login');
+          return;
+        }
+        const data = await res.json();
+        if (data.success) {
+          if (adminData) setAdmin(JSON.parse(adminData));
+          setAuthChecked(true);
+        } else {
+          localStorage.removeItem('unientry_token');
+          localStorage.removeItem('unientry_admin');
+          router.push('/admin/login');
+        }
+      } catch (err) {
+        console.error('Error verifying token:', err);
+        // On network error, don't force logout, just let the session continue with local data
+        if (adminData) setAdmin(JSON.parse(adminData));
+        setAuthChecked(true);
+      }
+    };
+
+    verifyToken();
 
     const fetchSettings = async () => {
       try {

@@ -64,6 +64,11 @@ export default function RentAndRideAdmin() {
         setFormData(prev => ({ ...prev, imageUrl: data.data ? data.data.url : data.url }));
       } else {
         alert('Upload failed: ' + data.message);
+        if (data.message && (data.message.includes('Token') || data.message.includes('authorized'))) {
+          localStorage.removeItem('unientry_token');
+          localStorage.removeItem('unientry_admin');
+          window.location.href = '/admin/login';
+        }
       }
     } catch (err) {
       console.error('Upload error:', err);

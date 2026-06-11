@@ -88,6 +88,11 @@ export default function AdminMarketplacePage() {
         setForm(f => ({ ...f, imageUrl: data.data.url }));
       } else {
         alert('Upload failed: ' + data.message);
+        if (data.message && (data.message.includes('Token') || data.message.includes('authorized'))) {
+          localStorage.removeItem('unientry_token');
+          localStorage.removeItem('unientry_admin');
+          window.location.href = '/admin/login';
+        }
       }
     } catch (err) {
       alert('Upload failed');

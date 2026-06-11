@@ -43,6 +43,11 @@ export default function AdminSettings() {
         setSettings({ ...settings, [field]: data.data.url });
       } else {
         alert('Upload failed: ' + data.message);
+        if (data.message && (data.message.includes('Token') || data.message.includes('authorized'))) {
+          localStorage.removeItem('unientry_token');
+          localStorage.removeItem('unientry_admin');
+          window.location.href = '/admin/login';
+        }
       }
     } catch (err) {
       console.error(err);
