@@ -12,7 +12,7 @@ const emptyForm = {
   amenities: '', 
   location: '', 
   universityId: '', 
-  imageUrl: '', 
+  imageUrl: [], 
   active: true 
 };
 
@@ -31,28 +31,35 @@ export default function AdminAccommodations() {
   const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` };
 
   const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('image', file);
-      const res = await fetch(`${API}/upload`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.success) {
-        setForm({ ...form, imageUrl: data.data.url });
-      } else {
-        alert('Upload failed: ' + data.message);
-        if (data.message && (data.message.includes('Token') || data.message.includes('authorized'))) {
-          localStorage.removeItem('unientry_token');
-          localStorage.removeItem('unientry_admin');
-          window.location.href = '/admin/login';
+      const uploadedUrls = [];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const formData = new FormData();
+        formData.append('image', file);
+        const res = await fetch(`${API}/upload`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData,
+        });
+        const data = await res.json();
+        if (data.success) {
+          uploadedUrls.push(data.data.url);
+        } else {
+          alert('Upload failed: ' + data.message);
+          if (data.message && (data.message.includes('Token') || data.message.includes('authorized'))) {
+            localStorage.removeItem('unientry_token');
+            localStorage.removeItem('unientry_admin');
+            window.location.href = '/admin/login';
+            return;
+          }
         }
       }
+      const currentImages = Array.isArray(form.imageUrl) ? form.imageUrl : (form.imageUrl ? [form.imageUrl] : []);
+      setForm({ ...form, imageUrl: [...currentImages, ...uploadedUrls] });
     } catch (err) {
       console.error(err);
       alert('Upload failed');
@@ -81,7 +88,8 @@ export default function AdminAccommodations() {
 
   const handleEdit = (acc) => {
     setEditId(acc._id);
-    setForm({ ...acc, amenities: acc.amenities?.join(', ') || '' });
+    const images = Array.isArray(acc.imageUrl) ? acc.imageUrl : (acc.imageUrl ? [acc.imageUrl] : []);
+    setForm({ ...acc, imageUrl: images, amenities: acc.amenities?.join(', ') || '' });
     setShowForm(true);
   };
 
@@ -182,18 +190,32 @@ export default function AdminAccommodations() {
                   <input type="text" value={form.amenities} onChange={(e) => setForm({ ...form, amenities: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="Wifi, Laundry, Gym" />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Property Image</label>
-                  <div className="flex items-center gap-4">
-                    {form.imageUrl && (
-                      <div className="w-20 h-20 rounded-xl border border-gray-200 overflow-hidden bg-gray-50">
-                        <img src={form.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                 <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Property Images (Multiple)</label>
+                  <div className="flex flex-wrap gap-3 mb-3">
+                    {(Array.isArray(form.imageUrl) ? form.imageUrl : (form.imageUrl ? [form.imageUrl] : [])).map((url, idx) => (
+                      <div key={idx} className="relative w-20 h-20 rounded-xl border border-gray-200 overflow-hidden bg-gray-50 group">
+                        <img src={url} alt={`Preview ${idx + 1}`} className="w-full h-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const currentImages = Array.isArray(form.imageUrl) ? form.imageUrl : (form.imageUrl ? [form.imageUrl] : []);
+                            const newImages = currentImages.filter((_, i) => i !== idx);
+                            setForm({ ...form, imageUrl: newImages });
+                          }}
+                          className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-bold rounded-xl"
+                        >
+                          Delete ✕
+                        </button>
                       </div>
-                    )}
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-4">
                     <div className="flex-1">
                       <input
                         type="file"
                         accept="image/*"
+                        multiple
                         onChange={handleImageUpload}
                         disabled={uploading}
                         className="block w-full text-xs text-gray-500

@@ -7,6 +7,135 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useSettings } from '@/components/providers/SettingsProvider';
 
+function AccommodationCard({ acc, settings, selectedUni }) {
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  let images = [];
+  if (acc.imageUrl) {
+    if (Array.isArray(acc.imageUrl)) {
+      images = acc.imageUrl;
+    } else if (typeof acc.imageUrl === 'string') {
+      if (acc.imageUrl.startsWith('[')) {
+        try {
+          images = JSON.parse(acc.imageUrl);
+        } catch (e) {
+          images = [acc.imageUrl];
+        }
+      } else if (acc.imageUrl.includes(',')) {
+        images = acc.imageUrl.split(',').map(s => s.trim()).filter(Boolean);
+      } else {
+        images = [acc.imageUrl];
+      }
+    }
+  }
+
+  return (
+    <div className="group bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 flex flex-col md:flex-row gap-8">
+      {/* Image Gallery */}
+      <div className="md:w-56 h-48 md:h-auto rounded-2xl bg-slate-100 flex-shrink-0 relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-500">
+        {images.length > 0 ? (
+          <>
+            <img src={images[activeIdx]} alt={acc.propertyName} className="w-full h-full object-cover transition-all duration-300" />
+            {images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setActiveIdx((prev) => (prev - 1 + images.length) % images.length); }}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-slate-700 hover:bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10 font-bold"
+                >
+                  &larr;
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setActiveIdx((prev) => (prev + 1) % images.length); }}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-slate-700 hover:bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10 font-bold"
+                >
+                  &rarr;
+                </button>
+                <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1 z-10">
+                  {images.map((_, i) => (
+                    <span
+                      key={i}
+                      className={`w-1.5 h-1.5 rounded-full transition-all ${i === activeIdx ? 'bg-blue-600 w-3' : 'bg-white/60'}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <svg className="w-12 h-12 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+          </div>
+        )}
+        <div className="absolute top-4 left-4 z-10">
+          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-[10px] font-bold text-blue-600 uppercase tracking-wider shadow-sm">
+            {acc.roomType}
+          </span>
+        </div>
+      </div>
+
+      <div className="flex-1 flex flex-col justify-between">
+        <div>
+          <div className="flex items-start justify-between mb-2">
+            <div>
+              <h3 className="font-heading font-bold text-xl text-slate-900 group-hover:text-blue-600 transition-colors">
+                {acc.propertyName}
+              </h3>
+              <div className="flex items-center gap-1 text-slate-400 text-sm mt-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                {acc.location}
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-slate-400 uppercase font-bold tracking-wider leading-none mb-1">Starts From</p>
+              <p className="text-2xl font-black text-blue-600 leading-none">{acc.price}</p>
+            </div>
+          </div>
+
+          <p className="text-slate-500 text-sm line-clamp-2 mb-4 leading-relaxed">
+            {acc.description}
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-6">
+            <div className="px-3 py-1.5 bg-slate-50 rounded-xl text-xs font-medium text-slate-600 flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              {acc.distance}
+            </div>
+            {acc.amenities?.slice(0, 3).map((amenity, i) => (
+              <div key={i} className="px-3 py-1.5 bg-slate-50 rounded-xl text-xs font-medium text-slate-600">
+                • {amenity}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between pt-6 border-t border-slate-50">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-green-500" />
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Available Now</span>
+          </div>
+          <a
+            href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I'm%20interested%20in%20the%20property%20"${acc.propertyName}"%20near%20${selectedUni.universityName}.`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-sm font-bold transition-all shadow-lg shadow-blue-600/20 active:scale-95"
+          >
+            Check Availability
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AccommodationPage() {
   const settings = useSettings();
   const [accommodations, setAccommodations] = useState([]);
@@ -197,84 +326,7 @@ export default function AccommodationPage() {
                 ) : accommodations.length > 0 ? (
                   <div className="space-y-6 animate-fade-in">
                     {accommodations.map((acc) => (
-                      <div 
-                        key={acc._id}
-                        className="group bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 flex flex-col md:flex-row gap-8"
-                      >
-                        {/* Image Placeholder */}
-                        <div className="md:w-56 h-48 md:h-auto rounded-2xl bg-slate-100 flex-shrink-0 relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-500">
-                          {acc.imageUrl ? (
-                            <img src={acc.imageUrl} alt={acc.propertyName} className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <svg className="w-12 h-12 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                              </svg>
-                            </div>
-                          )}
-                          <div className="absolute top-4 left-4">
-                            <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-[10px] font-bold text-blue-600 uppercase tracking-wider shadow-sm">
-                              {acc.roomType}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="flex-1 flex flex-col justify-between">
-                          <div>
-                            <div className="flex items-start justify-between mb-2">
-                              <div>
-                                <h3 className="font-heading font-bold text-xl text-slate-900 group-hover:text-blue-600 transition-colors">
-                                  {acc.propertyName}
-                                </h3>
-                                <div className="flex items-center gap-1 text-slate-400 text-sm mt-1">
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                  </svg>
-                                  {acc.location}
-                                </div>
-                              </div>
-                              <div className="text-right">
-                                <p className="text-xs text-slate-400 uppercase font-bold tracking-wider leading-none mb-1">Starts From</p>
-                                <p className="text-2xl font-black text-blue-600 leading-none">{acc.price}</p>
-                              </div>
-                            </div>
-
-                            <p className="text-slate-500 text-sm line-clamp-2 mb-4 leading-relaxed">
-                              {acc.description}
-                            </p>
-
-                            <div className="flex flex-wrap gap-2 mb-6">
-                              <div className="px-3 py-1.5 bg-slate-50 rounded-xl text-xs font-medium text-slate-600 flex items-center gap-1.5">
-                                <svg className="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                                {acc.distance}
-                              </div>
-                              {acc.amenities?.slice(0, 3).map((amenity, i) => (
-                                <div key={i} className="px-3 py-1.5 bg-slate-50 rounded-xl text-xs font-medium text-slate-600">
-                                  • {amenity}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div className="flex items-center justify-between pt-6 border-t border-slate-50">
-                            <div className="flex items-center gap-2">
-                              <div className="w-2 h-2 rounded-full bg-green-500" />
-                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Available Now</span>
-                            </div>
-                            <a 
-                              href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I'm%20interested%20in%20the%20property%20"${acc.propertyName}"%20near%20${selectedUni.universityName}.`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-sm font-bold transition-all shadow-lg shadow-blue-600/20 active:scale-95"
-                            >
-                              Check Availability
-                            </a>
-                          </div>
-                        </div>
-                      </div>
+                      <AccommodationCard key={acc._id} acc={acc} settings={settings} selectedUni={selectedUni} />
                     ))}
                   </div>
                 ) : (
