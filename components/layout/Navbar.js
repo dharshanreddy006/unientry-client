@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSettings } from '@/components/providers/SettingsProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { getImageUrl } from '@/lib/apiConfig';
 
 const navLinks = [
@@ -21,6 +22,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const settings = useSettings();
+  const { user, logout } = useAuth();
   const mobileMenuRef = useRef(null);
 
   useEffect(() => {
@@ -85,6 +87,24 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
+            {/* User profile / logout */}
+            {user && (
+              <div className="flex items-center gap-2 ml-2 pl-2 border-l border-slate-200">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-xs font-bold shadow-sm">
+                  {user.name?.charAt(0)?.toUpperCase()}
+                </div>
+                <span className="text-xs text-slate-600 font-medium max-w-[80px] truncate">{user.name?.split(' ')[0]}</span>
+                <button
+                  onClick={logout}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all duration-200"
+                  title="Logout"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Mobile Toggle */}
@@ -134,6 +154,23 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
+            {/* Mobile logout */}
+            {user && (
+              <button
+                onClick={logout}
+                className="flex items-center gap-3 w-full px-5 py-3.5 rounded-xl text-[15px] font-semibold text-red-500 hover:bg-red-50 active:bg-red-100 transition-all duration-200"
+                style={{
+                  transitionDelay: mobileOpen ? `${navLinks.length * 30}ms` : '0ms',
+                  transform: mobileOpen ? 'translateX(0)' : 'translateX(-8px)',
+                  opacity: mobileOpen ? 1 : 0,
+                }}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Logout ({user.name?.split(' ')[0]})
+              </button>
+            )}
           </div>
         </div>
       </div>

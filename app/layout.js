@@ -1,4 +1,6 @@
 import { SettingsProvider } from '@/components/providers/SettingsProvider';
+import { AuthProvider } from '@/components/providers/AuthProvider';
+import AuthGate from '@/components/auth/AuthGate';
 import "./globals.css";
 
 /**
@@ -160,9 +162,13 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="antialiased">
-        <SettingsProvider>
-          {children}
-        </SettingsProvider>
+        <AuthProvider>
+          <SettingsProvider>
+            <AuthGate>
+              {children}
+            </AuthGate>
+          </SettingsProvider>
+        </AuthProvider>
       </body>
     </html>
   );
