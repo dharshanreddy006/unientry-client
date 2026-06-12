@@ -9,7 +9,7 @@ export default function FloatingWhatsApp() {
 
   return (
     <a
-      href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I%20need%20admission%20guidance.`}
+      href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I%20would%20like%20to%20inquire%20about%20your%20services%20(Marketplace,%20Accommodation,%20Rent%20%26%20Ride,%20Refer%20%26%20Earn)%20or%20submit%20a%20query.`}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-40 group"

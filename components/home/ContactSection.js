@@ -158,7 +158,7 @@ export default function ContactSection() {
             {/* CTA Buttons */}
             <div className="flex flex-wrap items-center gap-3 mb-8">
               <a
-                href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I%20need%20admission%20guidance.`}
+                href={`https://wa.me/${settings?.whatsappNumber}?text=Hi%20UniEntry!%20I%20would%20like%20to%20inquire%20about%20your%20services%20(Marketplace,%20Accommodation,%20Rent%20%26%20Ride,%20Refer%20%26%20Earn)%20or%20submit%20a%20query.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="whatsapp-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs md:text-sm shadow-md transition-all hover:scale-[1.02] hover:shadow-lg"
