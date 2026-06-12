@@ -9,7 +9,7 @@ import WhatsAppButton from '@/components/common/WhatsAppButton';
 
 export default function AboutPage() {
   const [settings, setSettings] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -40,18 +40,18 @@ export default function AboutPage() {
     );
   }
 
-  const team = settings?.team || [
-    { name: 'Dr. Rajesh Kumar', role: 'Founder & CEO', initials: 'RK' },
-    { name: 'Anita Desai', role: 'Head of Admissions', initials: 'AD' },
-    { name: 'Michael Chen', role: 'Visa Counselor', initials: 'MC' },
-    { name: 'Sarah Wilson', role: 'Career Advisor', initials: 'SW' },
+  const team = [
+    { name: settings?.founderName || 'Darshan Reddy', role: 'Founder & CEO', initials: 'DR' },
+    { name: 'Community Manager', role: 'Head of Support', initials: 'CS' },
+    { name: 'Admissions Lead', role: 'Academic Guidance', initials: 'AL' },
+    { name: 'Product Developer', role: 'Operations & Engineering', initials: 'PD' },
   ];
 
-  const stats = settings?.stats || [
-    { number: '5000+', label: 'Students Guided' },
-    { number: '200+', label: 'Partner Universities' },
-    { number: '15+', label: 'Countries' },
-    { number: '95%', label: 'Visa Success Rate' },
+  const stats = [
+    { number: '10,000+', label: 'Students Helped' },
+    { number: '500+', label: 'Accommodations Listed' },
+    { number: '2,000+', label: 'Marketplace Trades' },
+    { number: '100%', label: 'Student-Driven' },
   ];
 
   return (
@@ -65,10 +65,10 @@ export default function AboutPage() {
             🏢 About Us
           </span>
           <h1 className="font-heading font-bold text-3xl md:text-5xl text-slate-900 mb-6">
-            Helping Students Achieve Their <span className="text-blue-600">Global Dreams</span>
+            Simplifying <span className="text-blue-600">Student Life</span>
           </h1>
           <p className="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed">
-            {settings?.aboutText || 'UniEntry is a trusted educational consultancy that has helped thousands of students achieve their dream of studying at top universities worldwide.'}
+            UniEntry is a student-focused tech ecosystem that makes university life easier. We provide a peer-to-peer student marketplace, room/stay accommodations, rent & ride mobility, and academic guidance.
           </p>
         </div>
       </section>
@@ -81,14 +81,14 @@ export default function AboutPage() {
               <div className="w-14 h-14 rounded-2xl bg-accent-500 flex items-center justify-center text-white text-2xl mb-5">🎯</div>
               <h2 className="font-heading font-bold text-2xl text-primary-900 mb-4">Our Mission</h2>
               <p className="text-gray-600 leading-relaxed">
-                {settings?.aboutMission || 'To democratize access to quality international education by providing expert guidance, comprehensive support, and transparent information to every aspiring student, regardless of their background.'}
+                To simplify student life by solving everyday campus challenges—such as buying or selling textbooks and items, finding nearby accommodation, renting local transport, and securing referral rewards.
               </p>
             </div>
             <div className="bg-gradient-to-br from-primary-50 to-indigo-50 rounded-3xl p-8 border border-primary-100">
               <div className="w-14 h-14 rounded-2xl bg-primary-700 flex items-center justify-center text-white text-2xl mb-5">🌟</div>
               <h2 className="font-heading font-bold text-2xl text-primary-900 mb-4">Our Vision</h2>
               <p className="text-gray-600 leading-relaxed">
-                {settings?.aboutVision || 'To become the most trusted and comprehensive education consultancy platform, connecting students with the best universities worldwide and shaping the future leaders of tomorrow.'}
+                To become the ultimate student hub in India, connecting peers and offering all necessary tools to navigate university years smoothly, safely, and cost-effectively.
               </p>
             </div>
           </div>
@@ -115,7 +115,7 @@ export default function AboutPage() {
           <div className="text-center mb-14">
             <h2 className="font-heading font-bold text-3xl md:text-4xl text-primary-900 mb-4">Meet Our Team</h2>
             <p className="text-gray-500 max-w-2xl mx-auto">
-              Our experienced team of counselors and advisors are here to guide you at every step
+              Our dedicated community members and coordinators are here to support your daily student needs.
             </p>
           </div>
 
@@ -137,10 +137,10 @@ export default function AboutPage() {
       <section className="py-20 bg-gradient-to-r from-accent-500 to-accent-600">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-white mb-4">
-            Ready to Start Your Journey?
+            Ready to simplify your college life?
           </h2>
           <p className="text-white/80 mb-8 text-lg">
-            Get in touch with us today and let&apos;s make your dream university a reality.
+            Get in touch with our team today or explore our services to make the most of your student experience.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link

@@ -12,14 +12,6 @@ const quickLinks = [
   { name: 'Contact', href: '/contact' },
 ];
 
-const studyAbroad = [
-  { name: 'Study in Germany', href: '/universities?country=Germany' },
-  { name: 'Study in UK', href: '/universities?country=UK' },
-  { name: 'Study in USA', href: '/universities?country=USA' },
-  { name: 'Study in Canada', href: '/universities?country=Canada' },
-  { name: 'Study in Australia', href: '/universities?country=Australia' },
-];
-
 export default function Footer() {
   const settings = useSettings();
 
@@ -27,17 +19,17 @@ export default function Footer() {
     <footer className="bg-primary-900 text-white">
       {/* Main footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-5">
               <img src={settings?.logoUrl ? getImageUrl(settings.logoUrl) : "/logo.png"} alt="Logo" className="h-10 w-auto object-contain" />
-            <div className="flex flex-col">
-              <span className="font-heading font-bold text-xl leading-none tracking-tight">
-                Uni<span className="text-accent-400">Entry</span>
-              </span>
-              <span className="text-[9px] text-accent-400 font-black uppercase tracking-[0.3em] leading-none mt-1">Global</span>
-            </div>
+              <div className="flex flex-col">
+                <span className="font-heading font-bold text-xl leading-none tracking-tight">
+                  Uni<span className="text-accent-400">Entry</span>
+                </span>
+                <span className="text-[9px] text-accent-400 font-black uppercase tracking-[0.3em] leading-none mt-1">Global</span>
+              </div>
             </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-6">
               UniEntry is a student-focused platform providing university resources, student services, and admission guidance across India. Our mission is to simplify student life by solving real problems through accessible and impactful solutions.
@@ -67,7 +59,7 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="md:col-span-1">
             <h3 className="font-heading font-semibold text-lg mb-5">Quick Links</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
@@ -86,28 +78,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Study Abroad */}
-          <div>
-            <h3 className="font-heading font-semibold text-lg mb-5">Study Abroad</h3>
-            <ul className="space-y-3">
-              {studyAbroad.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-white/60 hover:text-accent-400 text-sm transition-colors duration-200 flex items-center gap-2"
-                  >
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Contact Info */}
-          <div>
+          <div className="md:col-span-1">
             <h3 className="font-heading font-semibold text-lg mb-5">Contact Us</h3>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
@@ -155,8 +127,8 @@ export default function Footer() {
             © {new Date().getFullYear()} UniEntry. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <Link href="/about" className="text-white/40 hover:text-white/70 text-sm transition-colors">Privacy Policy</Link>
-            <Link href="/about" className="text-white/40 hover:text-white/70 text-sm transition-colors">Terms of Service</Link>
+            <Link href="/privacy" className="text-white/40 hover:text-white/70 text-sm transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-white/40 hover:text-white/70 text-sm transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>
