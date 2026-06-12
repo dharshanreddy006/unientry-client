@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const services = [
   {
@@ -128,6 +129,7 @@ const services = [
 ];
 
 export default function ServicesHub() {
+  const router = useRouter();
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -145,12 +147,17 @@ export default function ServicesHub() {
     return () => observer.disconnect();
   }, []);
 
-  const handleScrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const yOffset = -80; // navbar height offset
-      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+  const handleServiceClick = (id) => {
+    if (id === 'contact') {
+      router.push('/contact');
+    } else if (id === 'marketplace') {
+      router.push('/marketplace');
+    } else if (id === 'accommodation') {
+      router.push('/accommodation');
+    } else if (id === 'rent-and-ride') {
+      router.push('/rent-and-ride');
+    } else if (id === 'refer-and-earn') {
+      router.push('/refer-and-earn');
     }
   };
 
@@ -190,15 +197,15 @@ export default function ServicesHub() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6">
           {services.map((service, index) => (
             <button
               key={service.id}
-              onClick={() => handleScrollTo(service.id)}
-              className={`services-hub-card group relative flex flex-col items-center gap-2.5 sm:gap-3 p-4 sm:p-5 rounded-2xl sm:rounded-3xl
-                bg-white border ${service.borderAccent} 
-                hover:shadow-xl ${service.glow}
-                active:scale-[0.96] cursor-pointer
+              onClick={() => handleServiceClick(service.id)}
+              className={`services-hub-card group relative flex flex-col items-center gap-3 sm:gap-4 p-5 sm:p-6 rounded-[2rem]
+                bg-white border-2 ${service.borderAccent} 
+                hover:shadow-2xl ${service.glow}
+                active:scale-95 cursor-pointer
                 transition-all duration-300 ease-out`}
               style={{
                 opacity: isVisible ? 1 : 0,
@@ -209,20 +216,20 @@ export default function ServicesHub() {
             >
               {/* Hover gradient overlay */}
               <div
-                className={`absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-300`}
+                className={`absolute inset-0 rounded-[2rem] bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-[0.06] transition-opacity duration-300`}
               />
 
               {/* Icon */}
-              <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-0.5">
+              <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1">
                 {service.icon}
               </div>
 
               {/* Label */}
-              <div className="text-center min-h-[2.5rem] flex flex-col justify-center">
-                <span className={`font-heading font-bold text-xs sm:text-sm text-slate-800 group-hover:${service.textAccent} transition-colors duration-200 leading-tight`}>
+              <div className="text-center">
+                <span className={`font-heading font-black text-sm sm:text-base text-slate-800 group-hover:${service.textAccent} transition-colors duration-200 leading-tight block`}>
                   {service.name}
                 </span>
-                <span className="text-[10px] sm:text-xs text-slate-400 mt-0.5 leading-tight hidden sm:block">
+                <span className="text-[10px] sm:text-xs text-slate-400 mt-1 leading-tight block">
                   {service.subtitle}
                 </span>
               </div>
@@ -234,14 +241,6 @@ export default function ServicesHub() {
               />
             </button>
           ))}
-        </div>
-
-        {/* Scroll hint for mobile */}
-        <div className="mt-6 flex items-center justify-center gap-2 text-slate-400 text-xs sm:hidden">
-          <svg className="w-3.5 h-3.5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-          <span>Tap to jump to any section</span>
         </div>
       </div>
     </section>

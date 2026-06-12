@@ -137,6 +137,8 @@ const websiteSchema = {
   },
 };
 
+import MobileBottomNav from '@/components/layout/MobileBottomNav';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -175,7 +177,12 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <SettingsProvider>
             <AuthGate>
-              {children}
+              <div className="pb-16 md:pb-0 min-h-screen flex flex-col justify-between">
+                <div className="flex-grow">
+                  {children}
+                </div>
+                <MobileBottomNav />
+              </div>
             </AuthGate>
           </SettingsProvider>
         </AuthProvider>
