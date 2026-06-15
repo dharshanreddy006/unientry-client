@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { API_URL } from '@/lib/apiConfig';
+import { API_URL, getImageUrl } from '@/lib/apiConfig';
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -28,7 +28,7 @@ function AccommodationCard({ acc, settings, selectedUni, onOpenDetails }) {
   }
 
   const coverImage = images[0] || '';
-  const ownerNumber = acc.ownerPhone || settings?.whatsappNumber || '919876543210';
+  const ownerNumber = (acc.ownerPhone && acc.ownerPhone.trim()) ? acc.ownerPhone.trim() : (settings?.whatsappNumber || '919876543210');
   const whatsappText = `Hi! I saw your property "${acc.propertyName}" on UniEntry Global and I'm interested in learning more about its availability.`;
   const whatsappLink = `https://wa.me/${ownerNumber}?text=${encodeURIComponent(whatsappText)}`;
 
@@ -37,7 +37,7 @@ function AccommodationCard({ acc, settings, selectedUni, onOpenDetails }) {
       {/* Cover Image */}
       <div className="sm:w-48 h-44 rounded-2xl bg-slate-100 flex-shrink-0 relative overflow-hidden">
         {coverImage ? (
-          <img src={coverImage} alt={acc.propertyName} className="w-full h-full object-cover" />
+          <img src={getImageUrl(coverImage)} alt={acc.propertyName} className="w-full h-full object-cover" />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
             <svg className="w-10 h-10 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,12 +150,12 @@ export default function AccommodationPage() {
   const [activeTab, setActiveTab] = useState('rooms');
   const [activeDetails, setActiveDetails] = useState(null);
 
-  // Filter States
   const [filterType, setFilterType] = useState('All');
   const [filterCoLiving, setFilterCoLiving] = useState('All');
   const [filterCoupleFriendly, setFilterCoupleFriendly] = useState('All');
   const [maxPrice, setMaxPrice] = useState(50000);
   const [priceType, setPriceType] = useState('monthly');
+  const [filterOpen, setFilterOpen] = useState(false);
 
   // Fetch all universities for selection
   useEffect(() => {
@@ -333,7 +333,7 @@ export default function AccommodationPage() {
             </div>
 
             <div className="flex flex-col lg:flex-row gap-10">
-              {/* Sidebar/CTA */}
+              {/* Sidebar/CTA — hidden on mobile when viewing rooms tab */}
               <div className={`lg:w-1/3 ${activeTab === 'list' ? 'block' : 'hidden lg:block'}`}>
                 <div className="sticky top-32 space-y-6">
                   <div className="bg-primary-900 rounded-3xl p-8 text-white shadow-2xl shadow-primary-900/20 relative overflow-hidden">
@@ -384,28 +384,47 @@ export default function AccommodationPage() {
               <div className={`lg:w-2/3 ${activeTab === 'rooms' ? 'block' : 'hidden lg:block'}`}>
                 
                 {/* Dynamic Search & Filter Bar */}
-                <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm mb-6 space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <h4 className="font-bold text-slate-900 flex items-center gap-2">
+                <div className="bg-white rounded-3xl border border-slate-100 shadow-sm mb-6">
+                  {/* Filter Header — always visible */}
+                  <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
+                    <h4 className="font-bold text-slate-900 flex items-center gap-2 text-sm">
                       <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 8.293A1 1 0 013 7.586V4z" />
                       </svg>
                       Filter Accommodations
+                      {(filterType !== 'All' || filterCoLiving !== 'All' || filterCoupleFriendly !== 'All') && (
+                        <span className="ml-1 px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full text-[9px] font-black uppercase">Active</span>
+                      )}
                     </h4>
-                    <button 
-                      onClick={() => {
-                        setFilterType('All');
-                        setFilterCoLiving('All');
-                        setFilterCoupleFriendly('All');
-                        setPriceType('monthly');
-                        const prices = accommodations.map(acc => acc.priceMonthly).filter(Boolean);
-                        setMaxPrice(prices.length > 0 ? Math.max(...prices) : 50000);
-                      }}
-                      className="text-xs text-blue-600 hover:underline font-semibold"
-                    >
-                      Reset Filters
-                    </button>
+                    <div className="flex items-center gap-3">
+                      <button 
+                        onClick={() => {
+                          setFilterType('All');
+                          setFilterCoLiving('All');
+                          setFilterCoupleFriendly('All');
+                          setPriceType('monthly');
+                          const prices = accommodations.map(acc => acc.priceMonthly).filter(Boolean);
+                          setMaxPrice(prices.length > 0 ? Math.max(...prices) : 50000);
+                        }}
+                        className="text-xs text-blue-600 hover:underline font-semibold hidden sm:block"
+                      >
+                        Reset
+                      </button>
+                      {/* Collapse toggle — only on mobile */}
+                      <button
+                        onClick={() => setFilterOpen(prev => !prev)}
+                        className="lg:hidden p-2 rounded-xl bg-slate-100 hover:bg-blue-50 text-slate-500 hover:text-blue-600 transition-all"
+                        aria-label="Toggle filters"
+                      >
+                        <svg className={`w-4 h-4 transition-transform duration-300 ${filterOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
+
+                  {/* Filter Controls — collapsible on mobile, always open on desktop */}
+                  <div className={`p-5 space-y-4 ${filterOpen ? 'block' : 'hidden lg:block'}`}>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {/* Property Type */}
@@ -492,7 +511,8 @@ export default function AccommodationPage() {
                       />
                     </div>
                   </div>
-                </div>
+                  </div>{/* end collapsible filter controls */}
+                </div>{/* end filter card */}
 
                 {loading ? (
                   <div className="flex flex-col items-center justify-center py-20 gap-4">
@@ -580,7 +600,7 @@ export default function AccommodationPage() {
                           className="aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 cursor-zoom-in group relative shadow-sm"
                           onClick={() => window.open(url, '_blank')}
                         >
-                          <img src={url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                          <img src={getImageUrl(url)} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         </div>
                       ))}
                     </div>
@@ -675,7 +695,7 @@ export default function AccommodationPage() {
             {/* Sticky Bottom Actions */}
             <div className="sticky bottom-0 bg-white/95 backdrop-blur-md px-6 py-4 border-t border-slate-100 flex gap-3">
               {(() => {
-                const ownerNum = activeDetails.ownerPhone || settings?.whatsappNumber || '919876543210';
+                const ownerNum = (activeDetails.ownerPhone && activeDetails.ownerPhone.trim()) ? activeDetails.ownerPhone.trim() : (settings?.whatsappNumber || '919876543210');
                 const text = `Hi! I saw your property "${activeDetails.propertyName}" on UniEntry Global and I'm interested in renting/viewing it. Please let me know the details.`;
                 const link = `https://wa.me/${ownerNum}?text=${encodeURIComponent(text)}`;
                 return (
