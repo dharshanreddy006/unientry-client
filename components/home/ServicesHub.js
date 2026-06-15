@@ -15,6 +15,7 @@ const services = [
         className="w-full h-full object-contain scale-[1.4]"
       />
     ),
+    bgColor: '#f6f8f7',
     gradient: 'from-sky-500 to-blue-600',
     glow: 'shadow-sky-500/20',
     bgAccent: 'bg-sky-50',
@@ -32,6 +33,7 @@ const services = [
         className="w-full h-full object-contain scale-[1.35]"
       />
     ),
+    bgColor: '#f6fcfb',
     gradient: 'from-amber-500 to-amber-700',
     glow: 'shadow-amber-500/20',
     bgAccent: 'bg-amber-50',
@@ -49,6 +51,7 @@ const services = [
         className="w-full h-full object-contain scale-[1.45]"
       />
     ),
+    bgColor: '#fefefd',
     gradient: 'from-emerald-500 to-emerald-700',
     glow: 'shadow-emerald-500/20',
     bgAccent: 'bg-emerald-50',
@@ -66,6 +69,7 @@ const services = [
         className="w-full h-full object-contain scale-[1.4]"
       />
     ),
+    bgColor: '#ecedea',
     gradient: 'from-pink-500 to-pink-700',
     glow: 'shadow-pink-500/20',
     bgAccent: 'bg-pink-50',
@@ -91,6 +95,7 @@ const services = [
         </svg>
       </div>
     ),
+    bgColor: '#ffffff',
     gradient: 'from-slate-500 to-slate-700',
     glow: 'shadow-slate-500/20',
     bgAccent: 'bg-slate-50',
@@ -174,11 +179,12 @@ export default function ServicesHub() {
               key={service.id}
               onClick={() => handleServiceClick(service.id)}
               className={`services-hub-card group relative flex flex-col items-center gap-3 sm:gap-4 p-5 sm:p-6 rounded-[2rem]
-                bg-white border-2 ${service.borderAccent} 
+                border-2 ${service.borderAccent} 
                 hover:shadow-2xl ${service.glow}
                 active:scale-95 cursor-pointer
                 transition-all duration-300 ease-out`}
               style={{
+                backgroundColor: service.bgColor,
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? 'translateY(0)' : 'translateY(24px)',
                 transition: `all 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${index * 80}ms`,
