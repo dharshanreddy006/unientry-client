@@ -61,7 +61,10 @@ export default function AdminAccommodations() {
         const file = files[i];
         const formData = new FormData();
         formData.append('image', file);
-        const res = await fetch(`${API}/upload`, {
+        const uploadUrl = typeof window !== 'undefined' && !window.location.hostname.includes('localhost')
+          ? 'https://unientry-server-production.up.railway.app/api/upload'
+          : '/api/upload';
+        const res = await fetch(uploadUrl, {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}` },
           body: formData,
