@@ -191,64 +191,47 @@ export default function AuthGate({ children }) {
 
   // Login / Signup screen
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto"
-      style={{
-        background: 'linear-gradient(160deg, #f8fafc 0%, #e0f2fe 30%, #bae6fd 60%, #f0f9ff 100%)',
-      }}
-    >
-      {/* Background decorations */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-32 -right-32 w-80 h-80 bg-blue-200/30 rounded-full blur-3xl" />
-        <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-sky-200/30 rounded-full blur-3xl" />
-        <div className="absolute top-1/3 left-1/4 w-48 h-48 bg-violet-100/20 rounded-full blur-3xl" />
-        {/* Dot grid */}
-        <div className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, #3B82F6 1px, transparent 0)',
-            backgroundSize: '32px 32px',
-          }}
-        />
-      </div>
-
-      <div className="relative z-10 w-full max-w-md mx-4 my-8">
-        {/* Logo */}
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto bg-white">
+      <div className="relative z-10 w-full max-w-[420px] mx-4 my-8">
+        {/* WELCOME header */}
         <div className="text-center mb-8" style={{ animation: 'fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both' }}>
-          <div className="inline-flex items-center gap-3 mb-4">
-            <img src={settings?.logoUrl ? getImageUrl(settings.logoUrl) : "/logo.png"} alt="UniEntry GLOBAL" className="w-14 h-14" />
-            <div className="text-left">
-              <span className="text-slate-900 font-heading font-bold text-2xl leading-none">
-                Uni<span className="text-blue-600">Entry</span>
-              </span>
-              <span className="block text-[10px] text-blue-600 font-black uppercase tracking-[0.3em] leading-none mt-1">Global</span>
-            </div>
+          <h1 className="font-serif text-[4.5rem] font-bold tracking-[0.2em] text-black uppercase leading-none select-none mb-6">
+            WELCOME
+          </h1>
+          <div className="inline-flex items-center gap-2 mb-2">
+            {settings?.logoUrl ? (
+              <img src={getImageUrl(settings.logoUrl)} alt="UniEntry" className="h-6 w-auto object-contain brightness-0" />
+            ) : (
+              <span className="font-serif font-bold text-xs text-black tracking-[0.15em] uppercase">UniEntry GLOBAL</span>
+            )}
           </div>
-          <p className="text-slate-500 text-sm">
-            {mode === 'login' ? 'Welcome back! Sign in to continue' : 'Create your account to get started'}
+          <p className="text-zinc-500 text-[10px] tracking-widest uppercase mt-1">
+            {mode === 'login' ? 'Sign in to continue' : 'Create your account'}
           </p>
         </div>
 
         {/* Card */}
-        <div className="bg-white/90 backdrop-blur-xl rounded-3xl border border-white/60 shadow-2xl shadow-blue-900/10 p-6 sm:p-8"
+        <div className="bg-white border border-black p-6 sm:p-8 rounded-none shadow-none"
           style={{ animation: 'fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both' }}
         >
           {/* Tab toggle */}
-          <div className="flex bg-slate-100 rounded-2xl p-1 mb-6">
+          <div className="flex border-b border-zinc-200 mb-6">
             <button
               onClick={() => { setMode('login'); setError(''); }}
-              className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 py-3 text-center text-[10px] font-bold tracking-widest uppercase transition-all ${
                 mode === 'login'
-                  ? 'bg-white text-blue-600 shadow-sm'
-                  : 'text-slate-500 hover:text-slate-700'
+                  ? 'border-b-2 border-black text-black font-extrabold'
+                  : 'text-zinc-400 hover:text-black'
               }`}
             >
               Sign In
             </button>
             <button
               onClick={() => { setMode('signup'); setError(''); }}
-              className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 py-3 text-center text-[10px] font-bold tracking-widest uppercase transition-all ${
                 mode === 'signup'
-                  ? 'bg-white text-blue-600 shadow-sm'
-                  : 'text-slate-500 hover:text-slate-700'
+                  ? 'border-b-2 border-black text-black font-extrabold'
+                  : 'text-zinc-400 hover:text-black'
               }`}
             >
               Sign Up
@@ -257,25 +240,25 @@ export default function AuthGate({ children }) {
 
           {/* Error */}
           {error && (
-            <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-100 text-red-600 text-sm flex items-start gap-2"
+            <div className="mb-6 flex gap-3 p-4 bg-black border border-black text-white text-[11px] uppercase tracking-wider rounded-none"
               style={{ animation: 'fadeInUp 0.3s ease both' }}
             >
-              <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              {error}
+              <span>{error}</span>
             </div>
           )}
 
           {/* LOGIN Form */}
           {mode === 'login' && (
-            <form onSubmit={handleLogin} className="space-y-4">
+            <form onSubmit={handleLogin} className="space-y-6">
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                <label className="block text-black text-[10px] font-bold tracking-widest uppercase mb-2">
                   Email or Phone
                 </label>
                 <div className="relative">
-                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                   <input
@@ -284,17 +267,17 @@ export default function AuthGate({ children }) {
                     onChange={(e) => setIdentifier(e.target.value)}
                     placeholder="you@email.com or 9876543210"
                     required
-                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
+                    className="w-full pl-11 pr-4 py-3.5 rounded-none bg-white border border-zinc-300 text-black placeholder-zinc-400 focus:border-black focus:ring-0 outline-none transition-all text-xs tracking-wider font-medium"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                <label className="block text-black text-[10px] font-bold tracking-widest uppercase mb-2">
                   Password
                 </label>
                 <div className="relative">
-                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                   <input
@@ -303,17 +286,17 @@ export default function AuthGate({ children }) {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
                     required
-                    className="w-full pl-11 pr-12 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
+                    className="w-full pl-11 pr-12 py-3.5 rounded-none bg-white border border-zinc-300 text-black placeholder-zinc-400 focus:border-black focus:ring-0 outline-none transition-all text-xs tracking-wider font-medium"
                   />
                   <button type="button" onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-zinc-400 hover:text-black transition-colors"
                   >
                     {showPassword ? (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
                       </svg>
                     ) : (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
@@ -325,13 +308,13 @@ export default function AuthGate({ children }) {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed text-sm"
+                className="w-full py-4 mt-2 bg-black hover:bg-zinc-900 text-white font-semibold rounded-none uppercase tracking-[0.2em] text-[10px] transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {submitting ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <>
+                    <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     Signing in...
-                  </span>
+                  </>
                 ) : 'Sign In'}
               </button>
             </form>
@@ -339,61 +322,61 @@ export default function AuthGate({ children }) {
 
           {/* SIGNUP Form */}
           {mode === 'signup' && (
-            <form onSubmit={handleSignup} className="space-y-4">
+            <form onSubmit={handleSignup} className="space-y-6">
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Full Name</label>
+                <label className="block text-black text-[10px] font-bold tracking-widest uppercase mb-2">Full Name</label>
                 <div className="relative">
-                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                   <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" required
-                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
+                    className="w-full pl-11 pr-4 py-3.5 rounded-none bg-white border border-zinc-300 text-black placeholder-zinc-400 focus:border-black focus:ring-0 outline-none transition-all text-xs tracking-wider font-medium"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Email</label>
+                <label className="block text-black text-[10px] font-bold tracking-widest uppercase mb-2">Email</label>
                 <div className="relative">
-                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com (optional if phone given)"
-                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
+                    className="w-full pl-11 pr-4 py-3.5 rounded-none bg-white border border-zinc-300 text-black placeholder-zinc-400 focus:border-black focus:ring-0 outline-none transition-all text-xs tracking-wider font-medium"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Phone Number</label>
+                <label className="block text-black text-[10px] font-bold tracking-widest uppercase mb-2">Phone Number</label>
                 <div className="relative">
-                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="9876543210 (optional if email given)"
-                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
+                    className="w-full pl-11 pr-4 py-3.5 rounded-none bg-white border border-zinc-300 text-black placeholder-zinc-400 focus:border-black focus:ring-0 outline-none transition-all text-xs tracking-wider font-medium"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Password</label>
+                <label className="block text-black text-[10px] font-bold tracking-widest uppercase mb-2">Password</label>
                 <div className="relative">
-                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                   <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Min 6 characters" required minLength={6}
-                    className="w-full pl-11 pr-12 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
+                    className="w-full pl-11 pr-12 py-3.5 rounded-none bg-white border border-zinc-300 text-black placeholder-zinc-400 focus:border-black focus:ring-0 outline-none transition-all text-xs tracking-wider font-medium"
                   />
                   <button type="button" onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-black transition-colors"
                   >
                     {showPassword ? (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
                       </svg>
                     ) : (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
@@ -404,7 +387,7 @@ export default function AuthGate({ children }) {
 
               {/* Role selection */}
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">I am a</label>
+                <label className="block text-black text-[10px] font-bold tracking-widest uppercase mb-2">I am a</label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
                     { value: 'student', label: 'Student', icon: '🎓' },
@@ -415,13 +398,13 @@ export default function AuthGate({ children }) {
                       key={r.value}
                       type="button"
                       onClick={() => setRole(r.value)}
-                      className={`flex flex-col items-center gap-1 p-3 rounded-xl border-2 transition-all duration-200 text-xs font-semibold ${
+                      className={`flex flex-col items-center gap-1 p-3 rounded-none border-2 transition-all duration-200 text-xs font-semibold ${
                         role === r.value
-                          ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-sm'
-                          : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200'
+                          ? 'border-black bg-black text-white'
+                          : 'border-zinc-200 bg-white text-zinc-600 hover:border-black'
                       }`}
                     >
-                      <span className="text-xl">{r.icon}</span>
+                      <span className="text-lg">{r.icon}</span>
                       {r.label}
                     </button>
                   ))}
@@ -431,13 +414,13 @@ export default function AuthGate({ children }) {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed text-sm"
+                className="w-full py-4 mt-2 bg-black hover:bg-zinc-900 text-white font-semibold rounded-none uppercase tracking-[0.2em] text-[10px] transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {submitting ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <>
+                    <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     Creating account...
-                  </span>
+                  </>
                 ) : 'Create Account'}
               </button>
             </form>
@@ -445,7 +428,7 @@ export default function AuthGate({ children }) {
         </div>
 
         {/* Footer text */}
-        <p className="text-center text-slate-400 text-xs mt-6"
+        <p className="text-zinc-400 text-[10px] tracking-widest uppercase text-center mt-6"
           style={{ animation: 'fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both' }}
         >
           By continuing, you agree to UniEntry GLOBAL&apos;s Terms of Service
