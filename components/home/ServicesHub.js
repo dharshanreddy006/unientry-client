@@ -12,7 +12,7 @@ const services = [
       <img
         src="/service-marketplace.png"
         alt="Buy & Sell"
-        className="w-full h-full object-contain"
+        className="w-full h-full object-contain scale-[1.4]"
       />
     ),
     gradient: 'from-sky-500 to-blue-600',
@@ -29,7 +29,7 @@ const services = [
       <img
         src="/service-accommodation.png"
         alt="Stay"
-        className="w-full h-full object-contain"
+        className="w-full h-full object-contain scale-[1.35]"
       />
     ),
     gradient: 'from-amber-500 to-amber-700',
@@ -46,7 +46,7 @@ const services = [
       <img
         src="/service-rent-ride.png"
         alt="Rent & Ride"
-        className="w-full h-full object-contain"
+        className="w-full h-full object-contain scale-[1.45]"
       />
     ),
     gradient: 'from-emerald-500 to-emerald-700',
@@ -63,7 +63,7 @@ const services = [
       <img
         src="/service-refer-earn.png"
         alt="Refer & Earn"
-        className="w-full h-full object-contain"
+        className="w-full h-full object-contain scale-[1.4]"
       />
     ),
     gradient: 'from-pink-500 to-pink-700',
@@ -77,17 +77,19 @@ const services = [
     name: 'Contact Us',
     subtitle: 'Get in Touch',
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
-        <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#contact-bg)" />
-        <rect x="10" y="14" width="28" height="20" rx="4" stroke="#fff" strokeWidth="2" />
-        <path d="M10 18l14 8 14-8" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <defs>
-          <linearGradient id="contact-bg" x1="4" y1="4" x2="44" y2="44">
-            <stop stopColor="#64748B" />
-            <stop offset="1" stopColor="#334155" />
-          </linearGradient>
-        </defs>
-      </svg>
+      <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+        <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
+          <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#contact-bg)" />
+          <rect x="10" y="14" width="28" height="20" rx="4" stroke="#fff" strokeWidth="2" />
+          <path d="M10 18l14 8 14-8" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <defs>
+            <linearGradient id="contact-bg" x1="4" y1="4" x2="44" y2="44">
+              <stop stopColor="#64748B" />
+              <stop offset="1" stopColor="#334155" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
     ),
     gradient: 'from-slate-500 to-slate-700',
     glow: 'shadow-slate-500/20',
@@ -189,7 +191,7 @@ export default function ServicesHub() {
               />
 
               {/* Icon */}
-              <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1">
+              <div className="relative w-full h-24 sm:h-28 flex items-center justify-center overflow-hidden flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
                 {service.icon}
               </div>
 
