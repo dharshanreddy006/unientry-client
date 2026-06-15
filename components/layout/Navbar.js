@@ -48,10 +48,10 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
         scrolled
-          ? 'navbar-glass shadow-lg py-2.5'
-          : 'bg-transparent py-4'
+          ? 'navbar-glass py-2.5'
+          : 'navbar-glass-always py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" ref={mobileMenuRef}>
@@ -134,7 +134,7 @@ export default function Navbar() {
             paddingBottom: mobileOpen ? '1rem' : '0',
           }}
         >
-          <div className="bg-white/95 backdrop-blur-xl border border-blue-100/50 rounded-2xl p-2 space-y-0.5 shadow-2xl">
+          <div className="glass-panel rounded-2xl p-2 space-y-0.5">
             {navLinks.map((link, i) => (
               <Link
                 key={link.name}

@@ -254,7 +254,7 @@ export default function AccommodationPage() {
           {isSearching ? (
             <div className="max-w-2xl mx-auto space-y-4">
               <div className="relative group">
-                <svg className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-blue-500 transition-colors z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <input
@@ -262,12 +262,12 @@ export default function AccommodationPage() {
                   placeholder="Search your university..."
                   value={uniSearch}
                   onChange={(e) => setUniSearch(e.target.value)}
-                  className="w-full pl-14 pr-6 py-5 rounded-3xl bg-white border border-slate-200 text-slate-800 placeholder-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-blue-50 outline-none transition-all text-base shadow-xl shadow-blue-900/5"
+                  className="w-full pl-14 pr-6 py-5 rounded-3xl glass-search text-slate-800 placeholder-slate-400 outline-none transition-all text-base"
                 />
               </div>
 
               {uniSearch && (
-                <div className="bg-white rounded-3xl border border-slate-100 shadow-2xl overflow-hidden animate-slide-up max-h-96 overflow-y-auto">
+                <div className="glass-panel rounded-3xl overflow-hidden animate-slide-up max-h-96 overflow-y-auto">
                   {filteredUnis.length > 0 ? (
                     filteredUnis.map(uni => (
                       <button
