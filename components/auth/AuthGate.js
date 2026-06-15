@@ -90,47 +90,16 @@ export default function AuthGate({ children }) {
   // Welcome animation overlay
   if (showWelcome) {
     return (
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 40%, #0c4a6e 70%, #164e63 100%)',
-        }}
-      >
-        {/* Animated particles */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full"
-              style={{
-                width: `${Math.random() * 6 + 2}px`,
-                height: `${Math.random() * 6 + 2}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                background: `rgba(56, 189, 248, ${Math.random() * 0.4 + 0.1})`,
-                animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 2}s`,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Radial glow */}
-        <div className="absolute w-[500px] h-[500px] rounded-full opacity-20"
-          style={{
-            background: 'radial-gradient(circle, rgba(56,189,248,0.4) 0%, transparent 70%)',
-            animation: 'pulse-glow 2s ease-in-out infinite',
-          }}
-        />
-
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-white">
         <div className="relative z-10 text-center px-6"
           style={{ animation: 'welcomeEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) both' }}
         >
           {/* Checkmark circle */}
-          <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/30"
+          <div className="mx-auto w-16 h-16 border border-black flex items-center justify-center mb-6 rounded-none"
             style={{ animation: 'welcomeCheck 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both' }}
           >
-            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"
+            <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"
                 style={{
                   strokeDasharray: 24,
                   strokeDashoffset: 24,
@@ -140,20 +109,20 @@ export default function AuthGate({ children }) {
             </svg>
           </div>
 
-          <h1 className="font-heading font-bold text-3xl sm:text-4xl text-white mb-2"
+          <h1 className="font-serif text-3xl sm:text-4xl text-black uppercase tracking-[0.2em] mb-3"
             style={{ animation: 'welcomeText 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both' }}
           >
-            Welcome, {welcomeName}! 🎉
+            Welcome, {welcomeName}
           </h1>
-          <p className="text-sky-200/80 text-base sm:text-lg"
+          <p className="text-zinc-500 text-[10px] tracking-[0.2em] uppercase"
             style={{ animation: 'welcomeText 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both' }}
           >
-            Loading your UniEntry experience...
+            Loading your experience
           </p>
 
           {/* Loading bar */}
-          <div className="mt-8 w-48 h-1.5 bg-white/10 rounded-full mx-auto overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-sky-400 to-emerald-400 rounded-full"
+          <div className="mt-8 w-48 h-[1px] bg-zinc-200 mx-auto overflow-hidden rounded-none">
+            <div className="h-full bg-black"
               style={{ animation: 'welcomeBar 1.8s ease-out 0.5s both' }}
             />
           </div>
