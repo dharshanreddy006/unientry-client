@@ -11,6 +11,15 @@ const emptyForm = {
   description: '', 
   amenities: '', 
   location: '', 
+  detailedLocation: '',
+  propertyType: 'Flat', 
+  priceMonthly: '',
+  priceYearly: '',
+  coLiving: false,
+  coupleFriendly: false,
+  genderPreference: 'Unisex',
+  depositAmount: '',
+  ownerPhone: '',
   universityId: '', 
   imageUrl: [], 
   active: true 
@@ -89,7 +98,20 @@ export default function AdminAccommodations() {
   const handleEdit = (acc) => {
     setEditId(acc._id);
     const images = Array.isArray(acc.imageUrl) ? acc.imageUrl : (acc.imageUrl ? [acc.imageUrl] : []);
-    setForm({ ...acc, imageUrl: images, amenities: acc.amenities?.join(', ') || '' });
+    setForm({ 
+      ...acc, 
+      imageUrl: images, 
+      amenities: acc.amenities?.join(', ') || '',
+      detailedLocation: acc.detailedLocation || '',
+      propertyType: acc.propertyType || 'Flat',
+      priceMonthly: acc.priceMonthly || '',
+      priceYearly: acc.priceYearly || '',
+      coLiving: acc.coLiving ?? false,
+      coupleFriendly: acc.coupleFriendly ?? false,
+      genderPreference: acc.genderPreference || 'Unisex',
+      depositAmount: acc.depositAmount || '',
+      ownerPhone: acc.ownerPhone || '',
+    });
     setShowForm(true);
   };
 
@@ -108,7 +130,11 @@ export default function AdminAccommodations() {
       const body = { 
         ...form, 
         amenities: typeof form.amenities === 'string' ? form.amenities.split(',').map(s => s.trim()).filter(Boolean) : form.amenities,
-        universityId: form.universityId ? parseInt(form.universityId) : null
+        universityId: form.universityId ? parseInt(form.universityId) : null,
+        priceMonthly: form.priceMonthly ? parseInt(form.priceMonthly) : null,
+        priceYearly: form.priceYearly ? parseInt(form.priceYearly) : null,
+        coLiving: !!form.coLiving,
+        coupleFriendly: !!form.coupleFriendly
       };
       const url = editId ? `${API}/accommodations/${editId}` : `${API}/accommodations`;
       const method = editId ? 'PUT' : 'POST';
@@ -155,7 +181,7 @@ export default function AdminAccommodations() {
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. Single, Shared, Studio" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Price *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Price Text (fallback) *</label>
                     <input type="text" required value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. £800/month" />
                   </div>
@@ -175,10 +201,54 @@ export default function AdminAccommodations() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">General Location (City, Country) *</label>
                     <input type="text" required value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="City, Country" />
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Property Type *</label>
+                    <select required value={form.propertyType} onChange={(e) => setForm({ ...form, propertyType: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm">
+                      <option value="Flat">Flat</option>
+                      <option value="Hostel">Hostel</option>
+                      <option value="PG">PG</option>
+                      <option value="Studio Apartment">Studio Apartment</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Gender Preference *</label>
+                    <select required value={form.genderPreference} onChange={(e) => setForm({ ...form, genderPreference: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm">
+                      <option value="Unisex">Unisex</option>
+                      <option value="Boys">Boys</option>
+                      <option value="Girls">Girls</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Price Monthly (Numerical) *</label>
+                    <input type="number" required value={form.priceMonthly} onChange={(e) => setForm({ ...form, priceMonthly: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. 15000" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Price Yearly (Numerical)</label>
+                    <input type="number" value={form.priceYearly} onChange={(e) => setForm({ ...form, priceYearly: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. 180000" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Deposit Amount</label>
+                    <input type="text" value={form.depositAmount} onChange={(e) => setForm({ ...form, depositAmount: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. 2 months rent" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Owner WhatsApp Number *</label>
+                    <input type="text" required value={form.ownerPhone} onChange={(e) => setForm({ ...form, ownerPhone: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. 919876543210" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Detailed/Accurate Address Location</label>
+                  <input type="text" value={form.detailedLocation} onChange={(e) => setForm({ ...form, detailedLocation: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. Plot 4B, Sector 62, Noida" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
@@ -229,9 +299,19 @@ export default function AdminAccommodations() {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <input type="checkbox" id="active" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} className="w-4 h-4 rounded" />
-                  <label htmlFor="active" className="text-sm text-gray-700">Active</label>
+                <div className="flex flex-wrap items-center gap-6">
+                  <div className="flex items-center gap-2">
+                    <input type="checkbox" id="coLiving" checked={form.coLiving} onChange={(e) => setForm({ ...form, coLiving: e.target.checked })} className="w-4 h-4 rounded" />
+                    <label htmlFor="coLiving" className="text-sm text-gray-700">Co-Living</label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input type="checkbox" id="coupleFriendly" checked={form.coupleFriendly} onChange={(e) => setForm({ ...form, coupleFriendly: e.target.checked })} className="w-4 h-4 rounded" />
+                    <label htmlFor="coupleFriendly" className="text-sm text-gray-700">Couple Friendly</label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input type="checkbox" id="active" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} className="w-4 h-4 rounded" />
+                    <label htmlFor="active" className="text-sm text-gray-700">Active</label>
+                  </div>
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="submit" disabled={saving} className="flex-1 py-3 bg-accent-500 text-white rounded-xl font-semibold text-sm hover:bg-accent-600 disabled:opacity-50">
