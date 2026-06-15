@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useSettings } from '@/components/providers/SettingsProvider';
-import HighlightsCarousel from './HighlightsCarousel';
 
 export default function Hero() {
   const settings = useSettings();
@@ -79,13 +78,8 @@ export default function Hero() {
           </button>
         </div>
 
-        {/* Highlights Carousel */}
-        <div className="mt-12 animate-fade-in-up delay-400">
-          <HighlightsCarousel />
-        </div>
-
         {/* Stats */}
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 animate-fade-in-up delay-500">
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 animate-fade-in-up delay-500">
           {stats.map((stat, idx) => (
             <div key={stat.label} className={`${idx % 2 === 0 ? 'bg-amber-50/50 border-amber-100' : 'bg-sky-50/50 border-blue-100'} rounded-2xl p-4 shadow-sm border`}>
               <p className="font-heading font-extrabold text-2xl md:text-3xl text-slate-900">{stat.number}</p>
