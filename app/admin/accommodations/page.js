@@ -25,6 +25,18 @@ const emptyForm = {
   active: true 
 };
 
+const isVideoUrl = (url) => {
+  if (typeof url !== 'string') return false;
+  const lowerUrl = url.toLowerCase();
+  return (
+    lowerUrl.endsWith('.mp4') || 
+    lowerUrl.endsWith('.webm') || 
+    lowerUrl.endsWith('.ogg') || 
+    lowerUrl.endsWith('.mov') || 
+    lowerUrl.includes('/video')
+  );
+};
+
 export default function AdminAccommodations() {
   const [accommodations, setAccommodations] = useState([]);
   const [universities, setUniversities] = useState([]);
@@ -261,30 +273,37 @@ export default function AdminAccommodations() {
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="Wifi, Laundry, Gym" />
                 </div>
                  <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Property Images (Multiple)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Property Media (Images & Videos)</label>
                   <div className="flex flex-wrap gap-3 mb-3">
-                    {(Array.isArray(form.imageUrl) ? form.imageUrl : (form.imageUrl ? [form.imageUrl] : [])).map((url, idx) => (
-                      <div key={idx} className="relative w-20 h-20 rounded-xl border border-gray-200 overflow-hidden bg-gray-50 group">
-                        <img src={url} alt={`Preview ${idx + 1}`} className="w-full h-full object-cover" />
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const currentImages = Array.isArray(form.imageUrl) ? form.imageUrl : (form.imageUrl ? [form.imageUrl] : []);
-                            const newImages = currentImages.filter((_, i) => i !== idx);
-                            setForm({ ...form, imageUrl: newImages });
-                          }}
-                          className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-bold rounded-xl"
-                        >
-                          Delete ✕
-                        </button>
-                      </div>
-                    ))}
+                    {(Array.isArray(form.imageUrl) ? form.imageUrl : (form.imageUrl ? [form.imageUrl] : [])).map((url, idx) => {
+                      const isVid = isVideoUrl(url);
+                      return (
+                        <div key={idx} className="relative w-20 h-20 rounded-xl border border-gray-200 overflow-hidden bg-gray-50 group">
+                          {isVid ? (
+                            <video src={url} className="w-full h-full object-cover" muted />
+                          ) : (
+                            <img src={url} alt={`Preview ${idx + 1}`} className="w-full h-full object-cover" />
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const currentImages = Array.isArray(form.imageUrl) ? form.imageUrl : (form.imageUrl ? [form.imageUrl] : []);
+                              const newImages = currentImages.filter((_, i) => i !== idx);
+                              setForm({ ...form, imageUrl: newImages });
+                            }}
+                            className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-bold rounded-xl"
+                          >
+                            Delete ✕
+                          </button>
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="flex-1">
                       <input
                         type="file"
-                        accept="image/*"
+                        accept="image/*,video/*"
                         multiple
                         onChange={handleImageUpload}
                         disabled={uploading}

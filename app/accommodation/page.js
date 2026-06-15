@@ -7,6 +7,18 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useSettings } from '@/components/providers/SettingsProvider';
 
+const isVideoUrl = (url) => {
+  if (typeof url !== 'string') return false;
+  const lowerUrl = url.toLowerCase();
+  return (
+    lowerUrl.endsWith('.mp4') || 
+    lowerUrl.endsWith('.webm') || 
+    lowerUrl.endsWith('.ogg') || 
+    lowerUrl.endsWith('.mov') || 
+    lowerUrl.includes('/video')
+  );
+};
+
 function AccommodationCard({ acc, settings, selectedUni, onOpenDetails }) {
   let images = [];
   if (acc.imageUrl) {
@@ -37,7 +49,11 @@ function AccommodationCard({ acc, settings, selectedUni, onOpenDetails }) {
       {/* Cover Image */}
       <div className="sm:w-48 h-44 rounded-2xl bg-slate-100 flex-shrink-0 relative overflow-hidden">
         {coverImage ? (
-          <img src={getImageUrl(coverImage)} alt={acc.propertyName} className="w-full h-full object-cover" />
+          isVideoUrl(coverImage) ? (
+            <video src={getImageUrl(coverImage)} className="w-full h-full object-cover" muted loop playsInline autoPlay />
+          ) : (
+            <img src={getImageUrl(coverImage)} alt={acc.propertyName} className="w-full h-full object-cover" />
+          )
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
             <svg className="w-10 h-10 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -594,15 +610,22 @@ export default function AccommodationPage() {
                       );
                   return imgs.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                      {imgs.map((url, idx) => (
-                        <div 
-                          key={idx} 
-                          className="aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 cursor-zoom-in group relative shadow-sm"
-                          onClick={() => window.open(url, '_blank')}
-                        >
-                          <img src={getImageUrl(url)} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                        </div>
-                      ))}
+                      {imgs.map((url, idx) => {
+                        const isVid = isVideoUrl(url);
+                        return (
+                          <div 
+                            key={idx} 
+                            className="aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 cursor-zoom-in group relative shadow-sm"
+                            onClick={() => window.open(url, '_blank')}
+                          >
+                            {isVid ? (
+                              <video src={getImageUrl(url)} className="w-full h-full object-cover" controls onClick={(e) => e.stopPropagation()} />
+                            ) : (
+                              <img src={getImageUrl(url)} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   ) : (
                     <div className="py-12 bg-slate-50 rounded-2xl text-center text-slate-400 text-sm">No photos available</div>
