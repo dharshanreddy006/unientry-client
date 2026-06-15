@@ -9,18 +9,11 @@ const services = [
     name: 'Buy & Sell',
     subtitle: 'Student Marketplace',
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
-        <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#marketplace-bg)" />
-        <path d="M16 20h16M16 26h10" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
-        <circle cx="32" cy="32" r="6" fill="#fff" fillOpacity="0.25" />
-        <path d="M30 32l2 2 4-4" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <defs>
-          <linearGradient id="marketplace-bg" x1="4" y1="4" x2="44" y2="44">
-            <stop stopColor="#0EA5E9" />
-            <stop offset="1" stopColor="#2563EB" />
-          </linearGradient>
-        </defs>
-      </svg>
+      <img
+        src="/service-marketplace.png"
+        alt="Buy & Sell"
+        className="w-full h-full object-contain"
+      />
     ),
     gradient: 'from-sky-500 to-blue-600',
     glow: 'shadow-sky-500/20',
@@ -33,18 +26,11 @@ const services = [
     name: 'Stay',
     subtitle: 'Accommodation',
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
-        <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#accom-bg)" />
-        <path d="M12 34V22l12-8 12 8v12" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        <rect x="20" y="26" width="8" height="8" rx="1" stroke="#fff" strokeWidth="2" />
-        <circle cx="24" cy="18" r="2" fill="#FDE68A" />
-        <defs>
-          <linearGradient id="accom-bg" x1="4" y1="4" x2="44" y2="44">
-            <stop stopColor="#F59E0B" />
-            <stop offset="1" stopColor="#D97706" />
-          </linearGradient>
-        </defs>
-      </svg>
+      <img
+        src="/service-accommodation.png"
+        alt="Stay"
+        className="w-full h-full object-contain"
+      />
     ),
     gradient: 'from-amber-500 to-amber-700',
     glow: 'shadow-amber-500/20',
@@ -57,20 +43,11 @@ const services = [
     name: 'Rent & Ride',
     subtitle: 'Vehicles on Demand',
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
-        <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#ride-bg)" />
-        <path d="M12 30h24" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-        <path d="M14 30l3-10h14l3 10" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="18" cy="32" r="3" stroke="#fff" strokeWidth="2" />
-        <circle cx="30" cy="32" r="3" stroke="#fff" strokeWidth="2" />
-        <rect x="20" y="22" width="8" height="4" rx="1" stroke="#fff" strokeWidth="1.5" />
-        <defs>
-          <linearGradient id="ride-bg" x1="4" y1="4" x2="44" y2="44">
-            <stop stopColor="#10B981" />
-            <stop offset="1" stopColor="#059669" />
-          </linearGradient>
-        </defs>
-      </svg>
+      <img
+        src="/service-rent-ride.png"
+        alt="Rent & Ride"
+        className="w-full h-full object-contain"
+      />
     ),
     gradient: 'from-emerald-500 to-emerald-700',
     glow: 'shadow-emerald-500/20',
@@ -83,19 +60,11 @@ const services = [
     name: 'Refer & Earn',
     subtitle: 'Earn Rewards',
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
-        <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#refer-bg)" />
-        <circle cx="24" cy="20" r="6" stroke="#fff" strokeWidth="2" />
-        <path d="M16 34c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-        <path d="M34 16l4 4-4 4" stroke="#FDE68A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M38 20h-8" stroke="#FDE68A" strokeWidth="2" strokeLinecap="round" />
-        <defs>
-          <linearGradient id="refer-bg" x1="4" y1="4" x2="44" y2="44">
-            <stop stopColor="#EC4899" />
-            <stop offset="1" stopColor="#BE185D" />
-          </linearGradient>
-        </defs>
-      </svg>
+      <img
+        src="/service-refer-earn.png"
+        alt="Refer & Earn"
+        className="w-full h-full object-contain"
+      />
     ),
     gradient: 'from-pink-500 to-pink-700',
     glow: 'shadow-pink-500/20',
