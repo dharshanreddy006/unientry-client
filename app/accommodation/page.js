@@ -400,7 +400,7 @@ export default function AccommodationPage() {
               <div className={`lg:w-2/3 ${activeTab === 'rooms' ? 'block' : 'hidden lg:block'}`}>
                 
                 {/* Dynamic Search & Filter Bar */}
-                <div className="bg-white rounded-3xl border border-slate-100 shadow-sm mb-6">
+                <div className="bg-white rounded-3xl border border-slate-100 shadow-sm mb-6 sticky top-24 z-30">
                   {/* Filter Header — always visible */}
                   <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
                     <h4 className="font-bold text-slate-900 flex items-center gap-2 text-sm">

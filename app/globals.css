@@ -173,35 +173,104 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Glassmorphism */
 .glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(28px) saturate(190%) brightness(1.02) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.03), 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.35) !important;
 }
 
 .glass-dark {
-  background: rgba(10, 22, 40, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.55) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 
+    0 12px 40px 0 rgba(0, 0, 0, 0.2), 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Card hover effect */
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Card hover effect & Frosted Glass Cards transformation */
+.card-hover,
+.group.bg-white.rounded-2xl,
+.bg-white.rounded-2xl.shadow-sm,
+.bg-white.rounded-3xl.p-5.shadow-sm.border,
+.services-hub-card {
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(25px) saturate(180%) brightness(1.01) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(180%) brightness(1.01) !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 
+    0 10px 30px -10px rgba(0, 0, 0, 0.03), 
+    0 1px 1px 0 rgba(255, 255, 255, 0.45) inset !important;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 60px rgba(10, 22, 40, 0.15);
+.card-hover:hover,
+.group.bg-white.rounded-2xl:hover,
+.bg-white.rounded-2xl.shadow-sm:hover,
+.bg-white.rounded-3xl.p-5.shadow-sm.border:hover,
+.services-hub-card:hover {
+  transform: translateY(-8px) scale(1.01) !important;
+  background: rgba(255, 255, 255, 0.65) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 
+    0 30px 60px -15px rgba(10, 22, 40, 0.08), 
+    0 0 0 1px rgba(14, 165, 233, 0.2),
+    0 1px 2px 0 rgba(255, 255, 255, 0.5) inset !important;
+}
+
+/* Remove solid background blocks to reveal ambient gradients */
+.bg-gray-50, 
+.bg-slate-50, 
+.bg-slate-100 {
+  background: transparent !important;
+}
+
+/* Section styling for clean spacing */
+.section-padding {
+  padding: 5rem 1rem;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 6rem 2rem;
+  }
+}
+
+/* Global Ambient Blur backgrounds */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 15% 15%, rgba(14, 165, 233, 0.07) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.02) 0%, transparent 50%),
+    #f8fafc;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* Hero gradient — more colorful and dynamic */
+.hero-gradient {
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.85) 0%, rgba(224, 242, 254, 0.65) 40%, rgba(186, 230, 253, 0.45) 70%, rgba(254, 243, 199, 0.35) 100%) !important;
+  background-size: 200% 200%;
+  animation: gradient-shift 12s ease-in-out infinite;
 }
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #38BDF8, #0EA5E9, #2d4b9a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 50%, #1e3a8a 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
 }
 
 /* WhatsApp button */
@@ -217,87 +286,82 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
 }
 
-/* Section padding */
-.section-padding {
-  padding: 5rem 1rem;
-}
-
-@media (min-width: 768px) {
-  .section-padding {
-    padding: 6rem 2rem;
-  }
-}
-
-/* Hero gradient — more colorful and dynamic */
-.hero-gradient {
-  background: linear-gradient(135deg, #f1f5f9 0%, #e0f2fe 40%, #bae6fd 70%, #fef3c7 100%);
-  background-size: 200% 200%;
-  animation: gradient-shift 12s ease-in-out infinite;
-}
-
 /* ─────────────────────────────────────────
    Apple-style Glassmorphism — Navbar
-───────────────────────────────────────── */
+   ───────────────────────────────────────── */
 .navbar-glass {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(28px) saturate(200%) brightness(1.05);
-  -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.05);
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.42) !important;
+  backdrop-filter: blur(32px) saturate(210%) brightness(1.03) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(210%) brightness(1.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
   box-shadow:
-    0 0.5px 0 rgba(0, 0, 0, 0.06),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    0 8px 32px rgba(0, 0, 0, 0.06);
+    0 4px 30px rgba(0, 0, 0, 0.03),
+    0 1px 1px rgba(255, 255, 255, 0.4) inset !important;
 }
 
 /* Always-on glass (even before scroll) */
 .navbar-glass-always {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(28px) saturate(200%) brightness(1.04);
-  -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.04);
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.28) !important;
+  backdrop-filter: blur(24px) saturate(190%) brightness(1.02) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) brightness(1.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
   box-shadow:
-    0 0.5px 0 rgba(0, 0, 0, 0.05),
-    0 2px 12px rgba(0, 0, 0, 0.05),
-    0 8px 40px rgba(0, 0, 0, 0.07);
+    0 2px 20px rgba(0, 0, 0, 0.01),
+    0 1px 1px rgba(255, 255, 255, 0.3) inset !important;
 }
 
 /* ─────────────────────────────────────────
    Apple-style Glassmorphism — Search / Input bars
-───────────────────────────────────────── */
-.glass-search {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 0.5px solid rgba(255, 255, 255, 0.7);
+   ───────────────────────────────────────── */
+.glass-search,
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+  background: rgba(255, 255, 255, 0.42) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  border-radius: 16px !important;
   box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.04),
-    0 2px 8px rgba(0, 0, 0, 0.06),
-    0 8px 32px rgba(14, 165, 233, 0.06);
-  transition: box-shadow 0.25s ease, background 0.25s ease;
+    0 4px 12px rgba(0, 0, 0, 0.01),
+    0 1px 1px rgba(255, 255, 255, 0.3) inset !important;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-.glass-search:focus-within {
-  background: rgba(255, 255, 255, 0.95);
+.glass-search:focus,
+.glass-search:focus-within,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+  background: rgba(255, 255, 255, 0.72) !important;
+  border-color: rgba(14, 165, 233, 0.45) !important;
   box-shadow:
-    0 0 0 3px rgba(14, 165, 233, 0.15),
-    0 2px 8px rgba(0, 0, 0, 0.06),
-    0 8px 40px rgba(14, 165, 233, 0.1);
+    0 0 0 4px rgba(14, 165, 233, 0.15),
+    0 10px 30px rgba(0, 0, 0, 0.04),
+    0 1px 1px rgba(255, 255, 255, 0.45) inset !important;
+  outline: none !important;
 }
 
 /* Mobile menu glass panel */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(32px) saturate(200%);
-  -webkit-backdrop-filter: blur(32px) saturate(200%);
-  border: 0.5px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.55) !important;
+  backdrop-filter: blur(32px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(200%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
   box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.04),
-    0 16px 48px rgba(0, 0, 0, 0.1);
+    0 10px 40px rgba(0, 0, 0, 0.06),
+    0 1px 1px rgba(255, 255, 255, 0.35) inset !important;
 }
 
 /* -----------------------------------------
    Mobile Touch & Interaction Feedback
------------------------------------------ */
+   ----------------------------------------- */
 /* Remove default tap highlight color on mobile */
 * {
   -webkit-tap-highlight-color: transparent;
@@ -310,9 +374,9 @@ a,
 [role="button"],
 input,
 select {
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
               opacity 0.2s ease, 
-              box-shadow 0.2s ease, 
+              box-shadow 0.35s ease, 
               background-color 0.2s ease,
               border-color 0.2s ease;
 }

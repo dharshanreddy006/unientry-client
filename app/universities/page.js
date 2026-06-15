@@ -100,7 +100,7 @@ function UniversitiesContent() {
       <section className="section-padding bg-gray-50">
         <div className="max-w-7xl mx-auto">
           {/* Filter bar */}
-          <div className="flex flex-wrap gap-3 mb-8">
+          <div className="flex flex-wrap items-center gap-3 mb-8 sticky top-24 z-30 bg-white/45 backdrop-blur-xl border border-white/40 p-4 rounded-2xl shadow-sm">
             {/* Country filter */}
             <select
               value={filters.country}
