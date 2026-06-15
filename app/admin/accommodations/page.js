@@ -59,26 +59,66 @@ export default function AdminAccommodations() {
       const uploadedUrls = [];
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const formData = new FormData();
-        formData.append('image', file);
-        const uploadUrl = typeof window !== 'undefined' && !window.location.hostname.includes('localhost')
-          ? 'https://unientry-server-production.up.railway.app/api/upload'
-          : '/api/upload';
-        const res = await fetch(uploadUrl, {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${token}` },
-          body: formData,
-        });
-        const data = await res.json();
-        if (data.success) {
-          uploadedUrls.push(data.data.url);
+        
+        // Use chunked upload if file is larger than 3MB
+        if (file.size > 3 * 1024 * 1024) {
+          const chunkSize = 2 * 1024 * 1024; // 2MB chunks
+          const totalChunks = Math.ceil(file.size / chunkSize);
+          const sanitizedFilename = file.name.replace(/\s+/g, '_');
+          const filename = `${Date.now()}-${sanitizedFilename}`;
+          
+          let finalUrl = '';
+          for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
+            const start = chunkIndex * chunkSize;
+            const end = Math.min(start + chunkSize, file.size);
+            const chunk = file.slice(start, end);
+            
+            const formData = new FormData();
+            formData.append('chunk', chunk);
+            formData.append('filename', filename);
+            formData.append('chunkIndex', chunkIndex.toString());
+            formData.append('totalChunks', totalChunks.toString());
+            
+            // Chunk upload always goes relative (/api/upload/chunk) which is proxied
+            // and safely bypasses the 4.5MB Vercel size limit since chunk size is 2MB
+            const res = await fetch('/api/upload/chunk', {
+              method: 'POST',
+              headers: { Authorization: `Bearer ${token}` },
+              body: formData,
+            });
+            const data = await res.json();
+            if (!data.success) {
+              throw new Error(data.message || `Failed to upload chunk ${chunkIndex + 1}`);
+            }
+            if (data.data?.url) {
+              finalUrl = data.data.url;
+            }
+          }
+          if (finalUrl) {
+            uploadedUrls.push(finalUrl);
+          } else {
+            throw new Error('Failed to assemble file chunks on server');
+          }
         } else {
-          alert('Upload failed: ' + data.message);
-          if (data.message && (data.message.includes('Token') || data.message.includes('authorized'))) {
-            localStorage.removeItem('unientry_token');
-            localStorage.removeItem('unientry_admin');
-            window.location.href = '/admin/login';
-            return;
+          // Standard single upload for small files (using relative proxy path)
+          const formData = new FormData();
+          formData.append('image', file);
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}` },
+            body: formData,
+          });
+          const data = await res.json();
+          if (data.success) {
+            uploadedUrls.push(data.data.url);
+          } else {
+            alert('Upload failed: ' + data.message);
+            if (data.message && (data.message.includes('Token') || data.message.includes('authorized'))) {
+              localStorage.removeItem('unientry_token');
+              localStorage.removeItem('unientry_admin');
+              window.location.href = '/admin/login';
+              return;
+            }
           }
         }
       }
@@ -86,7 +126,7 @@ export default function AdminAccommodations() {
       setForm({ ...form, imageUrl: [...currentImages, ...uploadedUrls] });
     } catch (err) {
       console.error(err);
-      alert('Upload failed');
+      alert('Upload failed: ' + err.message);
     } finally {
       setUploading(false);
     }
