@@ -66,26 +66,61 @@ export function AuthProvider({ children }) {
   }, []);
 
   const loginWithGoogle = useCallback(async (role = 'student') => {
-    const { auth, googleProvider, signInWithPopup } = await import('@/lib/firebase');
-    const result = await signInWithPopup(auth, googleProvider);
-    const firebaseUser = result.user;
-    
-    const res = await fetch(`${API_URL}/users/google-login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        googleId: firebaseUser.uid,
-        name: firebaseUser.displayName,
-        email: firebaseUser.email,
-        profilePicture: firebaseUser.photoURL,
-        role,
-      }),
-    });
-    
-    const data = await res.json();
-    if (!data.success) throw new Error(data.message);
-    saveAuth(data.data, data.data.token);
-    return data.data;
+    try {
+      const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+
+      // Simulation mode if key is missing or dummy
+      if (!apiKey || apiKey === 'AIzaSyDummyApiKeyPlaceholderForOAuth') {
+        console.warn("Using simulated Google Sign-In because no valid Firebase API key is set in .env.local.");
+        
+        // Simulating loading state delay
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        
+        const res = await fetch(`${API_URL}/users/google-login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            googleId: 'google_mock_user_123456789',
+            name: 'Demo Google User',
+            email: 'demo_user@google.com',
+            profilePicture: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150',
+            role,
+          }),
+        });
+        
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message);
+        saveAuth(data.data, data.data.token);
+        return data.data;
+      }
+
+      // Real Firebase authentication
+      const { auth, googleProvider, signInWithPopup } = await import('@/lib/firebase');
+      const result = await signInWithPopup(auth, googleProvider);
+      const firebaseUser = result.user;
+      
+      const res = await fetch(`${API_URL}/users/google-login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          googleId: firebaseUser.uid,
+          name: firebaseUser.displayName,
+          email: firebaseUser.email,
+          profilePicture: firebaseUser.photoURL,
+          role,
+        }),
+      });
+      
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message);
+      saveAuth(data.data, data.data.token);
+      return data.data;
+    } catch (err) {
+      if (err.code === 'auth/api-key-not-valid' || err.message?.includes('API_KEY_INVALID') || err.message?.includes('api-key-not-valid')) {
+        throw new Error('Google Auth not configured. Please add NEXT_PUBLIC_FIREBASE_API_KEY to client/.env.local');
+      }
+      throw err;
+    }
   }, []);
 
   return (
