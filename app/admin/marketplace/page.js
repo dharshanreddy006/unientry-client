@@ -78,7 +78,7 @@ export default function AdminMarketplacePage() {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      const res = await fetch(`${API_URL}/upload`, {
+      const res = await fetch('https://unientry-server-production.up.railway.app/api/upload', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formData,

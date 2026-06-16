@@ -80,9 +80,8 @@ export default function AdminAccommodations() {
             formData.append('chunkIndex', chunkIndex.toString());
             formData.append('totalChunks', totalChunks.toString());
             
-            // Chunk upload always goes relative (/api/upload/chunk) which is proxied
-            // and safely bypasses the 4.5MB Vercel size limit since chunk size is 2MB
-            const res = await fetch('/api/upload/chunk', {
+            // Upload directly to Railway backend to bypass Vercel serverless request limits
+            const res = await fetch('https://unientry-server-production.up.railway.app/api/upload/chunk', {
               method: 'POST',
               headers: { Authorization: `Bearer ${token}` },
               body: formData,
@@ -101,10 +100,10 @@ export default function AdminAccommodations() {
             throw new Error('Failed to assemble file chunks on server');
           }
         } else {
-          // Standard single upload for small files (using relative proxy path)
+          // Standard single upload directly to Railway backend
           const formData = new FormData();
           formData.append('image', file);
-          const res = await fetch('/api/upload', {
+          const res = await fetch('https://unientry-server-production.up.railway.app/api/upload', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: formData,
