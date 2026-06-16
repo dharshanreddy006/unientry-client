@@ -114,6 +114,19 @@ function AccommodationCard({ acc, settings, selectedUni, onOpenDetails }) {
               </svg>
               {acc.distance}
             </div>
+            {acc.price && (
+              <span className={`px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1 ${
+                acc.price.toLowerCase().includes('without ac') || acc.price.toLowerCase().includes('non-ac')
+                  ? 'bg-amber-50 text-amber-600 border border-amber-100/30'
+                  : acc.price.toLowerCase().includes('with ac') || acc.price.toLowerCase().includes('ac')
+                  ? 'bg-sky-50 text-sky-600 border border-sky-100/30'
+                  : acc.price.toLowerCase().includes('everything')
+                  ? 'bg-purple-50 text-purple-600 border border-purple-100/30'
+                  : 'bg-slate-50 text-slate-600 border border-slate-100/30'
+              }`}>
+                {acc.price.toLowerCase().includes('without ac') || acc.price.toLowerCase().includes('non-ac') ? '💨' : acc.price.toLowerCase().includes('with ac') || acc.price.toLowerCase().includes('ac') ? '❄️' : '✨'} {acc.price}
+              </span>
+            )}
             {acc.coLiving && (
               <span className="px-2.5 py-1 bg-purple-50 rounded-lg text-[10px] font-bold text-purple-600 flex items-center gap-1">
                 👥 Co-Living
@@ -685,6 +698,21 @@ export default function AccommodationPage() {
                     <p className="text-sm font-bold text-slate-800">{activeDetails.depositAmount || 'None'}</p>
                   </div>
                 </div>
+
+                {activeDetails.price && (
+                  <div className="mt-3 p-4 bg-blue-50/30 rounded-2xl border border-blue-100/30 text-left flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">AC / Furnishing Option</span>
+                    <span className={`px-3 py-1 rounded-lg text-xs font-extrabold uppercase tracking-wide ${
+                      activeDetails.price.toLowerCase().includes('without ac') || activeDetails.price.toLowerCase().includes('non-ac')
+                        ? 'bg-amber-100 text-amber-700'
+                        : activeDetails.price.toLowerCase().includes('with ac') || activeDetails.price.toLowerCase().includes('ac')
+                        ? 'bg-sky-100 text-sky-700'
+                        : 'bg-purple-100 text-purple-700'
+                    }`}>
+                      {activeDetails.price}
+                    </span>
+                  </div>
+                )}
 
                 {activeDetails.detailedLocation && (
                   <div className="mt-3 p-4 bg-amber-50/40 rounded-2xl border border-amber-100/40 text-left">

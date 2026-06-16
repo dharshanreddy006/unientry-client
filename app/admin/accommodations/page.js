@@ -236,9 +236,20 @@ export default function AdminAccommodations() {
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. Single, Shared, Studio" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Price Text (fallback) *</label>
-                    <input type="text" required value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. £800/month" />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">AC Option *</label>
+                    <select required value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm">
+                      <option value="">Select AC Option</option>
+                      <option value="With AC">With AC</option>
+                      <option value="Without AC">Without AC</option>
+                      <option value="Everything">Everything</option>
+                      <option value="AC & Food Included">AC & Food Included</option>
+                      <option value="Non-AC + Food Included">Non-AC + Food Included</option>
+                      <option value="All Bills Included">All Bills Included</option>
+                      {form.price && !["With AC", "Without AC", "Everything", "AC & Food Included", "Non-AC + Food Included", "All Bills Included"].includes(form.price) && (
+                        <option value={form.price}>{form.price}</option>
+                      )}
+                    </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Distance *</label>
@@ -395,7 +406,7 @@ export default function AdminAccommodations() {
                 <thead><tr className="bg-gray-50 border-b border-gray-100">
                   <th className="text-left py-4 px-5 text-gray-400 font-medium">Property</th>
                   <th className="text-left py-4 px-5 text-gray-400 font-medium">Room Type</th>
-                  <th className="text-left py-4 px-5 text-gray-400 font-medium">Price</th>
+                  <th className="text-left py-4 px-5 text-gray-400 font-medium">AC / Price</th>
                   <th className="text-left py-4 px-5 text-gray-400 font-medium">Distance</th>
                   <th className="text-left py-4 px-5 text-gray-400 font-medium">University</th>
                   <th className="text-right py-4 px-5 text-gray-400 font-medium">Actions</th>
@@ -408,7 +419,12 @@ export default function AdminAccommodations() {
                         <div className="text-[10px] text-gray-400">{acc.location}</div>
                       </td>
                       <td className="py-4 px-5 text-gray-500">{acc.roomType}</td>
-                      <td className="py-4 px-5 text-gray-500 font-semibold text-accent-600">{acc.price}</td>
+                      <td className="py-4 px-5 text-gray-500">
+                        <div className="font-semibold text-accent-600 text-sm">{acc.price}</div>
+                        {acc.priceMonthly && (
+                          <div className="text-[10px] text-gray-400">₹{acc.priceMonthly}/mo</div>
+                        )}
+                      </td>
                       <td className="py-4 px-5 text-gray-500">{acc.distance}</td>
                       <td className="py-4 px-5 text-gray-500">
                         {universities.find(u => u.id === acc.universityId)?.universityName || 'Not Linked'}
