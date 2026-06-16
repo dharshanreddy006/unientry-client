@@ -47,6 +47,7 @@ export default function AdminAccommodations() {
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const API = '/api';
   const token = typeof window !== 'undefined' ? localStorage.getItem('unientry_token') : '';
@@ -56,6 +57,7 @@ export default function AdminAccommodations() {
     const files = e.target.files;
     if (!files || files.length === 0) return;
     setUploading(true);
+    setUploadProgress(0);
     try {
       const uploadedUrls = [];
       for (let i = 0; i < files.length; i++) {
@@ -69,6 +71,7 @@ export default function AdminAccommodations() {
           const filename = `${Date.now()}-${sanitizedFilename}`;
           
           let finalUrl = '';
+          let completedChunks = 0;
           
           // Helper function to upload chunk with retries
           const uploadChunkWithRetry = async (formData, chunkIndex, retries = 3) => {
@@ -91,23 +94,42 @@ export default function AdminAccommodations() {
             }
           };
 
-          for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
-            const start = chunkIndex * chunkSize;
-            const end = Math.min(start + chunkSize, file.size);
-            const chunk = file.slice(start, end);
-            
-            const formData = new FormData();
-            formData.append('chunk', chunk);
-            formData.append('filename', filename);
-            formData.append('chunkIndex', chunkIndex.toString());
-            formData.append('totalChunks', totalChunks.toString());
-            
-            // Upload chunk through proxy route
-            const data = await uploadChunkWithRetry(formData, chunkIndex);
-            if (data.data?.url) {
-              finalUrl = data.data.url;
+          // Pool of chunk indices to upload
+          const chunkIndices = Array.from({ length: totalChunks }, (_, idx) => idx);
+
+          // Worker function to upload chunks in parallel
+          const uploadWorker = async () => {
+            while (chunkIndices.length > 0) {
+              const chunkIndex = chunkIndices.shift();
+              if (chunkIndex === undefined) break;
+
+              const start = chunkIndex * chunkSize;
+              const end = Math.min(start + chunkSize, file.size);
+              const chunk = file.slice(start, end);
+              
+              const formData = new FormData();
+              formData.append('chunk', chunk);
+              formData.append('filename', filename);
+              formData.append('chunkIndex', chunkIndex.toString());
+              formData.append('totalChunks', totalChunks.toString());
+              
+              const data = await uploadChunkWithRetry(formData, chunkIndex);
+              completedChunks++;
+              setUploadProgress(Math.round((completedChunks / totalChunks) * 100));
+              
+              if (data.data?.url) {
+                finalUrl = data.data.url;
+              }
             }
-          }
+          };
+
+          // Run up to 3 parallel upload workers to speed up the process by up to 300%
+          const workers = Array.from(
+            { length: Math.min(3, totalChunks) },
+            () => uploadWorker()
+          );
+          await Promise.all(workers);
+
           if (finalUrl) {
             uploadedUrls.push(finalUrl);
           } else {
@@ -388,7 +410,20 @@ export default function AdminAccommodations() {
                           file:bg-accent-50 file:text-accent-700
                           hover:file:bg-accent-100 transition-all"
                       />
-                      {uploading && <p className="text-[10px] text-accent-600 mt-2 animate-pulse">Uploading...</p>}
+                      {uploading && (
+                        <div className="mt-2.5 space-y-1">
+                          <div className="flex justify-between items-center text-[10px] font-semibold text-accent-600">
+                            <span className="animate-pulse">Uploading Media...</span>
+                            <span>{uploadProgress}%</span>
+                          </div>
+                          <div className="w-full h-1.5 bg-accent-50 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-accent-600 rounded-full transition-all duration-300" 
+                              style={{ width: `${uploadProgress}%` }}
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
