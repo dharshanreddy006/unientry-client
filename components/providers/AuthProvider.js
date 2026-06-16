@@ -65,8 +65,31 @@ export function AuthProvider({ children }) {
     localStorage.removeItem(AUTH_KEY);
   }, []);
 
+  const loginWithGoogle = useCallback(async (role = 'student') => {
+    const { auth, googleProvider, signInWithPopup } = await import('@/lib/firebase');
+    const result = await signInWithPopup(auth, googleProvider);
+    const firebaseUser = result.user;
+    
+    const res = await fetch(`${API_URL}/users/google-login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        googleId: firebaseUser.uid,
+        name: firebaseUser.displayName,
+        email: firebaseUser.email,
+        profilePicture: firebaseUser.photoURL,
+        role,
+      }),
+    });
+    
+    const data = await res.json();
+    if (!data.success) throw new Error(data.message);
+    saveAuth(data.data, data.data.token);
+    return data.data;
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, signup, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, token, loading, login, signup, loginWithGoogle, logout, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   );

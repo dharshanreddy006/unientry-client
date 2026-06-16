@@ -8,7 +8,7 @@ import { getImageUrl } from '@/lib/apiConfig';
 
 export default function AuthGate({ children }) {
   const pathname = usePathname();
-  const { user, loading, isAuthenticated, login, signup } = useAuth();
+  const { user, loading, isAuthenticated, login, signup, loginWithGoogle } = useAuth();
   const [mode, setMode] = useState('login'); // 'login' | 'signup'
   const settings = useSettings();
 
@@ -70,6 +70,21 @@ export default function AuthGate({ children }) {
       setShowWelcome(true);
     } catch (err) {
       setError(err.message || 'Signup failed');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    setError('');
+    setSubmitting(true);
+    try {
+      const userData = await loginWithGoogle(role);
+      setWelcomeName(userData.name);
+      setShowWelcome(true);
+    } catch (err) {
+      console.error(err);
+      setError(err.message || 'Google authentication failed');
     } finally {
       setSubmitting(false);
     }
@@ -218,6 +233,49 @@ export default function AuthGate({ children }) {
               <span>{error}</span>
             </div>
           )}
+
+          {/* Google Authentication Button */}
+          <div className="mb-6">
+            <button
+              type="button"
+              onClick={handleGoogleAuth}
+              disabled={submitting}
+              className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-2xl bg-white/40 hover:bg-white/60 active:scale-[0.98] border border-white/20 backdrop-blur-md shadow-sm transition-all duration-300 group cursor-pointer"
+            >
+              {submitting ? (
+                <div className="w-4.5 h-4.5 border-2 border-zinc-400 border-t-black rounded-full animate-spin" />
+              ) : (
+                <svg className="w-4.5 h-4.5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24">
+                  <path
+                    fill="#4285F4"
+                    d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v3.9h6.69c-.29 1.5-.1.13-1.14 2.19l3.51 2.73c2.05-1.9 3.68-4.7 3.68-8.75z"
+                  />
+                  <path
+                    fill="#34A853"
+                    d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.51-2.73c-1-.67-2.28-1.07-3.47-1.07-2.67 0-4.93-1.8-5.74-4.22L3.6 15.82C5.58 19.74 9.64 24 12 24z"
+                  />
+                  <path
+                    fill="#FBBC05"
+                    d="M6.26 13.07a7.12 7.12 0 010-4.51L3.6 5.82c-.88 1.76-1.38 3.73-1.38 5.79 0 2.06.5 4.03 1.38 5.79l2.66-2.33z"
+                  />
+                  <path
+                    fill="#EA4335"
+                    d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.44-3.44C17.95 1.19 15.24 0 12 0 9.64 0 5.58 4.26 3.6 8.18l2.66 2.33c.81-2.42 3.07-4.22 5.74-4.22z"
+                  />
+                </svg>
+              )}
+              <span className="text-zinc-800 text-xs font-bold tracking-wider uppercase transition-colors group-hover:text-black">
+                {mode === 'login' ? 'Continue with Google' : 'Sign up with Google'}
+              </span>
+            </button>
+            
+            {/* Subtle Divider */}
+            <div className="flex items-center gap-3 my-6">
+              <div className="h-[1px] flex-1 bg-zinc-200" />
+              <span className="text-[10px] text-zinc-400 font-extrabold tracking-widest uppercase">OR</span>
+              <div className="h-[1px] flex-1 bg-zinc-200" />
+            </div>
+          </div>
 
           {/* LOGIN Form */}
           {mode === 'login' && (
