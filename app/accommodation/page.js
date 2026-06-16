@@ -79,13 +79,28 @@ function AccommodationCard({ acc, settings, selectedUni, onOpenDetails }) {
               <h3 className="font-heading font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors">
                 {acc.propertyName}
               </h3>
-              <div className="flex items-center gap-1 text-slate-400 text-xs mt-1">
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                {acc.location}
-              </div>
+              {acc.googleMapLink ? (
+                <a 
+                  href={acc.googleMapLink} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center gap-1 text-blue-500 hover:text-blue-700 text-xs mt-1 font-medium transition-colors"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  {acc.location} <span className="text-[9px] text-blue-500 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded font-bold">📍 View Map</span>
+                </a>
+              ) : (
+                <div className="flex items-center gap-1 text-slate-400 text-xs mt-1">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  {acc.location}
+                </div>
+              )}
               {acc.detailedLocation && (
                 <p className="text-[11px] text-slate-500 mt-1 italic">{acc.detailedLocation}</p>
               )}
@@ -718,6 +733,26 @@ export default function AccommodationPage() {
                   <div className="mt-3 p-4 bg-amber-50/40 rounded-2xl border border-amber-100/40 text-left">
                     <p className="text-[10px] text-amber-600 uppercase font-bold tracking-wider mb-1">Exact Address / Location</p>
                     <p className="text-sm font-medium text-slate-700">{activeDetails.detailedLocation}</p>
+                  </div>
+                )}
+
+                {activeDetails.googleMapLink && (
+                  <div className="mt-3 p-4 bg-emerald-50/30 rounded-2xl border border-emerald-100/30 text-left flex items-center justify-between">
+                    <div>
+                      <p className="text-[10px] text-emerald-600 uppercase font-bold tracking-wider mb-0.5">Google Maps Location</p>
+                      <p className="text-xs text-slate-500 font-medium">View coordinates and directions</p>
+                    </div>
+                    <a 
+                      href={activeDetails.googleMapLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-600/10 flex items-center gap-1.5"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L16 4m0 13V4m-6 3l6-3" />
+                      </svg>
+                      Open Google Maps
+                    </a>
                   </div>
                 )}
               </div>

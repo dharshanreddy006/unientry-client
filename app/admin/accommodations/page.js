@@ -12,6 +12,7 @@ const emptyForm = {
   amenities: '', 
   location: '', 
   detailedLocation: '',
+  googleMapLink: '',
   propertyType: 'Flat', 
   priceMonthly: '',
   priceYearly: '',
@@ -158,6 +159,7 @@ export default function AdminAccommodations() {
       imageUrl: images, 
       amenities: acc.amenities?.join(', ') || '',
       detailedLocation: acc.detailedLocation || '',
+      googleMapLink: acc.googleMapLink || '',
       propertyType: acc.propertyType || 'Flat',
       priceMonthly: acc.priceMonthly || '',
       priceYearly: acc.priceYearly || '',
@@ -311,10 +313,15 @@ export default function AdminAccommodations() {
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. 919876543210" />
                   </div>
                 </div>
-                <div>
+                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Detailed/Accurate Address Location</label>
                   <input type="text" value={form.detailedLocation} onChange={(e) => setForm({ ...form, detailedLocation: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. Plot 4B, Sector 62, Noida" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Google Map Location Link</label>
+                  <input type="text" value={form.googleMapLink || ''} onChange={(e) => setForm({ ...form, googleMapLink: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. https://maps.app.goo.gl/..." />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
