@@ -54,7 +54,7 @@ export default function RentAndRideAdmin() {
 
     setUploading(true);
     try {
-      const res = await fetch('https://unientry-server-production.up.railway.app/api/upload', {
+      const res = await fetch('/api/upload', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${localStorage.getItem('unientry_token')}` },
         body: formData

@@ -63,12 +63,34 @@ export default function AdminAccommodations() {
         
         // Use chunked upload if file is larger than 3MB
         if (file.size > 3 * 1024 * 1024) {
-          const chunkSize = 2 * 1024 * 1024; // 2MB chunks
+          const chunkSize = 1 * 1024 * 1024; // 1MB chunks for stability through proxy
           const totalChunks = Math.ceil(file.size / chunkSize);
           const sanitizedFilename = file.name.replace(/\s+/g, '_');
           const filename = `${Date.now()}-${sanitizedFilename}`;
           
           let finalUrl = '';
+          
+          // Helper function to upload chunk with retries
+          const uploadChunkWithRetry = async (formData, chunkIndex, retries = 3) => {
+            for (let attempt = 1; attempt <= retries; attempt++) {
+              try {
+                const res = await fetch('/api/upload/chunk', {
+                  method: 'POST',
+                  headers: { Authorization: `Bearer ${token}` },
+                  body: formData,
+                });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                if (!data.success) throw new Error(data.message || 'Chunk upload failed');
+                return data;
+              } catch (err) {
+                console.warn(`Attempt ${attempt} failed for chunk ${chunkIndex + 1}:`, err);
+                if (attempt === retries) throw err;
+                await new Promise(resolve => setTimeout(resolve, 1000));
+              }
+            }
+          };
+
           for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
             const start = chunkIndex * chunkSize;
             const end = Math.min(start + chunkSize, file.size);
@@ -80,16 +102,8 @@ export default function AdminAccommodations() {
             formData.append('chunkIndex', chunkIndex.toString());
             formData.append('totalChunks', totalChunks.toString());
             
-            // Upload directly to Railway backend to bypass Vercel serverless request limits
-            const res = await fetch('https://unientry-server-production.up.railway.app/api/upload/chunk', {
-              method: 'POST',
-              headers: { Authorization: `Bearer ${token}` },
-              body: formData,
-            });
-            const data = await res.json();
-            if (!data.success) {
-              throw new Error(data.message || `Failed to upload chunk ${chunkIndex + 1}`);
-            }
+            // Upload chunk through proxy route
+            const data = await uploadChunkWithRetry(formData, chunkIndex);
             if (data.data?.url) {
               finalUrl = data.data.url;
             }
@@ -100,10 +114,10 @@ export default function AdminAccommodations() {
             throw new Error('Failed to assemble file chunks on server');
           }
         } else {
-          // Standard single upload directly to Railway backend
+          // Standard single upload through relative proxy path
           const formData = new FormData();
           formData.append('image', file);
-          const res = await fetch('https://unientry-server-production.up.railway.app/api/upload', {
+          const res = await fetch('/api/upload', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: formData,
