@@ -21,7 +21,7 @@ export default function ResourceAccessPage() {
     try {
       const [reqRes, uniRes] = await Promise.all([
         fetch(`${API}/resources/admin/requests`, { headers }),
-        fetch(`${API}/universities?limit=100`)
+        fetch(`${API}/universities?limit=1000`)
       ]);
       const reqData = await reqRes.json();
       const uniData = await uniRes.json();

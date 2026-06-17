@@ -50,7 +50,7 @@ export default function AdminMarketplacePage() {
 
   const fetchUniversities = async () => {
     try {
-      const res = await fetch(`${API_URL}/universities?limit=200`);
+      const res = await fetch(`${API_URL}/universities?limit=1000`);
       const data = await res.json();
       setUniversities(data.data || []);
     } catch (e) {}

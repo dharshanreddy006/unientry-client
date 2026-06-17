@@ -173,7 +173,7 @@ export default function AdminAccommodations() {
     try {
       const [accRes, uniRes] = await Promise.all([
         fetch(`${API}/accommodations/all`, { headers, cache: 'no-store' }),
-        fetch(`${API}/universities`, { cache: 'no-store' })
+        fetch(`${API}/universities?limit=1000`, { cache: 'no-store' })
       ]);
       const accData = await accRes.json();
       const uniData = await uniRes.json();

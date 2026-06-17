@@ -32,7 +32,7 @@ export default function RentAndRideAdmin() {
     try {
       const [vRes, uRes] = await Promise.all([
         fetch(`${API_URL}/rent-and-rides`, { cache: 'no-store' }),
-        fetch(`${API_URL}/universities`, { cache: 'no-store' })
+        fetch(`${API_URL}/universities?limit=1000`, { cache: 'no-store' })
       ]);
       const vData = await vRes.json();
       const uData = await uRes.json();

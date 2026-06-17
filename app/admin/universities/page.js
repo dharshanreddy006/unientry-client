@@ -33,7 +33,7 @@ export default function AdminUniversities() {
   const fetchUniversities = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API}/universities?limit=100`, { cache: 'no-store' });
+      const res = await fetch(`${API}/universities?limit=1000`, { cache: 'no-store' });
       const data = await res.json();
       if (data.success) setUniversities(data.data);
     } catch (err) { console.error(err); }

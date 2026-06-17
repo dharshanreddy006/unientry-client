@@ -53,7 +53,7 @@ function UniversitiesContent() {
     fetchUniversities();
   };
 
-  const countries = ['Germany', 'UK', 'USA', 'Canada', 'Australia'];
+  const countries = ['India', 'Germany', 'UK', 'USA', 'Canada', 'Australia'];
   const degreeTypes = ['Undergraduate', 'Postgraduate', 'Doctorate', 'Diploma'];
 
   return (
