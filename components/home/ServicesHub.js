@@ -420,6 +420,11 @@ export default function ServicesHub() {
               }}
               aria-label={`Go to ${service.name}`}
             >
+              {service.id === 'rent-and-ride' && (
+                <div className="absolute top-4 right-4 bg-emerald-500/10 text-emerald-600 border border-emerald-200/40 rounded-full px-2.5 py-0.5 text-[8.5px] font-black tracking-widest uppercase z-20">
+                  Soon
+                </div>
+              )}
               {/* Hover gradient overlay */}
               <div
                 className={`absolute inset-0 rounded-[2rem] bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-[0.06] transition-opacity duration-300`}

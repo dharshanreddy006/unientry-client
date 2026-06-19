@@ -81,6 +81,67 @@ export default function RentAndRide() {
     : listings.filter(l => l.vehicleType === selectedType);
 
   return (
+    <section className="section-padding relative overflow-hidden bg-slate-50 min-h-[60vh] flex items-center justify-center" id="rent-and-ride">
+      {/* Background Decorations */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[130px] -mr-64 -mt-64 pointer-events-none" style={{background: 'rgba(16, 185, 129, 0.08)'}} />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full blur-[130px] -ml-64 -mb-64 pointer-events-none" style={{background: 'rgba(5, 150, 105, 0.08)'}} />
+
+      <div className="max-w-xl mx-auto px-4 text-center relative z-10">
+        {/* Animated Icon */}
+        <div className="w-24 h-24 rounded-[2rem] bg-emerald-50 border border-emerald-100/50 flex items-center justify-center mx-auto mb-8 shadow-xl shadow-emerald-500/5 relative group">
+          <div className="absolute inset-0 rounded-[2rem] bg-emerald-500/10 animate-ping opacity-75" />
+          <span className="text-5xl relative z-10 transition-transform duration-500 group-hover:scale-110">🛵</span>
+        </div>
+
+        {/* Badge */}
+        <span className="inline-block px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase mb-4 border bg-emerald-50 text-emerald-600 border-emerald-200/50 shadow-sm animate-pulse">
+          COMING SOON
+        </span>
+
+        {/* Title */}
+        <h2 className="font-heading font-black text-3xl sm:text-4xl text-slate-900 mb-4 tracking-tight">
+          Rent & Ride is <span className="text-emerald-600">On The Way!</span>
+        </h2>
+
+        {/* Description */}
+        <p className="text-slate-500 text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto">
+          We are currently preparing our Rent & Ride fleet to launch on your campus. Soon, you'll be able to rent verified bikes and cars on-demand, or list your own vehicle to earn extra income!
+        </p>
+
+        {/* CTA Card */}
+        <div className="bg-white/80 backdrop-blur-md border border-emerald-100/30 rounded-[2.5rem] p-6 sm:p-8 shadow-xl shadow-slate-100 mb-6">
+          <h4 className="text-slate-800 font-bold text-sm sm:text-base mb-2">Be the first to know when we launch</h4>
+          <p className="text-slate-400 text-xs mb-6">Join the campus waitlist and receive early access benefits.</p>
+          
+          <button
+            onClick={() => {
+              const msg = `Hi UniEntry! I am interested in the Rent & Ride service. Please notify me when it launches at my campus!`;
+              window.open(`https://wa.me/${getWaNumber()}?text=${encodeURIComponent(msg)}`, '_blank');
+            }}
+            className="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-3 transition-all hover:scale-[1.02] shadow-lg shadow-emerald-500/20"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12.012 2c-5.508 0-9.987 4.479-9.987 9.987 0 1.763.463 3.421 1.264 4.847l-1.341 4.904 5.018-1.315c1.403.763 3.007 1.197 4.712 1.197 5.508 0 9.988-4.479 9.988-9.987 0-5.508-4.48-9.987-9.988-9.987zm4.847 14.239c-.198.558-1.173 1.056-1.612 1.121-.401.059-.803.109-2.26-.479-1.856-.75-3.053-2.645-3.147-2.771-.095-.126-.772-.962-.772-1.836 0-.875.458-1.303.621-1.482.162-.179.356-.224.474-.224h.339c.109 0 .254-.041.396.302.147.356.502 1.221.545 1.31.042.089.071.192.012.31-.059.118-.089.191-.176.295-.089.103-.186.23-.265.308-.103.103-.209.215-.09.422.118.207.525.867 1.128 1.403.777.689 1.432.905 1.639.992.207.086.331.074.455-.068.125-.141.534-.622.676-.835.142-.213.284-.179.479-.107s1.242.585 1.454.693c.213.108.356.161.409.253.054.093.054.538-.145 1.096z"/>
+            </svg>
+            Join Waitlist via WhatsApp
+          </button>
+        </div>
+
+        {/* Back Link */}
+        <button
+          onClick={() => window.history.back()}
+          className="text-slate-400 hover:text-slate-600 text-xs font-semibold flex items-center justify-center gap-1.5 mx-auto transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Go Back
+        </button>
+      </div>
+    </section>
+  );
+
+  return (
     <section className="section-padding relative overflow-hidden bg-emerald-50/50" id="rent-and-ride">
       {/* Background Decorations */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] -mr-64 -mt-64 pointer-events-none" style={{background: 'rgba(16, 185, 129, 0.1)'}} />
