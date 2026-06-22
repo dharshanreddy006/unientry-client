@@ -19,7 +19,10 @@ const defaultSettings = {
   founderName: 'Darshan',
   founderRole: 'Founder & CEO',
   founderMessage: 'Education is the passport to the future, for tomorrow belongs to those who prepare for it today.',
-  founderImageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800'
+  founderImageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800',
+  coFounderName: '',
+  coFounderRole: 'Co-Founder',
+  coFounderImageUrl: ''
 };
 
 /**
