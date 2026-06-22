@@ -328,11 +328,6 @@ export default function AdminSettings() {
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Founder Message</label>
-              <textarea rows={4} value={settings.founderMessage || ''} onChange={(e) => setSettings({ ...settings, founderMessage: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm resize-none" />
-            </div>
-            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Founder Image</label>
               <div className="flex items-center gap-4">
                 {settings.founderImageUrl && (
@@ -351,7 +346,47 @@ export default function AdminSettings() {
                       file:bg-accent-50 file:text-accent-700
                       hover:file:bg-accent-100 transition-all"
                   />
-                  {uploading && <p className="text-sm text-accent-600 mt-2">Uploading image...</p>}
+                  {uploading === 'founderImageUrl' && <p className="text-sm text-accent-600 mt-2">Uploading image...</p>}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Co-Founder Section */}
+        <div className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
+          <h2 className="font-heading font-semibold text-lg text-primary-900 mb-5">Co-Founder Information</h2>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Co-Founder Name</label>
+              <input type="text" value={settings.coFounderName || ''} onChange={(e) => setSettings({ ...settings, coFounderName: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="Leave empty to hide co-founder" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Co-Founder Role</label>
+              <input type="text" value={settings.coFounderRole || ''} onChange={(e) => setSettings({ ...settings, coFounderRole: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g., Co-Founder & COO" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Co-Founder Image</label>
+              <div className="flex items-center gap-4">
+                {settings.coFounderImageUrl && (
+                  <img src={settings.coFounderImageUrl} alt="Co-Founder preview" className="w-20 h-20 rounded-xl object-cover border border-gray-200" />
+                )}
+                <div className="flex-1">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, 'coFounderImageUrl')}
+                    disabled={uploading === 'coFounderImageUrl'}
+                    className="block w-full text-sm text-gray-500
+                      file:mr-4 file:py-2.5 file:px-4
+                      file:rounded-xl file:border-0
+                      file:text-sm file:font-semibold
+                      file:bg-accent-50 file:text-accent-700
+                      hover:file:bg-accent-100 transition-all"
+                  />
+                  {uploading === 'coFounderImageUrl' && <p className="text-sm text-accent-600 mt-2">Uploading image...</p>}
                 </div>
               </div>
             </div>
