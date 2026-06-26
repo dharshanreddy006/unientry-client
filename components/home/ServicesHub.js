@@ -77,6 +77,35 @@ const services = [
     borderAccent: 'border-pink-100',
   },
   {
+    id: 'education-loan',
+    name: 'Education Loan',
+    subtitle: 'Find Best Rates',
+    icon: (
+      <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+        <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
+          <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#loan-bg)" />
+          {/* Graduation Cap */}
+          <path d="M24 13L11 20L24 27L37 20L24 13Z" fill="#fff" />
+          <path d="M16 24.5V30C16 32.5 19.5 34.5 24 34.5C28.5 34.5 32 32.5 32 30V24.5" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M37 20V29.5" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+          <circle cx="37" cy="30" r="1.5" fill="#fff" />
+          <defs>
+            <linearGradient id="loan-bg" x1="4" y1="4" x2="44" y2="44">
+              <stop stopColor="#3B82F6" />
+              <stop offset="1" stopColor="#1D4ED8" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    ),
+    bgColor: '#f4f7fe',
+    gradient: 'from-blue-500 to-indigo-600',
+    glow: 'shadow-blue-500/20',
+    bgAccent: 'bg-blue-50',
+    textAccent: 'text-blue-600',
+    borderAccent: 'border-blue-100',
+  },
+  {
     id: 'contact',
     name: 'Contact Us',
     subtitle: 'Get in Touch',
@@ -357,6 +386,8 @@ export default function ServicesHub() {
       router.push('/rent-and-ride');
     } else if (id === 'refer-and-earn') {
       router.push('/refer-and-earn');
+    } else if (id === 'education-loan') {
+      router.push('/education-loan');
     }
   };
 
@@ -396,7 +427,7 @@ export default function ServicesHub() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 sm:gap-6">
           {services.map((service, index) => (
             <button
               key={service.id}
