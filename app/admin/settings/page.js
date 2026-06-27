@@ -393,6 +393,45 @@ export default function AdminSettings() {
           </div>
         </div>
 
+        {/* SMTP Configuration Section */}
+        <div className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
+          <h2 className="font-heading font-semibold text-lg text-primary-900 mb-2">SMTP Mail Server Settings</h2>
+          <p className="text-xs text-gray-500 mb-5">
+            Configure your custom domain SMTP credentials below so all system verification and password reset emails are sent from your official email domain (e.g. <strong>noreply@unientry.online</strong>).
+          </p>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="sm:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-1">SMTP Host</label>
+                <input type="text" value={settings.smtpHost || ''} onChange={(e) => setSettings({ ...settings, smtpHost: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. mail.unientry.online" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">SMTP Port</label>
+                <input type="number" value={settings.smtpPort || ''} onChange={(e) => setSettings({ ...settings, smtpPort: parseInt(e.target.value) || '' })}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. 587 or 465" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">SMTP Username / Email</label>
+                <input type="email" value={settings.smtpUser || ''} onChange={(e) => setSettings({ ...settings, smtpUser: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. noreply@unientry.online" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">SMTP Password</label>
+                <input type="password" value={settings.smtpPass || ''} onChange={(e) => setSettings({ ...settings, smtpPass: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="Enter secure SMTP password" />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Sender Identity Header (SMTP From)</label>
+              <input type="text" value={settings.smtpFrom || ''} onChange={(e) => setSettings({ ...settings, smtpFrom: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-accent-400 outline-none text-sm" placeholder="e.g. UniEntry Global <noreply@unientry.online>" />
+            </div>
+          </div>
+        </div>
+
         {/* Save */}
         <button type="submit" disabled={saving}
           className="px-8 py-3.5 bg-accent-500 text-white rounded-xl font-semibold text-sm hover:bg-accent-600 transition-colors disabled:opacity-50 shadow-lg shadow-accent-500/20">
