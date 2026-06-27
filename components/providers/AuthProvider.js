@@ -59,6 +59,29 @@ export function AuthProvider({ children }) {
     return data.data;
   }, []);
 
+  const sendOtp = useCallback(async (email) => {
+    const res = await fetch(`${API_URL}/users/send-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.message);
+    return data;
+  }, []);
+
+  const verifyOtp = useCallback(async (email, otp, name, role) => {
+    const res = await fetch(`${API_URL}/users/verify-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, otp, name, role }),
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.message);
+    saveAuth(data.data, data.data.token);
+    return data.data;
+  }, []);
+
   const logout = useCallback(() => {
     setUser(null);
     setToken(null);
@@ -124,7 +147,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, signup, loginWithGoogle, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, token, loading, login, signup, sendOtp, verifyOtp, loginWithGoogle, logout, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   );
