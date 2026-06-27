@@ -42,7 +42,13 @@ export function AuthProvider({ children }) {
       body: JSON.stringify({ identifier, password }),
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.message);
+    if (!data.success) {
+      const err = new Error(data.message || 'Login failed');
+      if (data.unverified) {
+        err.unverified = true;
+      }
+      throw err;
+    }
     saveAuth(data.data, data.data.token);
     return data.data;
   }, []);
@@ -51,35 +57,66 @@ export function AuthProvider({ children }) {
     const res = await fetch(`${API_URL}/users/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email: email || undefined, phone: phone || undefined, password, role }),
+      body: JSON.stringify({ name, email, phone: phone || undefined, password, role }),
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.message);
+    if (!data.success) {
+      throw new Error(data.message || 'Signup failed');
+    }
+    return data;
+  }, []);
+
+  const verifyEmail = useCallback(async (token) => {
+    const res = await fetch(`${API_URL}/users/verify-email`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token }),
+    });
+    const data = await res.json();
+    if (!data.success) {
+      throw new Error(data.message || 'Verification failed');
+    }
     saveAuth(data.data, data.data.token);
     return data.data;
   }, []);
 
-  const sendOtp = useCallback(async (email) => {
-    const res = await fetch(`${API_URL}/users/send-otp`, {
+  const resendVerification = useCallback(async (email) => {
+    const res = await fetch(`${API_URL}/users/resend-verification`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.message);
+    if (!data.success) {
+      throw new Error(data.message || 'Failed to resend verification email');
+    }
     return data;
   }, []);
 
-  const verifyOtp = useCallback(async (email, otp, name, role) => {
-    const res = await fetch(`${API_URL}/users/verify-otp`, {
+  const forgotPassword = useCallback(async (email) => {
+    const res = await fetch(`${API_URL}/users/forgot-password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, otp, name, role }),
+      body: JSON.stringify({ email }),
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.message);
-    saveAuth(data.data, data.data.token);
-    return data.data;
+    if (!data.success) {
+      throw new Error(data.message || 'Failed to send password reset link');
+    }
+    return data;
+  }, []);
+
+  const resetPassword = useCallback(async (token, password) => {
+    const res = await fetch(`${API_URL}/users/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, password }),
+    });
+    const data = await res.json();
+    if (!data.success) {
+      throw new Error(data.message || 'Failed to reset password');
+    }
+    return data;
   }, []);
 
   const logout = useCallback(() => {
@@ -147,10 +184,11 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, signup, sendOtp, verifyOtp, loginWithGoogle, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, token, loading, login, signup, verifyEmail, resendVerification, forgotPassword, resetPassword, loginWithGoogle, logout, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
 export const useAuth = () => useContext(AuthContext);
+
